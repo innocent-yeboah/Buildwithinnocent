@@ -175,24 +175,28 @@ export default function Home() {
 </section>
 
       {/* Contact Section */}
-      <section className="py-16 px-4 bg-[#1E3A5F] text-white text-center">
-        <h2 className="text-3xl font-bold">Ready to Build?</h2>
-        <p className="mt-4 text-lg">Let's discuss your project. Free consultation.</p>
-        <div className="mt-8 space-x-4">
-          <a href="https://wa.me/233530710628" className="bg-[#2E7D32] text-white px-6 py-3 rounded-lg hover:bg-[#1b5e20] transition inline-block">
-            WhatsApp Me
-          </a>
-          <a href="mailto:igtechgh@gmail.com" className="bg-white text-[#1E3A5F] px-6 py-3 rounded-lg hover:bg-gray-100 transition inline-block">
-            Email Me
-          </a>
-        </div>
-        <div className="mt-8 text-gray-300">
-          <p>📞 Call/WhatsApp: +233 530 710 628</p>
-          <p>📧 Email: igtechgh@gmail.com</p>
-          <p className="mt-4 text-sm">📍 Based in Accra, Ghana. Available for remote work worldwide.</p>
-        </div>
-      </section>
-
+<section className="py-16 px-4 bg-[#1E3A5F] text-white text-center">
+  <h2 className="text-3xl font-bold">Ready to Build?</h2>
+  <p className="mt-4 text-lg">Let's discuss your project. Free consultation.</p>
+  
+  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+    <a href="https://wa.me/233530453400" className="bg-[#25D366] text-white px-6 py-3 rounded-lg hover:bg-[#128C7E] transition inline-flex items-center justify-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.47 3.45 1.35 4.95L2 22l5.36-1.47c1.45.8 3.1 1.23 4.81 1.23 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z" />
+      </svg>
+      WhatsApp AI Assistant
+    </a>
+    <a href="tel:+233530710628" className="bg-white text-[#1E3A5F] px-6 py-3 rounded-lg hover:bg-gray-100 transition inline-flex items-center justify-center gap-2">
+      📞 Call Me: +233 530 710 628
+    </a>
+  </div>
+  
+  <div className="mt-8 text-gray-300 text-sm">
+    <p>🤖 Try our AI assistant on WhatsApp: <span className="font-semibold">+233 530 453 400</span></p>
+    <p className="mt-1">📞 Direct calls: <span className="font-semibold">+233 530 710 628</span></p>
+    <p className="mt-4">📍 Based in Accra, Ghana. Available for remote work worldwide.</p>
+  </div>
+</section>
       {/* Footer */}
       <footer className="py-6 px-4 text-center text-gray-500 text-sm border-t">
         <p>© 2026 Build With Innocent. All rights reserved.</p>
