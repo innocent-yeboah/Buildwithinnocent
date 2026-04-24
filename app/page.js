@@ -76,6 +76,89 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Lead Capture Section */}
+<section className="py-16 px-4 bg-white" id="contact-form">
+  <div className="max-w-2xl mx-auto text-center">
+    <h2 className="text-3xl font-bold text-[#1E3A5F] mb-4">
+      Let's Build Something Great Together
+    </h2>
+    <p className="text-gray-600 mb-8">
+      Tell me about your business needs. I will respond within 24 hours.
+    </p>
+    
+    <form id="lead-form" className="space-y-4 text-left">
+      <div>
+        <label className="block text-gray-700 font-medium mb-2">Your Name *</label>
+        <input 
+          type="text" 
+          id="lead-name" 
+          required
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1E3A5F]"
+          placeholder="John Doe"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-gray-700 font-medium mb-2">Email Address *</label>
+        <input 
+          type="email" 
+          id="lead-email" 
+          required
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1E3A5F]"
+          placeholder="john@example.com"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-gray-700 font-medium mb-2">WhatsApp Number *</label>
+        <input 
+          type="tel" 
+          id="lead-phone" 
+          required
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1E3A5F]"
+          placeholder="+233 XX XXX XXXX"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-gray-700 font-medium mb-2">What do you need help with?</label>
+        <select 
+          id="lead-service"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1E3A5F]"
+        >
+          <option value="">Select a service</option>
+          <option value="website">Modern Website</option>
+          <option value="whatsapp">WhatsApp Automation</option>
+          <option value="dashboard">Business Dashboard</option>
+          <option value="custom">Custom Software</option>
+          <option value="other">Other / I'm not sure</option>
+        </select>
+      </div>
+      
+      <div>
+        <label className="block text-gray-700 font-medium mb-2">Tell me more about your business</label>
+        <textarea 
+          id="lead-message" 
+          rows="4"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1E3A5F]"
+          placeholder="Tell me about your business, challenges, and goals..."
+        ></textarea>
+      </div>
+      
+      <button 
+        type="submit"
+        className="w-full bg-[#1E3A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#152c47] transition"
+      >
+        Send Message →
+      </button>
+    </form>
+    
+    <p className="text-gray-400 text-sm mt-6">
+      I will respond within 24 hours. No spam. No pressure.
+    </p>
+  </div>
+</section>
+
       {/* Portfolio Section */}
       <section id="work" className="py-16 px-4 bg-gray-50">
   <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">My Work</h2>
@@ -219,6 +302,44 @@ export default function Home() {
     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.47 3.45 1.35 4.95L2 22l5.36-1.47c1.45.8 3.1 1.23 4.81 1.23 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9zm5.25 14.28c-.28.78-1.64 1.45-2.41 1.54-.44.05-.9.03-1.35-.05-.45-.08-.96-.22-1.94-.72-1.13-.57-2.5-1.84-3.25-2.72-.6-.7-1.25-1.48-1.62-2.38-.26-.64-.28-1.32-.04-1.96.19-.5.55-.9 1.05-1.12.44-.2.94-.28 1.44-.2.29.04.56.2.79.45.37.39.7.84.98 1.28.28.45.48.94.58 1.45.08.4-.05.8-.34 1.1-.18.19-.39.34-.56.54-.16.19-.26.41-.2.66.09.43.44.94.78 1.3.52.55 1.15.97 1.85 1.24.33.13.66.19 1 .17.45-.02.87-.22 1.14-.57.35-.45.53-1.03.44-1.61-.06-.4-.33-.73-.64-1.06s-.7-.66-1.06-.97c-.2-.17-.44-.27-.66-.43-.19-.14-.35-.3-.46-.5-.1-.19-.13-.4-.06-.6.1-.33.33-.6.64-.78.57-.34 1.26-.45 1.89-.28.45.13.86.43 1.2.78.33.34.6.74.78 1.18.09.23.13.47.11.71-.02.5-.2.99-.52 1.4-.43.57-1.05 1-1.75 1.19z" />
   </svg>
 </a>
+<script dangerouslySetInnerHTML={{
+  __html: `
+    document.getElementById('lead-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('lead-name').value;
+      const email = document.getElementById('lead-email').value;
+      const phone = document.getElementById('lead-phone').value;
+      const service = document.getElementById('lead-service').value;
+      const message = document.getElementById('lead-message').value;
+      
+      const submitBtn = document.querySelector('#lead-form button[type="submit"]');
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = 'Sending...';
+      submitBtn.disabled = true;
+      
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, service, message })
+        });
+        
+        if (response.ok) {
+          alert('Thank you! I will get back to you within 24 hours.');
+          document.getElementById('lead-form').reset();
+        } else {
+          alert('Something went wrong. Please WhatsApp me directly.');
+        }
+      } catch (error) {
+        alert('Something went wrong. Please WhatsApp me directly.');
+      } finally {
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  `
+}} />
     </div>
   );
 }
