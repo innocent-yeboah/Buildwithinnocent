@@ -24,8 +24,6 @@ export default function Home() {
         body: JSON.stringify({ name, email, phone, service, message: messageText })
       });
       
-      const result = await response.json();
-      
       if (response.ok) {
         setFormStatus({ submitting: false, message: 'Thank you! I will get back to you within 24 hours.' });
         setTimeout(() => {
@@ -35,7 +33,8 @@ export default function Home() {
           if (form) form.reset();
         }, 2000);
       } else {
-        setFormStatus({ submitting: false, message: result.error || 'Something went wrong. Please try again.' });
+        const error = await response.json();
+        setFormStatus({ submitting: false, message: error.error || 'Something went wrong. Please try again.' });
       }
     } catch (error) {
       setFormStatus({ submitting: false, message: 'Network error. Please try again.' });
@@ -92,17 +91,17 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">What I Build</h2>
         <p className="text-center text-gray-600 mt-2 mb-10">Services I offer to help businesses grow</p>
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <div onClick={() => setShowModal(true)} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">🖥️</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">Modern Websites</h3>
-            <p className="text-gray-600 mt-2">Professional landing pages that attract customers and build trust. Mobile-friendly and fast.</p>
+            <p className="text-gray-600 mt-2">Professional modern websites which serve as engine for business growth-that attract customers and build trust. Mobile-friendly and fast.</p>
           </div>
-          <div onClick={() => setShowModal(true)} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">💬</div>
-            <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp Automation</h3>
+            <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Automation</h3>
             <p className="text-gray-600 mt-2">Automated replies to customer messages. Save hours every week. Instant responses.</p>
           </div>
-          <div onClick={() => setShowModal(true)} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">📊</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">Business Dashboards</h3>
             <p className="text-gray-600 mt-2">Track inventory, sales, and payments in one place. Know your business in real-time.</p>
@@ -113,31 +112,27 @@ export default function Home() {
       {/* Portfolio Section */}
       <section id="work" className="py-16 px-4">
         <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">Live Projects</h2>
-        <p className="text-center text-gray-600 mt-2 mb-10">Click any project to inquire</p>
+        <p className="text-center text-gray-600 mt-2 mb-10">Real products I have built and shipped</p>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div onClick={() => setShowModal(true)} className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
+          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-bold text-[#1E3A5F]">SchoolLedger GH</h3>
             <p className="text-gray-600 mt-2">Multi-tenant SaaS for Ghanaian schools. Live pilot school. WhatsApp payment confirmations. Supabase RLS across 5 tables.</p>
             <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, WhatsApp API</p>
-            <p className="text-xs text-gray-400 mt-2">Click to inquire →</p>
           </div>
-          <div onClick={() => setShowModal(true)} className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
+          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Assistant</h3>
-            <p className="text-gray-600 mt-2">Zero-subscription AI assistant using Google Gemini API. Replaced Make.com + OpenAI with pure code.</p>
+            <p className="text-gray-600 mt-2">Zero-subscription AI assistant using Google Gemini API. Replaced Make.com + OpenAI with pure code. Client onboarding in under 30 minutes.</p>
             <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Gemini API, WhatsApp API</p>
-            <p className="text-xs text-gray-400 mt-2">Click to inquire →</p>
           </div>
-          <div onClick={() => setShowModal(true)} className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
+          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-bold text-[#1E3A5F]">My Central Bank</h3>
             <p className="text-gray-600 mt-2">Personal finance tracker with income, expense, and savings tracking. Real-time Supabase sync across devices.</p>
             <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, PostgreSQL</p>
-            <p className="text-xs text-gray-400 mt-2">Click to inquire →</p>
           </div>
-          <div onClick={() => setShowModal(true)} className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
+          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-bold text-[#1E3A5F]">FounderOS</h3>
-            <p className="text-gray-600 mt-2">Life-business operating system with habit tracking, income pipeline, and weekly reviews.</p>
+            <p className="text-gray-600 mt-2">Life-business operating system with habit tracking, income pipeline, and weekly reviews. Deployed via GitHub CI/CD.</p>
             <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, Vercel</p>
-            <p className="text-xs text-gray-400 mt-2">Click to inquire →</p>
           </div>
         </div>
       </section>
@@ -149,27 +144,36 @@ export default function Home() {
           <div className="space-y-8 text-gray-700 text-lg leading-relaxed">
             <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
               <p className="font-bold text-[#1E3A5F] mb-2">1. I noticed a pattern.</p>
-              <p>I was driving Uber in Accra, watching the world through my windshield. But I was also paying attention to something else — systems. Why do some countries and companies thrive while others struggle?</p>
-              <p className="mt-2"><strong className="text-[#2E7D32]">The best organizations don't rely on heroes. They rely on systems.</strong></p>
+              <p>I was driving Uber in Accra, watching the world through my windshield. But I was also paying attention to something else — systems. Why do some countries and companies thrive while others struggle? Why do some businesses grow effortlessly while others die slowly?</p>
+              <p className="mt-2">The answer was everywhere once I started looking. <strong className="text-[#2E7D32]">The best organizations don't rely on heroes. They rely on systems.</strong> And the worst? They rely on hope, manual work, and expensive software that doesn't fit.</p>
             </div>
             <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
               <p className="font-bold text-[#1E3A5F] mb-2">2. I had to prove it to myself.</p>
-              <p>So I started building. Not tutorials. Live products. Real users. First, <strong>My Central Bank</strong>. Then <strong>FounderOS</strong>.</p>
-              <p className="mt-2">Within months, I had 4 live products. <strong className="text-[#2E7D32]">The system worked better than I ever imagined.</strong></p>
+              <p>So I started building. Not tutorials. Not courses. Live products. Real users. Real problems.</p>
+              <p className="mt-2">First, I built <strong className="text-[#2E7D32]">My Central Bank</strong> — a personal finance tracker. Then <strong className="text-[#2E7D32]">FounderOS</strong> — a life-business operating system.</p>
+              <p className="mt-2 italic text-[#1E3A5F]">"Will systems actually work?"</p>
+              <p className="mt-2">The results shocked me. Within weeks, I had clarity. Within months, I had 4 live products. <strong className="text-[#2E7D32]">The system worked better than I ever imagined.</strong></p>
             </div>
             <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
               <p className="font-bold text-[#1E3A5F] mb-2">3. Then I looked around at businesses in Ghana.</p>
-              <p>Brilliant owners. Great products. But stuck on manual processes and expensive software.</p>
-              <p className="mt-2"><strong className="text-[#2E7D32]">They didn't need more features. They needed a working system.</strong></p>
+              <p>Brilliant owners. Great products. But stuck. Why? Because they were fighting their own systems — or running on none at all.</p>
+              <p className="mt-2">Paper notebooks. WhatsApp chaos. Expensive software built for other countries. Processes that worked against them.</p>
+              <p className="mt-2"><strong className="text-[#2E7D32]">I realized something: These business owners didn't need more features. They needed a working system.</strong> Software that actually solved THEIR problems, not problems from Silicon Valley.</p>
             </div>
             <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
               <p className="font-bold text-[#1E3A5F] mb-2">4. So I decided to build differently.</p>
-              <p>I build <strong className="text-[#2E7D32]">growth systems</strong> for businesses. Free prototype first. No monthly USD fees. You own everything.</p>
+              <p>I don't just write code. I build <strong className="text-[#2E7D32]">growth systems</strong> for businesses. A modern website that attracts customers. WhatsApp automation that saves hours every day. Dashboards that show you what is actually happening in your business.</p>
+              <p className="mt-2 font-semibold">And here is what makes me different:</p>
+              <ul className="list-disc pl-6 mt-2 space-y-1">
+                <li>I build a <strong className="text-[#2E7D32]">free prototype first</strong> — you test it before you pay</li>
+                <li>You <strong className="text-[#2E7D32]">own the software</strong> — no monthly USD subscriptions</li>
+                <li>I am <strong className="text-[#2E7D32]">based in Accra</strong> — we can meet in person</li>
+              </ul>
             </div>
           </div>
           <div className="mt-12 p-6 bg-[#1E3A5F] text-white rounded-lg text-center">
             <p className="text-xl md:text-2xl font-bold italic">"I don't build tutorials. I build systems that grow businesses."</p>
-            <p className="mt-3 text-gray-300">— Innocent Golden</p>
+            <p className="mt-3 text-gray-300">— Innocent Golden, Founder of Build With Innocent</p>
           </div>
         </div>
       </section>
@@ -179,17 +183,17 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-[#1E3A5F] mb-8">What People Say</h2>
           <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32]">
-            <p className="text-gray-700 italic text-lg">"It's so inspiring to hear your story! Let's celebrate how far you've come. And you are just getting started."</p>
+            <p className="text-gray-700 italic text-lg">"It's so inspiring to hear your story! This is a great achievement. Let's celebrate how far you've come. And you are just getting started."</p>
             <p className="text-[#1E3A5F] font-bold mt-4">— Clementina Aina</p>
-            <p className="text-gray-500">Founder & CEO, 6Cs (Top 0.01% EdTech)</p>
+            <p className="text-gray-500">Founder & CEO, 6Cs (#48 EdTech Globally)</p>
           </div>
         </div>
       </section>
 
       {/* Floating WhatsApp Button */}
-      <a href="https://wa.me/233530453400" className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110" target="_blank" rel="noopener noreferrer">
+      <a href="https://wa.me/233530453400" className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
-          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.47 3.45 1.35 4.95L2 22l5.36-1.47c1.45.8 3.1 1.23 4.81 1.23 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z"/>
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.47 3.45 1.35 4.95L2 22l5.36-1.47c1.45.8 3.1 1.23 4.81 1.23 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9zM12 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"/>
         </svg>
       </a>
 
@@ -220,7 +224,7 @@ export default function Home() {
                   <select id="lead-service" className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white">
                     <option value="">Select a service</option>
                     <option value="website">Modern Website</option>
-                    <option value="whatsapp">WhatsApp Automation</option>
+                    <option value="whatsapp">WhatsApp AI Automation</option>
                     <option value="dashboard">Business Dashboard</option>
                     <option value="custom">Custom Software</option>
                     <option value="other">Other / I'm not sure</option>
@@ -244,31 +248,39 @@ export default function Home() {
         </div>
       )}
 
-      {/* Footer Section */}
+           {/* Footer Section */}
       <footer className="bg-[#1E3A5F] text-white py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
+            
+            {/* Brand Column */}
             <div>
               <h3 className="text-xl font-bold mb-4">Build With Innocent</h3>
               <p className="text-gray-300 text-sm">Custom software for Ghanaian businesses. Free prototype. No monthly USD fees.</p>
             </div>
+            
+            {/* Quick Links */}
             <div>
               <h4 className="font-semibold mb-4 text-[#2E7D32]">Quick Links</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><a href="#" className="hover:text-white transition">Home</a></li>
                 <li><a href="#work" className="hover:text-white transition">My Work</a></li>
-                <li><button onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">Book Consultation</button></li>
+                <li><a href="#" onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">Book Consultation</a></li>
               </ul>
             </div>
+            
+            {/* Projects */}
             <div>
               <h4 className="font-semibold mb-4 text-[#2E7D32]">Live Projects</h4>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li><button onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">SchoolLedger GH</button></li>
-                <li><button onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">WhatsApp AI Assistant</button></li>
-                <li><button onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">My Central Bank</button></li>
-                <li><button onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">FounderOS</button></li>
+                <li><a href="#" className="hover:text-white transition">SchoolLedger GH</a></li>
+                <li><a href="#" className="hover:text-white transition">WhatsApp AI Assistant</a></li>
+                <li><a href="#" className="hover:text-white transition">My Central Bank</a></li>
+                <li><a href="#" className="hover:text-white transition">FounderOS</a></li>
               </ul>
             </div>
+            
+            {/* Contact */}
             <div>
               <h4 className="font-semibold mb-4 text-[#2E7D32]">Contact</h4>
               <ul className="space-y-2 text-sm text-gray-300">
@@ -278,14 +290,15 @@ export default function Home() {
                 <li>🌐 buildwithinnocent.com</li>
               </ul>
             </div>
+            
           </div>
+          
           <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
             <p>&copy; 2026 Build With Innocent. All rights reserved.</p>
             <p className="mt-1">Built with Next.js & Tailwind CSS. Deployed on Vercel.</p>
           </div>
         </div>
       </footer>
-      
     </div>
   );
 }
