@@ -94,7 +94,7 @@ export default function Home() {
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">🖥️</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">Modern Websites</h3>
-            <p className="text-gray-600 mt-2">Professional landing pages that attract customers and build trust. Mobile-friendly and fast.</p>
+            <p className="text-gray-600 mt-2">Professional modern websites which serve as engine for business growth-that attract customers and build trust. Mobile-friendly and fast.</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">💬</div>
@@ -248,14 +248,57 @@ export default function Home() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="py-8 px-4 text-center text-gray-500 text-sm border-t">
-        <p>📞 Call/WhatsApp: +233 530 710 628</p>
-        <p>📧 Email: igtechgh@gmail.com</p>
-        <p>🌐 buildwithinnocent.com</p>
-        <p className="mt-4">© 2026 Build With Innocent. All rights reserved.</p>
+           {/* Footer Section */}
+      <footer className="bg-[#1E3A5F] text-white py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            
+            {/* Brand Column */}
+            <div>
+              <h3 className="text-xl font-bold mb-4">Build With Innocent</h3>
+              <p className="text-gray-300 text-sm">Custom software for Ghanaian businesses. Free prototype. No monthly USD fees.</p>
+            </div>
+            
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-semibold mb-4 text-[#2E7D32]">Quick Links</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="#" className="hover:text-white transition">Home</a></li>
+                <li><a href="#work" className="hover:text-white transition">My Work</a></li>
+                <li><a href="#" onClick={() => setShowModal(true)} className="hover:text-white transition cursor-pointer">Book Consultation</a></li>
+              </ul>
+            </div>
+            
+            {/* Projects */}
+            <div>
+              <h4 className="font-semibold mb-4 text-[#2E7D32]">Live Projects</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="#" className="hover:text-white transition">SchoolLedger GH</a></li>
+                <li><a href="#" className="hover:text-white transition">WhatsApp AI Assistant</a></li>
+                <li><a href="#" className="hover:text-white transition">My Central Bank</a></li>
+                <li><a href="#" className="hover:text-white transition">FounderOS</a></li>
+              </ul>
+            </div>
+            
+            {/* Contact */}
+            <div>
+              <h4 className="font-semibold mb-4 text-[#2E7D32]">Contact</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>📞 <a href="tel:+233530710628" className="hover:text-white transition">+233 530 710 628</a></li>
+                <li>💬 <a href="https://wa.me/233530453400" className="hover:text-white transition">+233 530 453 400 (AI)</a></li>
+                <li>📧 <a href="mailto:igtechgh@gmail.com" className="hover:text-white transition">igtechgh@gmail.com</a></li>
+                <li>🌐 buildwithinnocent.com</li>
+              </ul>
+            </div>
+            
+          </div>
+          
+          <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+            <p>&copy; 2026 Build With Innocent. All rights reserved.</p>
+            <p className="mt-1">Built with Next.js & Tailwind CSS. Deployed on Vercel.</p>
+          </div>
+        </div>
       </footer>
-      
     </div>
   );
 }
