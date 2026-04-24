@@ -32,48 +32,47 @@ export default function Home() {
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">🖥️</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">Modern Websites</h3>
-            <p className="text-gray-600 mt-2">Professional landing pages that attract customers and build trust.</p>
+            <p className="text-gray-600 mt-2">A professional landing page that attracts customers, showcases your products, and includes a WhatsApp button for instant contact. Mobile-friendly and fast.</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">💬</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp Automation</h3>
-            <p className="text-gray-600 mt-2">Auto-replies and instant customer responses. Save hours every week.</p>
+            <p className="text-gray-600 mt-2">Automated replies to customer messages. Instant responses to common questions. Send product catalogs automatically. Save hours every week.</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3">📊</div>
             <h3 className="text-xl font-bold text-[#1E3A5F]">Business Dashboards</h3>
-            <p className="text-gray-600 mt-2">Inventory and payment tracking tools. Know your business in real-time.</p>
+            <p className="text-gray-600 mt-2">Track inventory, sales, and payments in one place. Know what's low in stock. Never forget who owes you. Simple view on phone or computer.</p>
           </div>
         </div>
       </section>
 
       {/* Portfolio Section */}
-      <section id="work" className="py-16 px-4">
-        <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">Live Projects</h2>
-        <p className="text-center text-gray-600 mt-2 mb-10">Real products I have built and shipped</p>
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">SchoolLedger GH</h3>
-            <p className="text-gray-600 mt-2">Multi-tenant SaaS for Ghanaian schools. Live pilot school. WhatsApp payment confirmations. Supabase RLS across 5 tables.</p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, WhatsApp API</p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Assistant</h3>
-            <p className="text-gray-600 mt-2">Zero-subscription AI assistant using Google Gemini API. Replaced Make.com + OpenAI with pure code. Client onboarding in under 30 minutes.</p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Gemini API, WhatsApp API</p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">My Central Bank</h3>
-            <p className="text-gray-600 mt-2">Personal finance tracker with income, expense, and savings tracking. Real-time Supabase sync across devices.</p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, PostgreSQL</p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">FounderOS</h3>
-            <p className="text-gray-600 mt-2">Life-business operating system with habit tracking, income pipeline, and weekly reviews. Deployed via GitHub CI/CD.</p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">Stack: Next.js, Supabase, Vercel</p>
-          </div>
-        </div>
-      </section>
+      <section id="work" className="py-16 px-4 bg-gray-50">
+  <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">My Work</h2>
+  <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h3 className="text-xl font-bold text-[#1E3A5F]">SchoolLedger GH</h3>
+      <p className="text-gray-600 mt-2">Multi-tenant SaaS for Ghanaian schools. Live pilot school. WhatsApp payment confirmations.</p>
+      <p className="text-sm text-[#2E7D32] mt-2">Stack: Next.js, Supabase, WhatsApp API</p>
+    </div>
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Assistant</h3>
+      <p className="text-gray-600 mt-2">Zero-subscription AI assistant using Google Gemini API. Replaced Make.com with pure code.</p>
+      <p className="text-sm text-[#2E7D32] mt-2">Stack: Next.js, Gemini API, WhatsApp API</p>
+    </div>
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h3 className="text-xl font-bold text-[#1E3A5F]">My Central Bank</h3>
+      <p className="text-gray-600 mt-2">Personal finance tracker with real-time Supabase sync across devices.</p>
+      <p className="text-sm text-[#2E7D32] mt-2">Stack: Next.js, Supabase, PostgreSQL</p>
+    </div>
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h3 className="text-xl font-bold text-[#1E3A5F]">FounderOS</h3>
+      <p className="text-gray-600 mt-2">Life-business operating system with habit tracking and weekly reviews.</p>
+      <p className="text-sm text-[#2E7D32] mt-2">Stack: Next.js, Supabase, Vercel</p>
+    </div>
+  </div>
+</section>
 
       {/* Story Section */}
       <section className="py-16 px-4 bg-gray-50">
@@ -98,16 +97,16 @@ export default function Home() {
       </section>
 
       {/* Testimonial Section */}
-      <section className="py-16 px-4">
-        <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">What People Say</h2>
-        <div className="max-w-2xl mx-auto mt-8 bg-gray-50 p-6 rounded-lg border-l-4 border-[#2E7D32]">
-          <p className="text-gray-700 italic">
-            "It's so inspiring to hear your story! This is a great achievement. Let's celebrate how far you've come. And you are just getting started."
-          </p>
-          <p className="text-[#1E3A5F] font-semibold mt-3">— Clementina Aina</p>
-          <p className="text-gray-500 text-sm">Founder & CEO, 6Cs (#48 EdTech Globally)</p>
-        </div>
-      </section>
+      <section className="py-16 px-4 bg-gray-50">
+  <div className="max-w-3xl mx-auto text-center">
+    <h2 className="text-3xl font-bold text-[#1E3A5F] mb-8">What People Say</h2>
+    <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32]">
+      <p className="text-gray-700 italic text-lg">"It's so inspiring to hear your story! This is a great achievement. Let's celebrate how far you've come. And you are just getting started."</p>
+      <p className="text-[#1E3A5F] font-bold mt-4">— Clementina Aina</p>
+      <p className="text-gray-500">Founder & CEO, 6Cs (#48 EdTech Globally)</p>
+    </div>
+  </div>
+</section>
 
       {/* Contact Section */}
       <section className="py-16 px-4 bg-[#1E3A5F] text-white text-center">
