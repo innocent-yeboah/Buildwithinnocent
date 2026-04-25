@@ -162,7 +162,7 @@ export default function Home() {
             </div>
             <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
               <p className="font-bold text-[#1E3A5F] mb-2">4. So I decided to build differently.</p>
-              <p>I don't just write code. I build <strong className="text-[#2E7D32]">growth systems</strong> for businesses. A modern website that attracts customers. WhatsApp automation that saves hours every day. Dashboards that show you what is actually happening in your business.</p>
+              <p>I don't just write code. I build <strong className="text-[#2E7D32]">growth systems</strong> for businesses. A modern website that attracts customers. AI automation systems that saves hours every day. Dashboards that show you what is actually happening in your business.</p>
               <p className="mt-2 font-semibold">And here is what makes me different:</p>
               <ul className="list-disc pl-6 mt-2 space-y-1">
                 <li>I build a <strong className="text-[#2E7D32]">free prototype first</strong> — you test it before you pay</li>
@@ -178,17 +178,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-[#1E3A5F] mb-8">What People Say</h2>
-          <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32]">
-            <p className="text-gray-700 italic text-lg">"It's so inspiring to hear your story! This is a great achievement. Let's celebrate how far you've come. And you are just getting started."</p>
-            <p className="text-[#1E3A5F] font-bold mt-4">— Clementina Aina</p>
-            <p className="text-gray-500">Founder & CEO, 6Cs (#48 EdTech Globally)</p>
-          </div>
-        </div>
-      </section>
+      {/* Testimonials Section - Expanded */}
+<section className="py-16 px-4 bg-gray-50">
+  <div className="max-w-4xl mx-auto">
+    <h2 className="text-3xl font-bold text-center text-[#1E3A5F] mb-12">
+      What People Are Saying
+    </h2>
+    
+    <div className="grid md:grid-cols-2 gap-6">
+      
+      {/* Testimonial 1 - Clementina Aina */}
+      <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md">
+        <p className="text-gray-700 italic text-md">
+          "It's so inspiring to hear your story! This is a great achievement. Let's celebrate how far you've come. And you are just getting started."
+        </p>
+        <p className="text-[#1E3A5F] font-bold mt-4">— Clementina Aina</p>
+        <p className="text-gray-500 text-sm">Founder & CEO, 6Cs (#48 EdTech Globally)</p>
+      </div>
+      
+      {/* Testimonial 2 - John Aacht */}
+      <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md">
+        <p className="text-gray-700 italic text-md">
+          "Great to see you getting out there and doing the groundwork. Keep exploring, keep asking questions, and most importantly, keep listening."
+        </p>
+        <p className="text-[#1E3A5F] font-bold mt-4">— John Aacht</p>
+        <p className="text-gray-500 text-sm">CEO, CloudFruition</p>
+      </div>
+      
+      {/* Testimonial 3 - Darius Asante */}
+      <div className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md md:col-span-2 max-w-2xl mx-auto">
+        <p className="text-gray-700 italic text-md">
+          "You put a smile on my face whenever I see your post. It inspires me to take more risks. All the best brother."
+        </p>
+        <p className="text-[#1E3A5F] font-bold mt-4">— Darius Asante</p>
+        <p className="text-gray-500 text-sm">AI Automation for Service Businesses</p>
+      </div>
+      
+    </div>
+  </div>
+</section>
 
       {/* Floating WhatsApp Button */}
       <a href="https://wa.me/233530453400" className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
