@@ -144,7 +144,7 @@ export default function BootcampPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4">
               <BootcampWhatsAppLink className="inline-flex justify-center items-center rounded-lg bg-[#25D366] text-white px-7 py-3.5 text-base font-semibold hover:bg-[#128C7E] transition shadow-lg shadow-[#25D366]/25">
                 Message “BOOTCAMP” on WhatsApp
               </BootcampWhatsAppLink>
@@ -154,6 +154,12 @@ export default function BootcampPage() {
               >
                 Email for syllabus
               </a>
+              <Link
+                href="/?register=1"
+                className="inline-flex justify-center items-center rounded-lg border-2 border-[#2E7D32] text-[#2E7D32] px-7 py-3.5 text-base font-semibold hover:bg-[#2E7D32] hover:text-white transition"
+              >
+                Register online
+              </Link>
             </div>
             <p className="mt-6 text-sm text-slate-500">
               Lead instructor: <strong className="text-[#1E3A5F]">Innocent Golden</strong>

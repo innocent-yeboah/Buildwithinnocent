@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
+const WA_CHAT_URL = "https://wa.me/233530710628";
+
 const HERO_SLIDES = [
   {
     src: "/hero/hero-1.jpg",
@@ -102,8 +104,9 @@ const FAQ_ITEMS = [
 ];
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState(null);
   const [formStatus, setFormStatus] = useState({ submitting: false, message: "" });
+  const [registerStatus, setRegisterStatus] = useState({ submitting: false, message: "" });
   const [turnstileToken, setTurnstileToken] = useState("");
   const [heroIndex, setHeroIndex] = useState(0);
   const [pauseHero, setPauseHero] = useState(false);
@@ -115,22 +118,46 @@ export default function Home() {
   const serviceRef = useRef(null);
   const messageRef = useRef(null);
   const honeypotRef = useRef(null);
+  const regFormRef = useRef(null);
+  const regNameRef = useRef(null);
+  const regEmailRef = useRef(null);
+  const regPhoneRef = useRef(null);
+  const regExperienceRef = useRef(null);
+  const regGoalsRef = useRef(null);
+  const regAgreeRef = useRef(null);
+  const regHoneypotRef = useRef(null);
   const turnstileContainerRef = useRef(null);
   const turnstileWidgetId = useRef(null);
 
   const openConsultModal = () => {
     track("consultation_cta_click");
-    setShowModal(true);
+    setModalMode("consult");
+  };
+
+  const openRegisterModal = () => {
+    track("registration_modal_open");
+    setModalMode("register");
   };
 
   useEffect(() => {
-    if (!showModal) return undefined;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("register") !== "1") return;
+    track("registration_deep_link_open");
+    window.history.replaceState({}, "", "/");
+    // URL deep-link must run after hydration (avoid SSR/client mismatch).
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot sync from ?register=1
+    setModalMode("register");
+  }, []);
+
+  useEffect(() => {
+    if (!modalMode) return undefined;
     const onKey = (ev) => {
-      if (ev.key === "Escape") setShowModal(false);
+      if (ev.key === "Escape") setModalMode(null);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [showModal]);
+  }, [modalMode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -143,7 +170,7 @@ export default function Home() {
   }, [pauseHero]);
 
   useEffect(() => {
-    if (!showModal || !TURNSTILE_SITE_KEY) return undefined;
+    if (!modalMode || !TURNSTILE_SITE_KEY) return undefined;
 
     let cancelled = false;
 
@@ -181,7 +208,7 @@ export default function Home() {
       turnstileWidgetId.current = null;
       setTurnstileToken("");
     };
-  }, [showModal]);
+  }, [modalMode]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -214,6 +241,7 @@ export default function Home() {
           service,
           message: messageText,
           website,
+          form: "consultation",
           turnstileToken: TURNSTILE_SITE_KEY ? turnstileToken : undefined,
         }),
       });
@@ -227,7 +255,7 @@ export default function Home() {
           message: "Thank you! I will get back to you within 24 hours.",
         });
         setTimeout(() => {
-          setShowModal(false);
+          setModalMode(null);
           setFormStatus({ submitting: false, message: "" });
           formRef.current?.reset();
           setTurnstileToken("");
@@ -241,6 +269,81 @@ export default function Home() {
       }
     } catch {
       setFormStatus({
+        submitting: false,
+        message: "Network error. Please try again.",
+      });
+    }
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+
+    const name = regNameRef.current?.value ?? "";
+    const email = regEmailRef.current?.value ?? "";
+    const phone = regPhoneRef.current?.value ?? "";
+    const experienceLevel = regExperienceRef.current?.value ?? "";
+    const goals = regGoalsRef.current?.value ?? "";
+    const agree = regAgreeRef.current?.checked === true;
+    const company = regHoneypotRef.current?.value ?? "";
+
+    if (!agree) {
+      setRegisterStatus({
+        submitting: false,
+        message: "Please agree to the Privacy Policy and Terms of Service to continue.",
+      });
+      return;
+    }
+
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setRegisterStatus({
+        submitting: false,
+        message: "Please complete the security check below.",
+      });
+      return;
+    }
+
+    setRegisterStatus({ submitting: true, message: "" });
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          form: "registration",
+          experienceLevel,
+          message: goals.trim() || undefined,
+          company,
+          agreeTerms: agree,
+          turnstileToken: TURNSTILE_SITE_KEY ? turnstileToken : undefined,
+        }),
+      });
+
+      if (response.ok) {
+        track("registration_submitted");
+        setRegisterStatus({
+          submitting: false,
+          message:
+            "Thank you! You are on the list. Check your email for curriculum and payment details.",
+        });
+        setTimeout(() => {
+          setModalMode(null);
+          setRegisterStatus({ submitting: false, message: "" });
+          regFormRef.current?.reset();
+          if (regAgreeRef.current) regAgreeRef.current.checked = false;
+          setTurnstileToken("");
+        }, 2400);
+      } else {
+        const errBody = await response.json().catch(() => ({}));
+        setRegisterStatus({
+          submitting: false,
+          message: errBody.error || "Something went wrong. Please try again.",
+        });
+      }
+    } catch {
+      setRegisterStatus({
         submitting: false,
         message: "Network error. Please try again.",
       });
@@ -341,6 +444,15 @@ export default function Home() {
               >
                 See My Work
               </a>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={openRegisterModal}
+                className="text-[#6EE7B7] font-semibold text-base md:text-lg underline-offset-4 hover:underline decoration-2 decoration-[#6EE7B7]/80 [text-shadow:0_1px_10px_rgba(0,0,0,0.55)] cursor-pointer"
+              >
+                Register for the 8-week Coding Bootcamp →
+              </button>
             </div>
           </div>
 
@@ -711,7 +823,7 @@ export default function Home() {
       </section>
 
       <a
-        href="https://wa.me/233530453400"
+        href={WA_CHAT_URL}
         onClick={() => track("whatsapp_fab_click")}
         className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
         target="_blank"
@@ -723,150 +835,341 @@ export default function Home() {
         </svg>
       </a>
 
-      {showModal ? (
+      {modalMode ? (
         <div
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
           role="presentation"
           onClick={(ev) => {
-            if (ev.target === ev.currentTarget) setShowModal(false);
+            if (ev.target === ev.currentTarget) setModalMode(null);
           }}
         >
           <div
             role="dialog"
             aria-modal="true"
-            aria-labelledby="consultation-title"
-            className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto shadow-xl"
+            aria-labelledby={
+              modalMode === "consult" ? "consultation-title" : "registration-title"
+            }
+            className={`bg-white rounded-lg w-full max-h-[90vh] overflow-y-auto shadow-xl ${
+              modalMode === "register" ? "max-w-lg" : "max-w-md"
+            }`}
           >
             <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 id="consultation-title" className="text-2xl font-bold text-[#1E3A5F]">
-                  Book Free Consultation
-                </h2>
+              <div className="flex justify-between items-start gap-4 mb-4">
+                <div>
+                  <h2
+                    id={modalMode === "consult" ? "consultation-title" : "registration-title"}
+                    className="text-2xl font-bold text-[#1E3A5F]"
+                  >
+                    {modalMode === "consult" ? "Book Free Consultation" : "Bootcamp sign-up"}
+                  </h2>
+                  {modalMode === "register" ? (
+                    <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                      Register for the{" "}
+                      <strong className="text-[#1E3A5F]">8-week Build With Innocent Bootcamp</strong>.
+                      I will follow up with the full curriculum and payment options.
+                    </p>
+                  ) : null}
+                </div>
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
-                  className="text-gray-500 hover:text-gray-700 text-2xl leading-none p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F]"
+                  onClick={() => setModalMode(null)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl leading-none p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] shrink-0"
                   aria-label="Close dialog"
                 >
                   ×
                 </button>
               </div>
-              <form ref={formRef} className="space-y-4 relative" onSubmit={handleFormSubmit} noValidate>
-                <div
-                  className="absolute left-[-10000px] top-0 w-px h-px overflow-hidden opacity-0"
-                  aria-hidden="true"
+
+              {modalMode === "consult" ? (
+                <form
+                  ref={formRef}
+                  key="consult-form"
+                  className="space-y-4 relative"
+                  onSubmit={handleFormSubmit}
+                  noValidate
                 >
-                  <label htmlFor="lead-website">Company website</label>
-                  <input
-                    ref={honeypotRef}
-                    type="text"
-                    id="lead-website"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    defaultValue=""
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="lead-name" className="block text-gray-800 font-semibold mb-2">
-                    Your Name <span aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    ref={nameRef}
-                    type="text"
-                    id="lead-name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
-                    placeholder="John Doe"
-                    autoComplete="name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lead-email" className="block text-gray-800 font-semibold mb-2">
-                    Email Address <span aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    ref={emailRef}
-                    type="email"
-                    id="lead-email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
-                    placeholder="john@example.com"
-                    autoComplete="email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lead-phone" className="block text-gray-800 font-semibold mb-2">
-                    WhatsApp Number <span aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    ref={phoneRef}
-                    type="tel"
-                    id="lead-phone"
-                    name="phone"
-                    required
-                    className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
-                    placeholder="+233 XX XXX XXXX"
-                    autoComplete="tel"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lead-service" className="block text-gray-800 font-semibold mb-2">
-                    What do you need help with?
-                  </label>
-                  <select
-                    ref={serviceRef}
-                    id="lead-service"
-                    name="service"
-                    className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
-                    defaultValue=""
+                  <div
+                    className="absolute left-[-10000px] top-0 w-px h-px overflow-hidden opacity-0"
+                    aria-hidden="true"
                   >
-                    <option value="">Select a service</option>
-                    <option value="website">Modern Website</option>
-                    <option value="whatsapp">WhatsApp AI Automation</option>
-                    <option value="dashboard">Business Dashboard</option>
-                    <option value="bootcamp">Coding Bootcamp (8 weeks)</option>
-                    <option value="custom">Custom Software</option>
-                    <option value="other">Other / I&apos;m not sure</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="lead-message" className="block text-gray-800 font-semibold mb-2">
-                    Tell me more about your business
-                  </label>
-                  <textarea
-                    ref={messageRef}
-                    id="lead-message"
-                    name="message"
-                    rows={3}
-                    className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
-                    placeholder="Tell me about your business, challenges, and goals..."
-                  />
-                </div>
+                    <label htmlFor="lead-website">Company website</label>
+                    <input
+                      ref={honeypotRef}
+                      type="text"
+                      id="lead-website"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      defaultValue=""
+                    />
+                  </div>
 
-                {TURNSTILE_SITE_KEY ? (
-                  <div ref={turnstileContainerRef} className="flex justify-center min-h-[65px]" />
-                ) : null}
+                  <div>
+                    <label htmlFor="lead-name" className="block text-gray-800 font-semibold mb-2">
+                      Your Name <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={nameRef}
+                      type="text"
+                      id="lead-name"
+                      name="name"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="John Doe"
+                      autoComplete="name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lead-email" className="block text-gray-800 font-semibold mb-2">
+                      Email Address <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={emailRef}
+                      type="email"
+                      id="lead-email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="john@example.com"
+                      autoComplete="email"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lead-phone" className="block text-gray-800 font-semibold mb-2">
+                      WhatsApp Number <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={phoneRef}
+                      type="tel"
+                      id="lead-phone"
+                      name="phone"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="+233 XX XXX XXXX"
+                      autoComplete="tel"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lead-service" className="block text-gray-800 font-semibold mb-2">
+                      What do you need help with?
+                    </label>
+                    <select
+                      ref={serviceRef}
+                      id="lead-service"
+                      name="service"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      defaultValue=""
+                    >
+                      <option value="">Select a service</option>
+                      <option value="website">Modern Website</option>
+                      <option value="whatsapp">WhatsApp AI Automation</option>
+                      <option value="dashboard">Business Dashboard</option>
+                      <option value="bootcamp">Coding Bootcamp (8 weeks)</option>
+                      <option value="custom">Custom Software</option>
+                      <option value="other">Other / I&apos;m not sure</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="lead-message" className="block text-gray-800 font-semibold mb-2">
+                      Tell me more about your business
+                    </label>
+                    <textarea
+                      ref={messageRef}
+                      id="lead-message"
+                      name="message"
+                      rows={3}
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="Tell me about your business, challenges, and goals..."
+                    />
+                  </div>
 
-                <button
-                  type="submit"
-                  disabled={formStatus.submitting}
-                  className="w-full bg-[#1E3A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#152c47] transition disabled:opacity-50"
+                  {TURNSTILE_SITE_KEY ? (
+                    <div ref={turnstileContainerRef} className="flex justify-center min-h-[65px]" />
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={formStatus.submitting}
+                    className="w-full bg-[#1E3A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#152c47] transition disabled:opacity-50"
+                  >
+                    {formStatus.submitting ? "Sending..." : "Send message"}
+                  </button>
+                  {formStatus.message ? (
+                    <p
+                      className={`text-center text-sm ${formStatus.message.includes("Thank you") ? "text-green-600" : "text-red-600"}`}
+                      role="status"
+                    >
+                      {formStatus.message}
+                    </p>
+                  ) : null}
+                </form>
+              ) : (
+                <form
+                  ref={regFormRef}
+                  key="register-form"
+                  className="space-y-4 relative"
+                  onSubmit={handleRegisterSubmit}
+                  noValidate
                 >
-                  {formStatus.submitting ? "Sending..." : "Send message"}
-                </button>
-                {formStatus.message ? (
-                  <p
-                    className={`text-center text-sm ${formStatus.message.includes("Thank you") ? "text-green-600" : "text-red-600"}`}
-                    role="status"
+                  <div
+                    className="absolute left-[-10000px] top-0 w-px h-px overflow-hidden opacity-0"
+                    aria-hidden="true"
                   >
-                    {formStatus.message}
+                    <label htmlFor="reg-company">Business name</label>
+                    <input
+                      ref={regHoneypotRef}
+                      type="text"
+                      id="reg-company"
+                      name="company"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      defaultValue=""
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="reg-name" className="block text-gray-800 font-semibold mb-2">
+                      Full name <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={regNameRef}
+                      type="text"
+                      id="reg-name"
+                      name="name"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="Your full name"
+                      autoComplete="name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="reg-email" className="block text-gray-800 font-semibold mb-2">
+                      Email <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={regEmailRef}
+                      type="email"
+                      id="reg-email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="reg-phone" className="block text-gray-800 font-semibold mb-2">
+                      WhatsApp number <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      ref={regPhoneRef}
+                      type="tel"
+                      id="reg-phone"
+                      name="phone"
+                      required
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="+233 XX XXX XXXX"
+                      autoComplete="tel"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="reg-experience" className="block text-gray-800 font-semibold mb-2">
+                      Coding experience
+                    </label>
+                    <select
+                      ref={regExperienceRef}
+                      id="reg-experience"
+                      name="experience"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      defaultValue=""
+                    >
+                      <option value="">Select one</option>
+                      <option value="Complete beginner — never coded">Complete beginner (never coded)</option>
+                      <option value="Some HTML/CSS or basics">Some HTML/CSS or basics</option>
+                      <option value="Comfortable with JavaScript">Comfortable with JavaScript</option>
+                      <option value="Built small projects before">Built small projects before</option>
+                      <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="reg-goals" className="block text-gray-800 font-semibold mb-2">
+                      What do you want from the bootcamp? (optional)
+                    </label>
+                    <textarea
+                      ref={regGoalsRef}
+                      id="reg-goals"
+                      name="goals"
+                      rows={3}
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      placeholder="Goals, timeline, or questions..."
+                    />
+                  </div>
+
+                  <div className="flex gap-3 items-start rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+                    <input
+                      ref={regAgreeRef}
+                      id="reg-agree"
+                      name="agree"
+                      type="checkbox"
+                      required
+                      className="mt-1 h-4 w-4 rounded border-gray-400 text-[#2E7D32] focus:ring-[#1E3A5F]"
+                    />
+                    <label htmlFor="reg-agree" className="text-sm text-slate-700 leading-snug">
+                      I agree to the{" "}
+                      <Link href="/privacy" className="text-[#2E7D32] font-semibold underline underline-offset-2">
+                        Privacy Policy
+                      </Link>{" "}
+                      and{" "}
+                      <Link href="/terms" className="text-[#2E7D32] font-semibold underline underline-offset-2">
+                        Terms of Service
+                      </Link>
+                      . <span aria-hidden="true">*</span>
+                    </label>
+                  </div>
+
+                  {TURNSTILE_SITE_KEY ? (
+                    <div ref={turnstileContainerRef} className="flex justify-center min-h-[65px]" />
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={registerStatus.submitting}
+                    className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#256629] transition disabled:opacity-50"
+                  >
+                    {registerStatus.submitting ? "Submitting..." : "Submit registration"}
+                  </button>
+                  {registerStatus.message ? (
+                    <p
+                      className={`text-center text-sm ${registerStatus.message.startsWith("Thank you") ? "text-green-600" : "text-red-600"}`}
+                      role="status"
+                    >
+                      {registerStatus.message}
+                    </p>
+                  ) : null}
+
+                  <p className="text-center text-xs text-slate-500">
+                    Prefer WhatsApp? Reply{" "}
+                    <a
+                      href={`${WA_CHAT_URL}?text=${encodeURIComponent("BOOTCAMP")}`}
+                      className="text-[#2E7D32] font-semibold underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      BOOTCAMP
+                    </a>{" "}
+                    on{" "}
+                    <a
+                      href={WA_CHAT_URL}
+                      className="text-[#2E7D32] font-semibold underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      +233 530 710 628
+                    </a>
+                    .
                   </p>
-                ) : null}
-              </form>
+                </form>
+              )}
             </div>
           </div>
         </div>
@@ -902,6 +1205,15 @@ export default function Home() {
                     className="hover:text-white transition text-left text-gray-300 text-sm"
                   >
                     Book Consultation
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={openRegisterModal}
+                    className="hover:text-white transition text-left text-gray-300 text-sm"
+                  >
+                    Bootcamp sign-up
                   </button>
                 </li>
                 <li>
@@ -972,12 +1284,12 @@ export default function Home() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/233530453400"
+                    href={WA_CHAT_URL}
                     className="hover:text-white transition"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    +233 530 453 400 (WhatsApp)
+                    +233 530 710 628 (WhatsApp)
                   </a>
                 </li>
                 <li>

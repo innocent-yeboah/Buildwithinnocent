@@ -27,12 +27,14 @@ async function verifyTurnstile(token, remoteip) {
 async function sendEmailNotification(leadData) {
   const namePlain = leadData.name;
   const servicePlain = leadData.service_interest || "";
+  const isRegistration = leadData.source === "bootcamp_registration";
   const name = escapeHtml(leadData.name);
   const email = escapeHtml(leadData.email);
   const phone = escapeHtml(leadData.phone);
   const serviceInterest = escapeHtml(leadData.service_interest || "");
   const message = escapeHtml(leadData.message || "");
   const waDigits = String(leadData.phone || "").replace(/\D/g, "");
+  const heading = isRegistration ? "New bootcamp registration" : "New lead";
 
   const emailHtml = `
     <!DOCTYPE html>
@@ -49,7 +51,7 @@ async function sendEmailNotification(leadData) {
     </head>
     <body>
       <div class="container">
-        <h2>New lead</h2>
+        <h2>${heading}</h2>
         <div class="label">Name:</div>
         <div class="value">${name}</div>
         <div class="label">Email:</div>
@@ -86,7 +88,9 @@ async function sendEmailNotification(leadData) {
       body: JSON.stringify({
         from: "Build With Innocent <notifications@buildwithinnocent.com>",
         to: ["igtechgh@gmail.com"],
-        subject: `New lead: ${namePlain} — ${servicePlain || "software"}`,
+        subject: isRegistration
+          ? `Bootcamp registration: ${namePlain}`
+          : `New lead: ${namePlain} — ${servicePlain || "software"}`,
         html: emailHtml,
       }),
     });
@@ -103,6 +107,7 @@ async function sendEmailNotification(leadData) {
 
 async function sendCustomerEmail(leadData) {
   const namePlain = leadData.name;
+  const isRegistration = leadData.source === "bootcamp_registration";
   const name = escapeHtml(leadData.name);
   const phone = escapeHtml(leadData.phone);
   const serviceInterest = escapeHtml(leadData.service_interest || "");
@@ -130,10 +135,14 @@ async function sendCustomerEmail(leadData) {
         <div class="header"><h1>Build With Innocent</h1></div>
         <div class="content">
           <div class="greeting">Hello ${name}!</div>
-          <div class="message">Thank you for reaching out to <strong>Build With Innocent</strong>. I have received your request and am excited to help you grow your business.</div>
+          <div class="message">${
+            isRegistration
+              ? `Thank you for registering interest in the <strong>Build With Innocent Bootcamp</strong>. I have received your details and will follow up with next steps (curriculum and payment options).`
+              : `Thank you for reaching out to <strong>Build With Innocent</strong>. I have received your request and am excited to help you grow your business.`
+          }</div>
           <div class="details">
             <p><strong>Your request summary:</strong></p>
-            <p>• Service requested: <strong>${serviceInterest || "Consultation"}</strong></p>
+            <p>• Service requested: <strong>${serviceInterest || (isRegistration ? "Coding Bootcamp" : "Consultation")}</strong></p>
             <p>• Contact number: <strong>${phone}</strong></p>
             <p>• Submitted on: <strong>${escapeHtml(new Date().toLocaleString("en-GH"))}</strong></p>
           </div>
@@ -174,7 +183,9 @@ async function sendCustomerEmail(leadData) {
       body: JSON.stringify({
         from: "Build With Innocent <hello@buildwithinnocent.com>",
         to: [leadData.email],
-        subject: `Thank you, ${namePlain}! I've received your request`,
+        subject: isRegistration
+          ? `Bootcamp — thanks ${namePlain}! I received your registration`
+          : `Thank you, ${namePlain}! I've received your request`,
         html: emailHtml,
       }),
     });
@@ -213,10 +224,20 @@ export async function POST(request) {
       service,
       message,
       website: honeypot,
+      company: regHoneypot,
       turnstileToken,
+      form,
+      experienceLevel,
+      agreeTerms,
     } = body;
 
-    if (honeypot != null && String(honeypot).trim() !== "") {
+    const isRegistration = form === "registration";
+
+    if (isRegistration) {
+      if (regHoneypot != null && String(regHoneypot).trim() !== "") {
+        return NextResponse.json({ success: true });
+      }
+    } else if (honeypot != null && String(honeypot).trim() !== "") {
       return NextResponse.json({ success: true });
     }
 
@@ -235,19 +256,44 @@ export async function POST(request) {
       );
     }
 
+    if (isRegistration && agreeTerms !== true) {
+      return NextResponse.json(
+        {
+          error:
+            "Please confirm you agree to the Privacy Policy and Terms of Service before registering.",
+        },
+        { status: 400 }
+      );
+    }
+
+    let composedMessage = typeof message === "string" ? message.trim() : "";
+    if (isRegistration) {
+      const exp =
+        typeof experienceLevel === "string" ? experienceLevel.trim() : "";
+      const header = `[Bootcamp registration]\nExperience level: ${exp || "Not specified"}`;
+      composedMessage = composedMessage ? `${header}\n\n${composedMessage}` : header;
+    }
+
+    const leadSource = isRegistration ? "bootcamp_registration" : "website";
+
     const leadData = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
-      service_interest: service || null,
-      message: message || null,
+      service_interest: isRegistration ? "Coding Bootcamp" : service || null,
+      message: composedMessage || null,
+      source: leadSource,
     };
 
     const { error } = await getSupabase()
       .from("leads")
       .insert({
-        ...leadData,
-        source: "website",
+        name: leadData.name,
+        email: leadData.email,
+        phone: leadData.phone,
+        service_interest: leadData.service_interest,
+        message: leadData.message,
+        source: leadSource,
         contacted: false,
         created_at: new Date().toISOString(),
       });
