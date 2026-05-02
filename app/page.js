@@ -1,6 +1,8 @@
 "use client";
 
+import { track } from "@vercel/analytics/react";
 import Image from "next/image";
+import Link from "next/link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 
@@ -68,6 +70,37 @@ const LIVE_PROJECTS = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    q: 'What does "free prototype" actually mean?',
+    a: "We align on a small, tangible slice of your product — enough to prove the concept — you try it, then we agree on scope and pricing for the full build. Details vary by project.",
+  },
+  {
+    q: "Will I pay recurring fees in USD?",
+    a: "The goal is software you own, without open-ended USD SaaS rent for core delivery. Ongoing costs (if any) are things like hosting or SMS/WhatsApp usage — discussed upfront.",
+  },
+  {
+    q: "How soon can we see something working?",
+    a: "After a consultation, timelines depend on complexity. Many engagements start with a prototype window measured in weeks, not months — not overnight magic, but disciplined execution.",
+  },
+  {
+    q: "Do I own the code and data?",
+    a: "Client engagements are structured so you own what you pay for, subject to the written agreement. Third-party services (e.g. hosting, Supabase) have their own terms.",
+  },
+  {
+    q: "Can we meet in person?",
+    a: "Yes — Build With Innocent is based in Accra. Remote collaboration works too; we pick whatever keeps your project moving.",
+  },
+  {
+    q: "What stacks do you build with?",
+    a: "Primarily modern TypeScript/JavaScript stacks — commonly Next.js, Supabase/PostgreSQL, and integrations such as WhatsApp or email providers — chosen for maintainability and fit.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "We can agree support retainers, handoffs to your team, or documentation — scoped separately so you are never locked into surprise subscriptions.",
+  },
+];
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, message: "" });
@@ -84,6 +117,11 @@ export default function Home() {
   const honeypotRef = useRef(null);
   const turnstileContainerRef = useRef(null);
   const turnstileWidgetId = useRef(null);
+
+  const openConsultModal = () => {
+    track("consultation_cta_click");
+    setShowModal(true);
+  };
 
   useEffect(() => {
     if (!showModal) return undefined;
@@ -181,6 +219,9 @@ export default function Home() {
       });
 
       if (response.ok) {
+        track("lead_submitted", {
+          service: service.trim() || "unspecified",
+        });
         setFormStatus({
           submitting: false,
           message: "Thank you! I will get back to you within 24 hours.",
@@ -288,13 +329,14 @@ export default function Home() {
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 type="button"
-                onClick={() => setShowModal(true)}
+                onClick={openConsultModal}
                 className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
               >
                 Book a Free Consultation
               </button>
               <a
                 href="#work"
+                onClick={() => track("hero_see_work_click")}
                 className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#1E3A5F] transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
               >
                 See My Work
@@ -447,6 +489,11 @@ export default function Home() {
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() =>
+                          track("portfolio_visit", {
+                            project: project.title,
+                          })
+                        }
                         className="group/link inline-flex items-center gap-2 rounded-lg bg-[#2E7D32] text-white px-4 py-2.5 text-sm font-semibold hover:bg-[#256629] transition-colors shadow-md shadow-[#2E7D32]/30"
                       >
                         Visit live site
@@ -595,8 +642,56 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="faq" className="py-16 md:py-24 px-4 bg-white border-t border-slate-200">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2E7D32] mb-3">
+            FAQ
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] tracking-tight">
+            Questions founders ask before we build
+          </h2>
+          <p className="text-center text-slate-600 mt-4 text-base leading-relaxed">
+            Straight answers on prototypes, ownership, timelines, and how we work with Ghanaian
+            teams — before you ever jump on WhatsApp.
+          </p>
+
+          <div className="mt-12 space-y-3">
+            {FAQ_ITEMS.map((item) => (
+              <details
+                key={item.q}
+                className="group rounded-xl border border-slate-200 bg-slate-50/90 hover:border-[#2E7D32]/35 open:bg-white open:shadow-md transition-all [&_summary::-webkit-details-marker]:hidden"
+              >
+                <summary className="cursor-pointer font-semibold text-[#1E3A5F] px-5 py-4 flex justify-between items-center gap-4 text-left list-none">
+                  <span>{item.q}</span>
+                  <span
+                    className="text-[#2E7D32] text-xs shrink-0 transition-transform group-open:rotate-180"
+                    aria-hidden="true"
+                  >
+                    ▼
+                  </span>
+                </summary>
+                <div className="px-5 pb-4 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <p className="text-center mt-10">
+            <button
+              type="button"
+              onClick={openConsultModal}
+              className="inline-flex items-center rounded-lg bg-[#1E3A5F] text-white px-6 py-3 text-sm font-semibold hover:bg-[#152c47] transition shadow-md"
+            >
+              Still unsure? Book a free consultation
+            </button>
+          </p>
+        </div>
+      </section>
+
       <a
         href="https://wa.me/233530453400"
+        onClick={() => track("whatsapp_fab_click")}
         className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
         target="_blank"
         rel="noopener noreferrer"
@@ -781,11 +876,26 @@ export default function Home() {
                 <li>
                   <button
                     type="button"
-                    onClick={() => setShowModal(true)}
+                    onClick={openConsultModal}
                     className="hover:text-white transition text-left text-gray-300 text-sm"
                   >
                     Book Consultation
                   </button>
+                </li>
+                <li>
+                  <a href="#faq" className="hover:text-white transition">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-white transition">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="hover:text-white transition">
+                    Terms of Service
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -857,9 +967,20 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+          <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm space-y-2">
             <p>&copy; 2026 Build With Innocent. All rights reserved.</p>
-            <p className="mt-1">Built with Next.js &amp; Tailwind CSS. Deployed on Vercel.</p>
+            <p>Built with Next.js &amp; Tailwind CSS. Deployed on Vercel.</p>
+            <p className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-1">
+              <Link href="/privacy" className="hover:text-white underline underline-offset-2">
+                Privacy
+              </Link>
+              <span className="text-gray-600" aria-hidden="true">
+                ·
+              </span>
+              <Link href="/terms" className="hover:text-white underline underline-offset-2">
+                Terms
+              </Link>
+            </p>
           </div>
         </div>
       </footer>
