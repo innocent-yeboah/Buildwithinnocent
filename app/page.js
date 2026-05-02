@@ -387,7 +387,7 @@ export default function Home() {
                 className="object-cover object-center brightness-[1.06] contrast-[1.03]"
                 sizes="100vw"
                 priority={i === 0}
-                quality={88}
+                quality={75}
               />
             </div>
           ))}
