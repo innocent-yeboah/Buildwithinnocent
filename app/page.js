@@ -197,7 +197,7 @@ export default function Home() {
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-center brightness-[1.06] contrast-[1.03]"
                 sizes="100vw"
                 priority={i === 0}
                 quality={88}
@@ -207,55 +207,58 @@ export default function Home() {
         </div>
 
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-b from-black/90 via-black/[0.84] to-black/92 pointer-events-none"
+          className="absolute inset-0 z-[2] bg-gradient-to-b from-black/38 via-black/22 to-black/44 pointer-events-none"
           aria-hidden
         />
         <div
-          className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_120%_90%_at_50%_36%,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.68)_52%,rgba(0,0,0,0.88)_100%)] pointer-events-none"
+          className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_130%_95%_at_50%_42%,rgba(0,0,0,0)_25%,rgba(0,0,0,0.16)_55%,rgba(0,0,0,0.34)_100%)] pointer-events-none"
           aria-hidden
         />
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
+        <div className="relative z-10 max-w-5xl mx-auto text-center w-full px-3">
           <p className="sr-only" aria-live="polite">
             Slide {heroIndex + 1} of {HERO_SLIDES.length}
           </p>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,0.92),0_1px_3px_rgba(0,0,0,0.85)]">
-            Stop Fighting Your Business.
-            <br />
-            <span className="text-[#6EE7B7] [text-shadow:0_2px_20px_rgba(0,0,0,0.92),0_0_28px_rgba(0,0,0,0.65)]">
-              Start Running a System.
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-100 mt-6 max-w-3xl mx-auto [text-shadow:0_2px_14px_rgba(0,0,0,0.88)]">
-            Most Ghanaian businesses are losing money, time, and customers — not because their
-            products are bad, but because their{" "}
-            <span className="font-semibold text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.95)]">
-              systems are broken.
-            </span>
-          </p>
-          <p className="text-lg md:text-xl text-gray-100 mt-4 max-w-2xl mx-auto [text-shadow:0_2px_14px_rgba(0,0,0,0.88)]">
-            I build custom software that turns chaos into clarity.
-            <span className="font-bold text-[#6EE7B7] [text-shadow:0_2px_16px_rgba(0,0,0,0.9)]">
-              {" "}
-              Free prototype. No monthly USD fees. You own everything.
-            </span>
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              type="button"
-              onClick={() => setShowModal(true)}
-              className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
-            >
-              Book a Free Consultation
-            </button>
-            <a
-              href="#work"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#1E3A5F] transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
-            >
-              See My Work
-            </a>
+          <div className="rounded-3xl bg-slate-950/58 backdrop-blur-md px-6 py-10 md:px-12 md:py-11 shadow-2xl ring-1 ring-white/20 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight [text-shadow:0_2px_16px_rgba(0,0,0,0.65)]">
+              Stop Fighting Your Business.
+              <br />
+              <span className="text-[#6EE7B7] [text-shadow:0_2px_14px_rgba(0,0,0,0.7)]">
+                Start Running a System.
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-100 mt-6 max-w-3xl mx-auto [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]">
+              Most Ghanaian businesses are losing money, time, and customers — not because their
+              products are bad, but because their{" "}
+              <span className="font-semibold text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
+                systems are broken.
+              </span>
+            </p>
+            <p className="text-lg md:text-xl text-gray-100 mt-4 max-w-2xl mx-auto [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]">
+              I build custom software that turns chaos into clarity.
+              <span className="font-bold text-[#6EE7B7] [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
+                {" "}
+                Free prototype. No monthly USD fees. You own everything.
+              </span>
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
+                className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
+              >
+                Book a Free Consultation
+              </button>
+              <a
+                href="#work"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#1E3A5F] transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
+              >
+                See My Work
+              </a>
+            </div>
           </div>
+
           <div className="mt-12 inline-block bg-white/[0.96] backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/40 ring-1 ring-black/10">
             <p className="text-gray-700 text-sm flex flex-wrap items-center justify-center gap-2">
               <span className="text-[#2E7D32]" aria-hidden="true">
@@ -271,12 +274,12 @@ export default function Home() {
               4 live products in 6 months
             </p>
           </div>
-          <div className="mt-8 max-w-md mx-auto">
-            <figure className="text-gray-200 text-sm italic [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
+          <div className="mt-8 max-w-md mx-auto rounded-2xl bg-slate-950/55 backdrop-blur-md px-5 py-4 ring-1 ring-white/15 shadow-lg">
+            <figure className="text-gray-200 text-sm italic">
               <blockquote>
                 &ldquo;Inspiring story. Let&apos;s celebrate how far you&apos;ve come.&rdquo;
               </blockquote>
-              <figcaption className="block font-semibold text-gray-100 not-italic mt-1 [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
+              <figcaption className="block font-semibold text-gray-100 not-italic mt-1">
                 — Clementina Aina, Founder of 6Cs (Top 0.01% EdTech)
               </figcaption>
             </figure>
@@ -294,8 +297,10 @@ export default function Home() {
                 role="tab"
                 aria-selected={i === heroIndex}
                 aria-label={`Workspace photo ${i + 1} of ${HERO_SLIDES.length}`}
-                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black/60 ${
-                  i === heroIndex ? "w-9 bg-[#2E7D32] ring-2 ring-white/50" : "w-2.5 bg-white/55 hover:bg-white/85"
+                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-white/90 shadow-sm ${
+                  i === heroIndex
+                    ? "w-9 bg-[#2E7D32] ring-2 ring-white/70 shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                    : "w-2.5 bg-white/90 hover:bg-white shadow-[0_1px_6px_rgba(0,0,0,0.25)]"
                 }`}
                 onClick={() => setHeroIndex(i)}
               />
