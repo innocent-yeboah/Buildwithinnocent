@@ -387,15 +387,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="py-20 md:py-24 px-4 bg-slate-50 border-t border-slate-200/80">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2E7D32] mb-3">
-            Portfolio
-          </p>
+      <section
+        id="work"
+        className="relative py-20 md:py-24 px-4 border-t-4 border-[#2E7D32] bg-gradient-to-b from-[#e8f5e9]/55 via-white to-[#f4f8fb]"
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2E7D32]/40 to-transparent pointer-events-none" aria-hidden />
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center">
+            <span className="inline-flex items-center rounded-full bg-[#2E7D32] text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-2 mb-4 shadow-md shadow-[#2E7D32]/25">
+              Portfolio
+            </span>
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] tracking-tight">
             Live platforms &amp; products
           </h2>
-          <p className="text-center text-slate-600 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+          <p className="text-center text-[#1E3A5F]/80 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium">
             Production-grade builds you can open in the browser — schools, commerce, and automation,
             shipped for ownership and long-term operation.
           </p>
@@ -404,14 +410,24 @@ export default function Home() {
             {LIVE_PROJECTS.map((project) => (
               <article
                 key={project.title}
-                className="group flex flex-col rounded-xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.06)] hover:shadow-lg hover:border-slate-300 transition-all duration-300"
+                className="group flex flex-col rounded-xl overflow-hidden border-2 border-[#1E3A5F]/18 bg-white shadow-md shadow-[#1E3A5F]/06 hover:border-[#2E7D32]/55 hover:shadow-xl hover:shadow-[#2E7D32]/12 transition-all duration-300"
               >
+                <div
+                  className="h-1.5 bg-gradient-to-r from-[#1E3A5F] via-[#2E7D32] to-[#1E3A5F]"
+                  aria-hidden
+                />
                 <div className="flex flex-col flex-1 p-7 md:p-8">
                   <div className="flex items-start justify-between gap-3 mb-4">
-                    <h3 className="text-[1.05rem] md:text-lg font-semibold text-[#1E3A5F] leading-snug pr-2">
+                    <h3 className="text-[1.05rem] md:text-lg font-bold text-[#1E3A5F] leading-snug pr-2">
                       {project.title}
                     </h3>
-                    <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wider text-[#2E7D32] bg-emerald-50 border border-emerald-100/90 px-2.5 py-1 rounded-md">
+                    <span
+                      className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md text-white border border-transparent shadow-sm ${
+                        project.status === "Production"
+                          ? "bg-[#1E3A5F]"
+                          : "bg-[#2E7D32]"
+                      }`}
+                    >
                       {project.status}
                     </span>
                   </div>
@@ -419,19 +435,19 @@ export default function Home() {
                   <ul className="flex flex-wrap gap-2 mt-6 list-none p-0">
                     {project.stack.map((tag) => (
                       <li key={tag}>
-                        <span className="inline-block text-[11px] font-medium text-slate-600 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
+                        <span className="inline-block text-[11px] font-semibold text-[#1E3A5F] bg-[#e8f5e9] border border-[#2E7D32]/35 px-2.5 py-1 rounded-md">
                           {tag}
                         </span>
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 pt-5 border-t border-slate-100">
+                  <div className="mt-6 pt-5 border-t border-[#2E7D32]/20">
                     {project.href ? (
                       <a
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E3A5F] hover:text-[#2E7D32] transition-colors"
+                        className="group/link inline-flex items-center gap-2 rounded-lg bg-[#2E7D32] text-white px-4 py-2.5 text-sm font-semibold hover:bg-[#256629] transition-colors shadow-md shadow-[#2E7D32]/30"
                       >
                         Visit live site
                         <span
@@ -442,7 +458,7 @@ export default function Home() {
                         </span>
                       </a>
                     ) : (
-                      <p className="text-xs text-slate-400 leading-snug">
+                      <p className="text-xs text-[#1E3A5F]/75 leading-snug border-l-[3px] border-[#2E7D32] pl-3 py-0.5 bg-[#e8f5e9]/40 rounded-r-md">
                         Private / invite-only — request a walkthrough when we speak.
                       </p>
                     )}
