@@ -1,14 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
+const HERO_SLIDES = [
+  {
+    src: "/hero/hero-1.jpg",
+    alt: "Professional laptop on desk with programming environment visible on screen",
+  },
+  {
+    src: "/hero/hero-2.jpg",
+    alt: "Developer workspace with laptop showing application code on display",
+  },
+  {
+    src: "/hero/hero-3.jpg",
+    alt: "Software source code on a large monitor in a focused workspace",
+  },
+  {
+    src: "/hero/hero-4.jpg",
+    alt: "Hands typing on laptop keyboard with coding tutorial on screen",
+  },
+];
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, message: "" });
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [pauseHero, setPauseHero] = useState(false);
 
   const formRef = useRef(null);
   const nameRef = useRef(null);
@@ -28,6 +50,16 @@ export default function Home() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [showModal]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    if (pauseHero) return undefined;
+    const id = setInterval(() => {
+      setHeroIndex((i) => (i + 1) % HERO_SLIDES.length);
+    }, 6500);
+    return () => clearInterval(id);
+  }, [pauseHero]);
 
   useEffect(() => {
     if (!showModal || !TURNSTILE_SITE_KEY) return undefined;
@@ -142,22 +174,63 @@ export default function Home() {
 
       <section
         id="top"
-        className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-white to-gray-50"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20"
+        aria-roledescription="carousel"
+        aria-label="Introduction"
+        onMouseEnter={() => setPauseHero(true)}
+        onMouseLeave={() => setPauseHero(false)}
+        onFocusCapture={() => setPauseHero(true)}
+        onBlurCapture={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) setPauseHero(false);
+        }}
       >
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#1E3A5F] leading-tight">
+        <div className="absolute inset-0 z-0">
+          {HERO_SLIDES.map((slide, i) => (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${
+                i === heroIndex ? "opacity-100 z-[1]" : "opacity-0 z-0"
+              }`}
+              aria-hidden={i !== heroIndex}
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                className="object-cover object-center"
+                sizes="100vw"
+                priority={i === 0}
+                quality={88}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div
+          className="absolute inset-0 z-[2] bg-gradient-to-b from-slate-950/85 via-slate-900/78 to-slate-950/88 pointer-events-none"
+          aria-hidden
+        />
+
+        <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
+          <p className="sr-only" aria-live="polite">
+            Slide {heroIndex + 1} of {HERO_SLIDES.length}
+          </p>
+
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight drop-shadow-md">
             Stop Fighting Your Business.
             <br />
-            <span className="text-[#2E7D32]">Start Running a System.</span>
+            <span className="text-[#86efac] drop-shadow-md">
+              Start Running a System.
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mt-6 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto drop-shadow-sm">
             Most Ghanaian businesses are losing money, time, and customers — not because their
             products are bad, but because their{" "}
-            <span className="font-semibold text-[#1E3A5F]">systems are broken</span>.
+            <span className="font-semibold text-white">systems are broken</span>.
           </p>
-          <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-200 mt-4 max-w-2xl mx-auto drop-shadow-sm">
             I build custom software that turns chaos into clarity.
-            <span className="font-bold text-[#2E7D32]">
+            <span className="font-bold text-[#86efac]">
               {" "}
               Free prototype. No monthly USD fees. You own everything.
             </span>
@@ -166,19 +239,19 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setShowModal(true)}
-              className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer"
+              className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
             >
               Book a Free Consultation
             </button>
             <a
               href="#work"
-              className="border-2 border-[#1E3A5F] text-[#1E3A5F] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#1E3A5F] hover:text-white transition transform hover:-translate-y-1 duration-300 text-center"
+              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#1E3A5F] transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
             >
               See My Work
             </a>
           </div>
-          <div className="mt-12 inline-block bg-white rounded-full px-6 py-3 shadow-md border border-gray-100">
-            <p className="text-gray-500 text-sm flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-12 inline-block bg-white/95 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-white/30">
+            <p className="text-gray-600 text-sm flex flex-wrap items-center justify-center gap-2">
               <span className="text-[#2E7D32]" aria-hidden="true">
                 ✓
               </span>
@@ -193,14 +266,34 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 max-w-md mx-auto">
-            <figure className="text-gray-400 text-sm italic">
+            <figure className="text-gray-300 text-sm italic">
               <blockquote>
                 &ldquo;Inspiring story. Let&apos;s celebrate how far you&apos;ve come.&rdquo;
               </blockquote>
-              <figcaption className="block font-semibold text-gray-500 not-italic mt-1">
+              <figcaption className="block font-semibold text-gray-200 not-italic mt-1">
                 — Clementina Aina, Founder of 6Cs (Top 0.01% EdTech)
               </figcaption>
             </figure>
+          </div>
+
+          <div
+            className="flex justify-center gap-2.5 mt-14 flex-wrap"
+            role="tablist"
+            aria-label="Hero workspace photos"
+          >
+            {HERO_SLIDES.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === heroIndex}
+                aria-label={`Workspace photo ${i + 1} of ${HERO_SLIDES.length}`}
+                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E3A5F]/50 ${
+                  i === heroIndex ? "w-9 bg-[#2E7D32]" : "w-2.5 bg-white/45 hover:bg-white/80"
+                }`}
+                onClick={() => setHeroIndex(i)}
+              />
+            ))}
           </div>
         </div>
       </section>

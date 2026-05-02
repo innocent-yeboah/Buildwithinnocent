@@ -1,0 +1,11 @@
+Hero photography — Unsplash License (https://unsplash.com/license).
+
+Images were downloaded from images.unsplash.com for bundling with this site.
+
+Photo IDs (search on unsplash.com):
+  hero-1.jpg → 1498050108023
+  hero-2.jpg → 1517694712202
+  hero-3.jpg → 1461749280684
+  hero-4.jpg → 1555066931
+
+Attribution is not required by the license but is appreciated; credit photographers via each photo page.

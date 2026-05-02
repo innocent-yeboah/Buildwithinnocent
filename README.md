@@ -37,6 +37,10 @@ Next.js (App Router) landing page for [buildwithinnocent.com](https://buildwithi
 - **Turnstile:** if `TURNSTILE_SECRET_KEY` is set, set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and complete verification server-side.
 - **Email HTML:** user-supplied fields are escaped before interpolation (`lib/escape-html.js`).
 
+## Hero imagery
+
+The homepage hero uses a full-viewport carousel of workspace photos stored under `public/hero/` ([Unsplash License](https://unsplash.com/license)). See `public/hero/credits.txt` for source photo IDs. Images auto-advance and pause on hover or keyboard focus; auto-play is disabled when the visitor prefers reduced motion.
+
 ## Generated metadata
 
 Open Graph image, favicon, Apple touch icon, and web app manifest are generated from `app/opengraph-image.js`, `app/icon.js`, `app/apple-icon.js`, and `app/manifest.js` (no manual `og-image.jpg` in `public/` required).

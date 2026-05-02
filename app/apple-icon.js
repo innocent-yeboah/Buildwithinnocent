@@ -14,12 +14,12 @@ export default function AppleIcon() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#1E3A5F",
+          backgroundColor: "#2E7D32",
           borderRadius: 36,
         }}
       >
         <div style={{ fontSize: 72, fontWeight: 700, color: "#ffffff" }}>B</div>
-        <div style={{ fontSize: 18, fontWeight: 600, color: "#2E7D32", marginTop: 8 }}>
+        <div style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.92)", marginTop: 8 }}>
           W.I.
         </div>
       </div>
