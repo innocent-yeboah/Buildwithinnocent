@@ -397,7 +397,7 @@ export default function Home() {
       <section className="py-16 px-4 bg-gray-50">
         <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">What I Build</h2>
         <p className="text-center text-gray-600 mt-2 mb-10">Services I offer to help businesses grow</p>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3" aria-hidden="true">
               🖥️
@@ -426,6 +426,27 @@ export default function Home() {
               Track inventory, sales, and payments in one place. Know your business in real-time.
             </p>
           </div>
+          <Link
+            href="/bootcamp"
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition border-2 border-transparent hover:border-[#2E7D32]/45 ring-1 ring-[#1E3A5F]/08 flex flex-col group"
+          >
+            <div className="text-4xl mb-3" aria-hidden="true">
+              🎓
+            </div>
+            <h3 className="text-xl font-bold text-[#1E3A5F] group-hover:text-[#2E7D32] transition-colors">
+              Coding Bootcamp
+            </h3>
+            <p className="text-gray-600 mt-2 flex-1">
+              8-week cohort: live classes, shipped projects, WhatsApp support — from zero to a
+              production-ready portfolio.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#2E7D32]">
+              View program
+              <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </span>
+          </Link>
         </div>
       </section>
 
@@ -807,6 +828,7 @@ export default function Home() {
                     <option value="website">Modern Website</option>
                     <option value="whatsapp">WhatsApp AI Automation</option>
                     <option value="dashboard">Business Dashboard</option>
+                    <option value="bootcamp">Coding Bootcamp (8 weeks)</option>
                     <option value="custom">Custom Software</option>
                     <option value="other">Other / I&apos;m not sure</option>
                   </select>
@@ -886,6 +908,11 @@ export default function Home() {
                   <a href="#faq" className="hover:text-white transition">
                     FAQ
                   </a>
+                </li>
+                <li>
+                  <Link href="/bootcamp" className="hover:text-white transition">
+                    Coding Bootcamp
+                  </Link>
                 </li>
                 <li>
                   <Link href="/privacy" className="hover:text-white transition">
