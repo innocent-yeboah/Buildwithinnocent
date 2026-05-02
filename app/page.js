@@ -314,7 +314,7 @@ export default function Home() {
           phone,
           form: "registration",
           experienceLevel,
-          message: goals.trim() || undefined,
+          goals: goals.trim() || undefined,
           company,
           agreeTerms: agree,
           turnstileToken: TURNSTILE_SITE_KEY ? turnstileToken : undefined,
@@ -433,14 +433,14 @@ export default function Home() {
               <button
                 type="button"
                 onClick={openConsultModal}
-                className="bg-[#1E3A5F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#152c47] transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
+                className="bg-brand-navy text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-brand-navy-muted transition transform hover:-translate-y-1 duration-300 shadow-lg cursor-pointer ring-2 ring-white/10"
               >
                 Book a Free Consultation
               </button>
               <a
                 href="#work"
                 onClick={() => track("hero_see_work_click")}
-                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#1E3A5F] transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-brand-navy transition transform hover:-translate-y-1 duration-300 text-center ring-2 ring-white/10"
               >
                 See My Work
               </a>
@@ -458,14 +458,14 @@ export default function Home() {
 
           <div className="mt-12 inline-block bg-white/[0.96] backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/40 ring-1 ring-black/10">
             <p className="text-gray-700 text-sm flex flex-wrap items-center justify-center gap-2">
-              <span className="text-[#2E7D32]" aria-hidden="true">
+              <span className="text-brand-green" aria-hidden="true">
                 ✓
               </span>
               Built on The Four Laws of Atomic Habits
               <span className="text-gray-300 mx-1" aria-hidden="true">
                 |
               </span>
-              <span className="text-[#2E7D32]" aria-hidden="true">
+              <span className="text-brand-green" aria-hidden="true">
                 ✓
               </span>
               5 shipped platforms and tools
@@ -494,9 +494,9 @@ export default function Home() {
                 role="tab"
                 aria-selected={i === heroIndex}
                 aria-label={`Workspace photo ${i + 1} of ${HERO_SLIDES.length}`}
-                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-white/90 shadow-sm ${
+                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2 focus-visible:ring-offset-white/90 shadow-sm ${
                   i === heroIndex
-                    ? "w-9 bg-[#2E7D32] ring-2 ring-white/70 shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                    ? "w-9 bg-brand-green ring-2 ring-white/70 shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
                     : "w-2.5 bg-white/90 hover:bg-white shadow-[0_1px_6px_rgba(0,0,0,0.25)]"
                 }`}
                 onClick={() => setHeroIndex(i)}
@@ -506,15 +506,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
-        <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">What I Build</h2>
+      <section className="py-16 px-4 bg-brand-surface">
+        <h2 className="text-3xl font-bold text-center text-brand-navy">What I Build</h2>
         <p className="text-center text-gray-600 mt-2 mb-10">Services I offer to help businesses grow</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <div className="text-4xl mb-3" aria-hidden="true">
               🖥️
             </div>
-            <h3 className="text-xl font-bold text-[#1E3A5F]">Modern Websites</h3>
+            <h3 className="text-xl font-bold text-brand-navy">Modern Websites</h3>
             <p className="text-gray-600 mt-2">
               Professional modern websites that serve as an engine for business growth — they attract
               customers and build trust. Mobile-friendly and fast.
@@ -524,7 +524,7 @@ export default function Home() {
             <div className="text-4xl mb-3" aria-hidden="true">
               💬
             </div>
-            <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Automation</h3>
+            <h3 className="text-xl font-bold text-brand-navy">WhatsApp AI Automation</h3>
             <p className="text-gray-600 mt-2">
               Automated replies to customer messages. Save hours every week. Instant responses.
             </p>
@@ -533,26 +533,26 @@ export default function Home() {
             <div className="text-4xl mb-3" aria-hidden="true">
               📊
             </div>
-            <h3 className="text-xl font-bold text-[#1E3A5F]">Business Dashboards</h3>
+            <h3 className="text-xl font-bold text-brand-navy">Business Dashboards</h3>
             <p className="text-gray-600 mt-2">
               Track inventory, sales, and payments in one place. Know your business in real-time.
             </p>
           </div>
           <Link
             href="/bootcamp"
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition border-2 border-transparent hover:border-[#2E7D32]/45 ring-1 ring-[#1E3A5F]/08 flex flex-col group"
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition border-2 border-transparent hover:border-brand-green/45 ring-1 ring-brand-navy/08 flex flex-col group"
           >
             <div className="text-4xl mb-3" aria-hidden="true">
               🎓
             </div>
-            <h3 className="text-xl font-bold text-[#1E3A5F] group-hover:text-[#2E7D32] transition-colors">
+            <h3 className="text-xl font-bold text-brand-navy group-hover:text-brand-green transition-colors">
               Coding Bootcamp
             </h3>
             <p className="text-gray-600 mt-2 flex-1">
               8-week cohort: live classes, shipped projects, WhatsApp support — from zero to a
               production-ready portfolio.
             </p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#2E7D32]">
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-green">
               View program
               <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
                 →
@@ -564,19 +564,19 @@ export default function Home() {
 
       <section
         id="work"
-        className="relative py-20 md:py-24 px-4 border-t-4 border-[#2E7D32] bg-gradient-to-b from-[#e8f5e9]/55 via-white to-[#f4f8fb]"
+        className="relative py-20 md:py-24 px-4 border-t-4 border-brand-green bg-gradient-to-b from-brand-tint/90 via-white to-brand-surface"
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2E7D32]/40 to-transparent pointer-events-none" aria-hidden />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-green/40 to-transparent pointer-events-none" aria-hidden />
         <div className="max-w-6xl mx-auto relative">
           <div className="text-center">
-            <span className="inline-flex items-center rounded-full bg-[#2E7D32] text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-2 mb-4 shadow-md shadow-[#2E7D32]/25">
+            <span className="inline-flex items-center rounded-full bg-brand-green text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-2 mb-4 shadow-md shadow-brand-green/25">
               Portfolio
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-brand-navy tracking-tight">
             Live platforms &amp; products
           </h2>
-          <p className="text-center text-[#1E3A5F]/80 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium">
+          <p className="text-center text-brand-navy/80 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium">
             Production-grade builds you can open in the browser — schools, commerce, and automation,
             shipped for ownership and long-term operation.
           </p>
@@ -585,22 +585,22 @@ export default function Home() {
             {LIVE_PROJECTS.map((project) => (
               <article
                 key={project.title}
-                className="group flex flex-col rounded-xl overflow-hidden border-2 border-[#1E3A5F]/18 bg-white shadow-md shadow-[#1E3A5F]/06 hover:border-[#2E7D32]/55 hover:shadow-xl hover:shadow-[#2E7D32]/12 transition-all duration-300"
+                className="group flex flex-col rounded-xl overflow-hidden border-2 border-brand-navy/18 bg-white shadow-md shadow-brand-navy/06 hover:border-brand-green/55 hover:shadow-xl hover:shadow-brand-green/12 transition-all duration-300"
               >
                 <div
-                  className="h-1.5 bg-gradient-to-r from-[#1E3A5F] via-[#2E7D32] to-[#1E3A5F]"
+                  className="h-1.5 bg-gradient-to-r from-brand-navy via-brand-green to-brand-navy"
                   aria-hidden
                 />
                 <div className="flex flex-col flex-1 p-7 md:p-8">
                   <div className="flex items-start justify-between gap-3 mb-4">
-                    <h3 className="text-[1.05rem] md:text-lg font-bold text-[#1E3A5F] leading-snug pr-2">
+                    <h3 className="text-[1.05rem] md:text-lg font-bold text-brand-navy leading-snug pr-2">
                       {project.title}
                     </h3>
                     <span
                       className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md text-white border border-transparent shadow-sm ${
                         project.status === "Production"
-                          ? "bg-[#1E3A5F]"
-                          : "bg-[#2E7D32]"
+                          ? "bg-brand-navy"
+                          : "bg-brand-green"
                       }`}
                     >
                       {project.status}
@@ -610,13 +610,13 @@ export default function Home() {
                   <ul className="flex flex-wrap gap-2 mt-6 list-none p-0">
                     {project.stack.map((tag) => (
                       <li key={tag}>
-                        <span className="inline-block text-[11px] font-semibold text-[#1E3A5F] bg-[#e8f5e9] border border-[#2E7D32]/35 px-2.5 py-1 rounded-md">
+                        <span className="inline-block text-[11px] font-semibold text-brand-navy bg-brand-tint border border-brand-green/35 px-2.5 py-1 rounded-md">
                           {tag}
                         </span>
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 pt-5 border-t border-[#2E7D32]/20">
+                  <div className="mt-6 pt-5 border-t border-brand-green/20">
                     {project.href ? (
                       <a
                         href={project.href}
@@ -627,7 +627,7 @@ export default function Home() {
                             project: project.title,
                           })
                         }
-                        className="group/link inline-flex items-center gap-2 rounded-lg bg-[#2E7D32] text-white px-4 py-2.5 text-sm font-semibold hover:bg-[#256629] transition-colors shadow-md shadow-[#2E7D32]/30"
+                        className="group/link inline-flex items-center gap-2 rounded-lg bg-brand-green text-white px-4 py-2.5 text-sm font-semibold hover:bg-brand-green-muted transition-colors shadow-md shadow-brand-green/30"
                       >
                         Visit live site
                         <span
@@ -638,7 +638,7 @@ export default function Home() {
                         </span>
                       </a>
                     ) : (
-                      <p className="text-xs text-[#1E3A5F]/75 leading-snug border-l-[3px] border-[#2E7D32] pl-3 py-0.5 bg-[#e8f5e9]/40 rounded-r-md">
+                      <p className="text-xs text-brand-navy/75 leading-snug border-l-[3px] border-brand-green pl-3 py-0.5 bg-brand-tint/40 rounded-r-md">
                         Private / invite-only — request a walkthrough when we speak.
                       </p>
                     )}
@@ -652,12 +652,12 @@ export default function Home() {
 
       <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-brand-navy mb-12">
             From Uber Seat to Desk
           </h2>
           <div className="space-y-8 text-gray-700 text-lg leading-relaxed">
-            <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
-              <p className="font-bold text-[#1E3A5F] mb-2">1. I noticed a pattern.</p>
+            <div className="border-l-4 border-brand-green pl-6 py-2 bg-brand-surface rounded-r-lg">
+              <p className="font-bold text-brand-navy mb-2">1. I noticed a pattern.</p>
               <p>
                 I was driving Uber in Accra, watching the world through my windshield. But I was also
                 paying attention to something else — systems. Why do some countries and companies
@@ -666,31 +666,31 @@ export default function Home() {
               </p>
               <p className="mt-2">
                 The answer was everywhere once I started looking.{" "}
-                <strong className="text-[#2E7D32]">
+                <strong className="text-brand-green">
                   The best organizations don&apos;t rely on heroes. They rely on systems.
                 </strong>{" "}
                 And the worst? They rely on hope, manual work, and expensive software that doesn&apos;t
                 fit.
               </p>
             </div>
-            <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
-              <p className="font-bold text-[#1E3A5F] mb-2">2. I had to prove it to myself.</p>
+            <div className="border-l-4 border-brand-green pl-6 py-2 bg-brand-surface rounded-r-lg">
+              <p className="font-bold text-brand-navy mb-2">2. I had to prove it to myself.</p>
               <p>So I started building. Not tutorials. Not courses. Live products. Real users. Real problems.</p>
               <p className="mt-2">
-                First, I built <strong className="text-[#2E7D32]">My Central Bank</strong> — a personal
-                finance tracker. Then <strong className="text-[#2E7D32]">FounderOS</strong> — a
+                First, I built <strong className="text-brand-green">My Central Bank</strong> — a personal
+                finance tracker. Then <strong className="text-brand-green">FounderOS</strong> — a
                 life-business operating system.
               </p>
-              <p className="mt-2 italic text-[#1E3A5F]">&ldquo;Will systems actually work?&rdquo;</p>
+              <p className="mt-2 italic text-brand-navy">&ldquo;Will systems actually work?&rdquo;</p>
               <p className="mt-2">
                 The results shocked me. Within weeks, I had clarity. Within months, I had multiple live products.{" "}
-                <strong className="text-[#2E7D32]">
+                <strong className="text-brand-green">
                   The system worked better than I ever imagined.
                 </strong>
               </p>
             </div>
-            <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
-              <p className="font-bold text-[#1E3A5F] mb-2">3. Then I looked around at businesses in Ghana.</p>
+            <div className="border-l-4 border-brand-green pl-6 py-2 bg-brand-surface rounded-r-lg">
+              <p className="font-bold text-brand-navy mb-2">3. Then I looked around at businesses in Ghana.</p>
               <p>
                 Brilliant owners. Great products. But stuck. Why? Because they were fighting their own
                 systems — or running on none at all.
@@ -700,17 +700,17 @@ export default function Home() {
                 that worked against them.
               </p>
               <p className="mt-2">
-                <strong className="text-[#2E7D32]">
+                <strong className="text-brand-green">
                   I realized something: These business owners didn&apos;t need more features. They
                   needed a working system.
                 </strong>{" "}
                 Software that actually solved THEIR problems, not problems from Silicon Valley.
               </p>
             </div>
-            <div className="border-l-4 border-[#2E7D32] pl-6 py-2 bg-gray-50 rounded-r-lg">
-              <p className="font-bold text-[#1E3A5F] mb-2">4. So I decided to build differently.</p>
+            <div className="border-l-4 border-brand-green pl-6 py-2 bg-brand-surface rounded-r-lg">
+              <p className="font-bold text-brand-navy mb-2">4. So I decided to build differently.</p>
               <p>
-                I don&apos;t just write code. I build <strong className="text-[#2E7D32]">growth systems</strong>{" "}
+                I don&apos;t just write code. I build <strong className="text-brand-green">growth systems</strong>{" "}
                 for businesses. A modern website that attracts customers. AI automation systems that
                 save hours every day. Dashboards that show you what is actually happening in your
                 business.
@@ -718,20 +718,20 @@ export default function Home() {
               <p className="mt-2 font-semibold">And here is what makes me different:</p>
               <ul className="list-disc pl-6 mt-2 space-y-1">
                 <li>
-                  I build a <strong className="text-[#2E7D32]">free prototype first</strong> — you test it
+                  I build a <strong className="text-brand-green">free prototype first</strong> — you test it
                   before you pay
                 </li>
                 <li>
-                  You <strong className="text-[#2E7D32]">own the software</strong> — no monthly USD
+                  You <strong className="text-brand-green">own the software</strong> — no monthly USD
                   subscriptions
                 </li>
                 <li>
-                  I am <strong className="text-[#2E7D32]">based in Accra</strong> — we can meet in person
+                  I am <strong className="text-brand-green">based in Accra</strong> — we can meet in person
                 </li>
               </ul>
             </div>
           </div>
-          <div className="mt-12 p-6 bg-[#1E3A5F] text-white rounded-lg text-center">
+          <div className="mt-12 p-6 bg-brand-navy text-white rounded-lg text-center">
             <p className="text-xl md:text-2xl font-bold italic">
               &ldquo;I don&apos;t build tutorials. I build systems that grow businesses.&rdquo;
             </p>
@@ -740,35 +740,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-brand-surface">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-[#1E3A5F] mb-12">What People Are Saying</h2>
+          <h2 className="text-3xl font-bold text-center text-brand-navy mb-12">What People Are Saying</h2>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <figure className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md">
+            <figure className="bg-white p-6 rounded-lg border-l-4 border-brand-green shadow-md">
               <blockquote className="text-gray-700 italic text-md">
                 &ldquo;It&apos;s so inspiring to hear your story! This is a great achievement.
                 Let&apos;s celebrate how far you&apos;ve come. And you are just getting started.&rdquo;
               </blockquote>
-              <figcaption className="text-[#1E3A5F] font-bold mt-4">— Clementina Aina</figcaption>
+              <figcaption className="text-brand-navy font-bold mt-4">— Clementina Aina</figcaption>
               <p className="text-gray-500 text-sm">Founder &amp; CEO, 6Cs (#48 EdTech Globally)</p>
             </figure>
 
-            <figure className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md">
+            <figure className="bg-white p-6 rounded-lg border-l-4 border-brand-green shadow-md">
               <blockquote className="text-gray-700 italic text-md">
                 &ldquo;Great to see you getting out there and doing the groundwork. Keep exploring,
                 keep asking questions, and most importantly, keep listening.&rdquo;
               </blockquote>
-              <figcaption className="text-[#1E3A5F] font-bold mt-4">— John Aacht</figcaption>
+              <figcaption className="text-brand-navy font-bold mt-4">— John Aacht</figcaption>
               <p className="text-gray-500 text-sm">CEO, CloudFruition</p>
             </figure>
 
-            <figure className="bg-white p-6 rounded-lg border-l-4 border-[#2E7D32] shadow-md md:col-span-2 max-w-2xl mx-auto">
+            <figure className="bg-white p-6 rounded-lg border-l-4 border-brand-green shadow-md md:col-span-2 max-w-2xl mx-auto">
               <blockquote className="text-gray-700 italic text-md">
                 &ldquo;You put a smile on my face whenever I see your post. It inspires me to take more
                 risks. All the best brother.&rdquo;
               </blockquote>
-              <figcaption className="text-[#1E3A5F] font-bold mt-4">— Darius Asante</figcaption>
+              <figcaption className="text-brand-navy font-bold mt-4">— Darius Asante</figcaption>
               <p className="text-gray-500 text-sm">AI Automation for Service Businesses</p>
             </figure>
           </div>
@@ -777,10 +777,10 @@ export default function Home() {
 
       <section id="faq" className="py-16 md:py-24 px-4 bg-white border-t border-slate-200">
         <div className="max-w-3xl mx-auto">
-          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2E7D32] mb-3">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-green mb-3">
             FAQ
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-brand-navy tracking-tight">
             Questions founders ask before we build
           </h2>
           <p className="text-center text-slate-600 mt-4 text-base leading-relaxed">
@@ -792,12 +792,12 @@ export default function Home() {
             {FAQ_ITEMS.map((item) => (
               <details
                 key={item.q}
-                className="group rounded-xl border border-slate-200 bg-slate-50/90 hover:border-[#2E7D32]/35 open:bg-white open:shadow-md transition-all [&_summary::-webkit-details-marker]:hidden"
+                className="group rounded-xl border border-slate-200 bg-slate-50/90 hover:border-brand-green/35 open:bg-white open:shadow-md transition-all [&_summary::-webkit-details-marker]:hidden"
               >
-                <summary className="cursor-pointer font-semibold text-[#1E3A5F] px-5 py-4 flex justify-between items-center gap-4 text-left list-none">
+                <summary className="cursor-pointer font-semibold text-brand-navy px-5 py-4 flex justify-between items-center gap-4 text-left list-none">
                   <span>{item.q}</span>
                   <span
-                    className="text-[#2E7D32] text-xs shrink-0 transition-transform group-open:rotate-180"
+                    className="text-brand-green text-xs shrink-0 transition-transform group-open:rotate-180"
                     aria-hidden="true"
                   >
                     ▼
@@ -814,7 +814,7 @@ export default function Home() {
             <button
               type="button"
               onClick={openConsultModal}
-              className="inline-flex items-center rounded-lg bg-[#1E3A5F] text-white px-6 py-3 text-sm font-semibold hover:bg-[#152c47] transition shadow-md"
+              className="inline-flex items-center rounded-lg bg-brand-navy text-white px-6 py-3 text-sm font-semibold hover:bg-brand-navy-muted transition shadow-md"
             >
               Still unsure? Book a free consultation
             </button>
@@ -825,7 +825,7 @@ export default function Home() {
       <a
         href={WA_CHAT_URL}
         onClick={() => track("whatsapp_fab_click")}
-        className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
+        className="fixed bottom-6 right-6 bg-brand-maroon text-white p-4 rounded-full shadow-xl shadow-brand-maroon/35 ring-2 ring-white/35 hover:bg-brand-maroon-muted transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
@@ -858,14 +858,14 @@ export default function Home() {
                 <div>
                   <h2
                     id={modalMode === "consult" ? "consultation-title" : "registration-title"}
-                    className="text-2xl font-bold text-[#1E3A5F]"
+                    className="text-2xl font-bold text-brand-navy"
                   >
                     {modalMode === "consult" ? "Book Free Consultation" : "Bootcamp sign-up"}
                   </h2>
                   {modalMode === "register" ? (
                     <p className="text-slate-600 text-sm mt-2 leading-relaxed">
                       Register for the{" "}
-                      <strong className="text-[#1E3A5F]">8-week Build With Innocent Bootcamp</strong>.
+                      <strong className="text-brand-navy">8-week Build With Innocent Bootcamp</strong>.
                       I will follow up with the full curriculum and payment options.
                     </p>
                   ) : null}
@@ -873,7 +873,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setModalMode(null)}
-                  className="text-gray-500 hover:text-gray-700 text-2xl leading-none p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A5F] shrink-0"
+                  className="text-gray-500 hover:text-gray-700 text-2xl leading-none p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy shrink-0"
                   aria-label="Close dialog"
                 >
                   ×
@@ -914,7 +914,7 @@ export default function Home() {
                       id="lead-name"
                       name="name"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="John Doe"
                       autoComplete="name"
                     />
@@ -929,7 +929,7 @@ export default function Home() {
                       id="lead-email"
                       name="email"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="john@example.com"
                       autoComplete="email"
                     />
@@ -944,7 +944,7 @@ export default function Home() {
                       id="lead-phone"
                       name="phone"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="+233 XX XXX XXXX"
                       autoComplete="tel"
                     />
@@ -957,7 +957,7 @@ export default function Home() {
                       ref={serviceRef}
                       id="lead-service"
                       name="service"
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       defaultValue=""
                     >
                       <option value="">Select a service</option>
@@ -978,7 +978,7 @@ export default function Home() {
                       id="lead-message"
                       name="message"
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="Tell me about your business, challenges, and goals..."
                     />
                   </div>
@@ -990,7 +990,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={formStatus.submitting}
-                    className="w-full bg-[#1E3A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#152c47] transition disabled:opacity-50"
+                    className="w-full bg-brand-navy text-white py-3 rounded-lg font-semibold hover:bg-brand-navy-muted transition disabled:opacity-50"
                   >
                     {formStatus.submitting ? "Sending..." : "Send message"}
                   </button>
@@ -1037,7 +1037,7 @@ export default function Home() {
                       id="reg-name"
                       name="name"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="Your full name"
                       autoComplete="name"
                     />
@@ -1052,7 +1052,7 @@ export default function Home() {
                       id="reg-email"
                       name="email"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="you@example.com"
                       autoComplete="email"
                     />
@@ -1067,7 +1067,7 @@ export default function Home() {
                       id="reg-phone"
                       name="phone"
                       required
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="+233 XX XXX XXXX"
                       autoComplete="tel"
                     />
@@ -1080,7 +1080,7 @@ export default function Home() {
                       ref={regExperienceRef}
                       id="reg-experience"
                       name="experience"
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       defaultValue=""
                     >
                       <option value="">Select one</option>
@@ -1100,7 +1100,7 @@ export default function Home() {
                       id="reg-goals"
                       name="goals"
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-[#1E3A5F] text-gray-900 bg-white"
+                      className="w-full px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-brand-navy text-gray-900 bg-white"
                       placeholder="Goals, timeline, or questions..."
                     />
                   </div>
@@ -1112,15 +1112,15 @@ export default function Home() {
                       name="agree"
                       type="checkbox"
                       required
-                      className="mt-1 h-4 w-4 rounded border-gray-400 text-[#2E7D32] focus:ring-[#1E3A5F]"
+                      className="mt-1 h-4 w-4 rounded border-gray-400 text-brand-green focus:ring-brand-navy"
                     />
                     <label htmlFor="reg-agree" className="text-sm text-slate-700 leading-snug">
                       I agree to the{" "}
-                      <Link href="/privacy" className="text-[#2E7D32] font-semibold underline underline-offset-2">
+                      <Link href="/privacy" className="text-brand-green font-semibold underline underline-offset-2">
                         Privacy Policy
                       </Link>{" "}
                       and{" "}
-                      <Link href="/terms" className="text-[#2E7D32] font-semibold underline underline-offset-2">
+                      <Link href="/terms" className="text-brand-green font-semibold underline underline-offset-2">
                         Terms of Service
                       </Link>
                       . <span aria-hidden="true">*</span>
@@ -1134,7 +1134,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={registerStatus.submitting}
-                    className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#256629] transition disabled:opacity-50"
+                    className="w-full bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-green-muted transition disabled:opacity-50"
                   >
                     {registerStatus.submitting ? "Submitting..." : "Submit registration"}
                   </button>
@@ -1151,7 +1151,7 @@ export default function Home() {
                     Prefer WhatsApp? Reply{" "}
                     <a
                       href={`${WA_CHAT_URL}?text=${encodeURIComponent("BOOTCAMP")}`}
-                      className="text-[#2E7D32] font-semibold underline"
+                      className="text-brand-green font-semibold underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -1160,7 +1160,7 @@ export default function Home() {
                     on{" "}
                     <a
                       href={WA_CHAT_URL}
-                      className="text-[#2E7D32] font-semibold underline"
+                      className="text-brand-green font-semibold underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -1175,7 +1175,7 @@ export default function Home() {
         </div>
       ) : null}
 
-      <footer className="bg-[#1E3A5F] text-white py-12 px-4">
+      <footer className="bg-brand-navy text-white py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -1186,7 +1186,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4 text-[#2E7D32]">Quick Links</h4>
+              <h4 className="font-semibold mb-4 text-brand-green">Quick Links</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
                   <a href="#top" className="hover:text-white transition">
@@ -1240,7 +1240,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4 text-[#2E7D32]">Live Projects</h4>
+              <h4 className="font-semibold mb-4 text-brand-green">Live Projects</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
                   <a
@@ -1275,7 +1275,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4 text-[#2E7D32]">Contact</h4>
+              <h4 className="font-semibold mb-4 text-brand-green">Contact</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
                   <a href="tel:+233530710628" className="hover:text-white transition">

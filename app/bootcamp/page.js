@@ -107,14 +107,14 @@ export default function BootcampPage() {
         <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
           <Link
             href="/"
-            className="text-sm font-semibold text-[#1E3A5F] hover:text-[#2E7D32] transition"
+            className="text-sm font-semibold text-brand-navy hover:text-brand-green transition"
           >
             ← Home
           </Link>
-          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#2E7D32]">
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-green">
             Bootcamp
           </span>
-          <BootcampWhatsAppLink className="text-sm font-semibold text-[#2E7D32] hover:underline">
+          <BootcampWhatsAppLink className="text-sm font-semibold text-brand-green hover:underline">
             WhatsApp: BOOTCAMP →
           </BootcampWhatsAppLink>
         </div>
@@ -123,12 +123,12 @@ export default function BootcampPage() {
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#e8f5e9]/40 via-white to-white">
         <div className="max-w-6xl mx-auto px-4 py-14 md:py-20 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2E7D32] mb-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-green mb-3">
               Build With Innocent Bootcamp
             </p>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1E3A5F] tracking-tight leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-navy tracking-tight leading-tight">
               From zero to{" "}
-              <span className="text-[#2E7D32]">production-ready</span> in 8 weeks.
+              <span className="text-brand-green">production-ready</span> in 8 weeks.
             </h1>
             <p className="mt-5 text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl">
               Stop watching tutorials. Start building real products — with live classes, shipped weekly,
@@ -138,7 +138,7 @@ export default function BootcampPage() {
               {["Live classes", "Real projects", "Real results"].map((label) => (
                 <li
                   key={label}
-                  className="rounded-full bg-[#1E3A5F] text-white text-xs font-semibold px-4 py-2 shadow-sm shadow-[#1E3A5F]/20"
+                  className="rounded-full bg-brand-navy text-white text-xs font-semibold px-4 py-2 shadow-sm shadow-brand-navy/20"
                 >
                   {label}
                 </li>
@@ -150,23 +150,23 @@ export default function BootcampPage() {
               </BootcampWhatsAppLink>
               <a
                 href="mailto:igtechgh@gmail.com?subject=Build%20With%20Innocent%20Bootcamp"
-                className="inline-flex justify-center items-center rounded-lg border-2 border-[#1E3A5F] text-[#1E3A5F] px-7 py-3.5 text-base font-semibold hover:bg-[#1E3A5F] hover:text-white transition"
+                className="inline-flex justify-center items-center rounded-lg border-2 border-brand-navy text-brand-navy px-7 py-3.5 text-base font-semibold hover:bg-brand-navy hover:text-white transition"
               >
                 Email for syllabus
               </a>
               <Link
                 href="/?register=1"
-                className="inline-flex justify-center items-center rounded-lg border-2 border-[#2E7D32] text-[#2E7D32] px-7 py-3.5 text-base font-semibold hover:bg-[#2E7D32] hover:text-white transition"
+                className="inline-flex justify-center items-center rounded-lg border-2 border-brand-green text-brand-green px-7 py-3.5 text-base font-semibold hover:bg-brand-green hover:text-white transition"
               >
                 Register online
               </Link>
             </div>
             <p className="mt-6 text-sm text-slate-500">
-              Lead instructor: <strong className="text-[#1E3A5F]">Innocent Golden</strong>
+              Lead instructor: <strong className="text-brand-navy">Innocent Golden</strong>
               <span className="mx-2 text-slate-300" aria-hidden="true">
                 ·
               </span>
-              <span className="text-[#2E7D32] font-medium">buildwithinnocent.com</span>
+              <span className="text-brand-green font-medium">buildwithinnocent.com</span>
             </p>
           </div>
 
@@ -189,7 +189,7 @@ export default function BootcampPage() {
 
       <section className="py-14 md:py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-[#1E3A5F]">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-brand-navy">
             Built on habit science — applied to coding
           </h2>
           <p className="text-center text-slate-600 mt-3 max-w-2xl mx-auto">
@@ -200,9 +200,9 @@ export default function BootcampPage() {
             {PILLARS.map((p) => (
               <div
                 key={p.title}
-                className="rounded-xl border border-slate-200 bg-slate-50/80 p-6 text-center hover:border-[#2E7D32]/40 transition"
+                className="rounded-xl border border-slate-200 bg-slate-50/80 p-6 text-center hover:border-brand-green/40 transition"
               >
-                <h3 className="text-lg font-bold text-[#1E3A5F]">{p.title}</h3>
+                <h3 className="text-lg font-bold text-brand-navy">{p.title}</h3>
                 <p className="text-slate-600 text-sm mt-2 leading-relaxed">{p.detail}</p>
               </div>
             ))}
@@ -210,9 +210,9 @@ export default function BootcampPage() {
         </div>
       </section>
 
-      <section className="py-14 md:py-20 px-4 bg-gray-50 border-y border-slate-200">
+      <section className="py-14 md:py-20 px-4 bg-brand-surface border-y border-slate-200">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-[#1E3A5F]">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-brand-navy">
             The four laws in practice
           </h2>
           <div className="mt-12 grid md:grid-cols-2 gap-6">
@@ -221,10 +221,10 @@ export default function BootcampPage() {
                 key={block.law}
                 className="rounded-xl bg-white border border-slate-200 p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow"
               >
-                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#2E7D32] mb-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-brand-green mb-2">
                   {block.law}
                 </p>
-                <h3 className="text-xl font-bold text-[#1E3A5F]">{block.headline}</h3>
+                <h3 className="text-xl font-bold text-brand-navy">{block.headline}</h3>
                 <ul className="mt-4 space-y-2 text-slate-600 text-sm leading-relaxed list-disc pl-5">
                   {block.bullets.map((b) => (
                     <li key={b}>{b}</li>
@@ -239,10 +239,10 @@ export default function BootcampPage() {
       <section className="py-14 md:py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <span className="inline-flex rounded-full bg-[#2E7D32] text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-2 mb-4 shadow-md shadow-[#2E7D32]/25">
+            <span className="inline-flex rounded-full bg-brand-green text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-2 mb-4 shadow-md shadow-brand-green/25">
               Curriculum
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1E3A5F]">
+            <h2 className="text-2xl md:text-3xl font-bold text-brand-navy">
               What you build — week by week
             </h2>
             <p className="text-slate-600 mt-3 max-w-2xl mx-auto">
@@ -251,23 +251,23 @@ export default function BootcampPage() {
             </p>
           </div>
 
-          <ol className="relative border-l-2 border-[#2E7D32]/35 ml-3 md:ml-6 space-y-8 pl-8 md:pl-12 list-none">
+          <ol className="relative border-l-2 border-brand-green/35 ml-3 md:ml-6 space-y-8 pl-8 md:pl-12 list-none">
             {WEEKS.map((w) => (
               <li key={w.week} className="relative">
                 <span
-                  className="absolute -left-[calc(0.5rem+9px)] md:-left-[calc(1.5rem+9px)] top-1 flex h-[18px] w-[18px] rounded-full bg-[#2E7D32] ring-4 ring-white shadow"
+                  className="absolute -left-[calc(0.5rem+9px)] md:-left-[calc(1.5rem+9px)] top-1 flex h-[18px] w-[18px] rounded-full bg-brand-green ring-4 ring-white shadow"
                   aria-hidden
                 />
                 <div className="rounded-xl border border-slate-200 bg-slate-50/60 px-5 py-4 md:px-6 md:py-5">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#2E7D32]">
+                    <p className="text-xs font-bold uppercase tracking-wider text-brand-green">
                       Week {w.week}
                     </p>
-                    <span className="text-[11px] font-semibold text-[#1E3A5F]/80 bg-white border border-slate-200 px-2.5 py-1 rounded-md">
+                    <span className="text-[11px] font-semibold text-brand-navy/80 bg-white border border-slate-200 px-2.5 py-1 rounded-md">
                       {w.stack}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#1E3A5F] mt-2">{w.title}</h3>
+                  <h3 className="text-lg font-bold text-brand-navy mt-2">{w.title}</h3>
                 </div>
               </li>
             ))}
@@ -275,7 +275,7 @@ export default function BootcampPage() {
         </div>
       </section>
 
-      <section className="py-14 px-4 bg-[#1E3A5F] text-white">
+      <section className="py-14 px-4 bg-brand-navy text-white">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold">Who this is for</h2>
@@ -298,16 +298,16 @@ export default function BootcampPage() {
             </div>
           </div>
           <div className="rounded-2xl bg-white text-slate-800 p-8 shadow-xl">
-            <h2 className="text-xl font-bold text-[#1E3A5F]">Investment</h2>
-            <p className="mt-4 text-3xl md:text-4xl font-bold text-[#2E7D32] tracking-tight">
+            <h2 className="text-xl font-bold text-brand-navy">Investment</h2>
+            <p className="mt-4 text-3xl md:text-4xl font-bold text-brand-green tracking-tight">
               ₵1,500 – ₵2,500
             </p>
             <p className="text-slate-600 text-sm mt-2">Ghana Cedis · payment plans available</p>
-            <p className="font-semibold text-[#1E3A5F] mt-8 mb-3">What&apos;s included</p>
+            <p className="font-semibold text-brand-navy mt-8 mb-3">What&apos;s included</p>
             <ul className="space-y-2 text-sm text-slate-600 list-none p-0">
               {INCLUDED.map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="text-[#2E7D32]" aria-hidden="true">
+                  <span className="text-brand-green" aria-hidden="true">
                     ✓
                   </span>
                   <span>{item}</span>
@@ -319,26 +319,26 @@ export default function BootcampPage() {
                 Get full curriculum &amp; payment options
               </BootcampWhatsAppLink>
               <p className="text-center text-xs text-slate-500 mt-3">
-                Reply <strong className="text-[#1E3A5F]">BOOTCAMP</strong> on WhatsApp to start.
+                Reply <strong className="text-brand-navy">BOOTCAMP</strong> on WhatsApp to start.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20 px-4 bg-gray-50">
+      <section className="py-14 md:py-20 px-4 bg-brand-surface">
         <div className="max-w-3xl mx-auto text-center">
-          <blockquote className="text-xl md:text-2xl font-bold italic text-[#1E3A5F] leading-snug">
+          <blockquote className="text-xl md:text-2xl font-bold italic text-brand-navy leading-snug">
             &ldquo;I don&apos;t build tutorials. I build live products.&rdquo;
           </blockquote>
           <p className="mt-4 text-slate-600 font-medium">— Innocent Golden</p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <BootcampWhatsAppLink className="inline-flex justify-center items-center rounded-lg bg-[#2E7D32] text-white px-8 py-4 text-lg font-semibold hover:bg-[#256629] transition shadow-lg">
+            <BootcampWhatsAppLink className="inline-flex justify-center items-center rounded-lg bg-brand-green text-white px-8 py-4 text-lg font-semibold hover:bg-brand-green-muted transition shadow-lg">
               WhatsApp +233 530 710 628
             </BootcampWhatsAppLink>
             <a
               href="mailto:igtechgh@gmail.com"
-              className="inline-flex justify-center items-center rounded-lg border-2 border-[#1E3A5F] text-[#1E3A5F] px-8 py-4 text-lg font-semibold hover:bg-[#1E3A5F] hover:text-white transition"
+              className="inline-flex justify-center items-center rounded-lg border-2 border-brand-navy text-brand-navy px-8 py-4 text-lg font-semibold hover:bg-brand-navy hover:text-white transition"
             >
               igtechgh@gmail.com
             </a>
@@ -348,7 +348,7 @@ export default function BootcampPage() {
 
       <footer className="border-t border-slate-200 bg-white py-10 px-4">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-600">
-          <Link href="/" className="font-semibold text-[#2E7D32] hover:underline">
+          <Link href="/" className="font-semibold text-brand-green hover:underline">
             ← Back to home
           </Link>
           <p className="text-center sm:text-right">

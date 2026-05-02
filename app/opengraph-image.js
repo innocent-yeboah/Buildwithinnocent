@@ -38,7 +38,7 @@ export default function Image() {
             style={{
               fontSize: 56,
               fontWeight: 700,
-              color: "#1E3A5F",
+              color: "#11274c",
               textAlign: "center",
               lineHeight: 1.15,
             }}
@@ -49,7 +49,7 @@ export default function Image() {
             style={{
               fontSize: 34,
               fontWeight: 600,
-              color: "#2E7D32",
+              color: "#166534",
               marginTop: 24,
               textAlign: "center",
             }}

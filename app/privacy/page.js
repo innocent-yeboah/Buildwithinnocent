@@ -10,7 +10,7 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800">
-      <header className="border-b border-slate-200 bg-[#1E3A5F] text-white">
+      <header className="border-b border-slate-200 bg-brand-navy text-white">
         <div className="max-w-3xl mx-auto px-4 py-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86efac] mb-2">
             Legal
@@ -26,24 +26,27 @@ export default function PrivacyPage() {
       <main className="max-w-3xl mx-auto px-4 py-10 md:py-14 space-y-8 text-sm md:text-base leading-relaxed">
         <p className="text-slate-600">
           This policy describes how{" "}
-          <strong className="text-[#1E3A5F]">Build With Innocent</strong> (“we”, “us”) handles
+          <strong className="text-brand-navy">Build With Innocent</strong> (“we”, “us”) handles
           information when you use{" "}
-          <a href="https://buildwithinnocent.com" className="text-[#2E7D32] font-medium underline">
+          <a href="https://buildwithinnocent.com" className="text-brand-green font-medium underline">
             buildwithinnocent.com
           </a>{" "}
           (the “Site”). For questions:{" "}
-          <a href="mailto:igtechgh@gmail.com" className="text-[#2E7D32] underline">
+          <a href="mailto:igtechgh@gmail.com" className="text-brand-green underline">
             igtechgh@gmail.com
           </a>
           .
         </p>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">1. What we collect</h2>
+          <h2 className="text-lg font-bold text-brand-navy">1. What we collect</h2>
           <ul className="list-disc pl-5 space-y-2 text-slate-600">
             <li>
-              <strong>Lead form:</strong> name, email, phone/WhatsApp number, optional service
-              selection and message when you request a consultation.
+              <strong>Consultation &amp; bootcamp registration:</strong> name, email, WhatsApp number;
+              optional service selection and message for consultations; for bootcamp sign-up we also
+              store self-reported coding experience, your stated goals or notes, whether you accepted
+              our terms (with a timestamp), and whether you came from the consultation or
+              registration flow.
             </li>
             <li>
               <strong>Technical data:</strong> basic analytics from our hosting/analytics provider
@@ -59,7 +62,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">2. Why we use it</h2>
+          <h2 className="text-lg font-bold text-brand-navy">2. Why we use it</h2>
           <p className="text-slate-600">
             To respond to enquiries, operate and secure the Site, send acknowledgment or operational
             emails related to your request (via Resend when configured), and improve reliability and
@@ -68,7 +71,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">3. Where data is stored</h2>
+          <h2 className="text-lg font-bold text-brand-navy">3. Where data is stored</h2>
           <p className="text-slate-600">
             Lead records may be stored in{" "}
             <strong>Supabase</strong> (hosted PostgreSQL). Messages may transit email providers (
@@ -79,7 +82,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">4. Analytics</h2>
+          <h2 className="text-lg font-bold text-brand-navy">4. Analytics</h2>
           <p className="text-slate-600">
             We may use <strong>Vercel Web Analytics</strong> to measure traffic and product usage in a
             privacy-conscious way. You can limit cookies in your browser; core Site functionality should
@@ -88,7 +91,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">5. Retention</h2>
+          <h2 className="text-lg font-bold text-brand-navy">5. Retention</h2>
           <p className="text-slate-600">
             We keep lead and operational records only as long as needed for client communication,
             delivery, and legal/accounting obligations, unless you ask us to delete sooner where the law
@@ -97,11 +100,11 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">6. Your choices</h2>
+          <h2 className="text-lg font-bold text-brand-navy">6. Your choices</h2>
           <p className="text-slate-600">
             You may request access, correction, or deletion of personal data tied to a consultation
             request by emailing{" "}
-            <a href="mailto:igtechgh@gmail.com" className="text-[#2E7D32] underline">
+            <a href="mailto:igtechgh@gmail.com" className="text-brand-green underline">
               igtechgh@gmail.com
             </a>
             . We may need to verify your identity before acting on certain requests.
@@ -109,7 +112,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">7. Linked sites</h2>
+          <h2 className="text-lg font-bold text-brand-navy">7. Linked sites</h2>
           <p className="text-slate-600">
             Our portfolio links to third-party websites (for example client demos). Their privacy
             practices are governed by those sites, not this policy.
@@ -117,7 +120,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-[#1E3A5F]">8. Updates</h2>
+          <h2 className="text-lg font-bold text-brand-navy">8. Updates</h2>
           <p className="text-slate-600">
             We may update this policy from time to time. Material changes will be reflected by updating
             the “Last updated” date above.
@@ -125,7 +128,7 @@ export default function PrivacyPage() {
         </section>
 
         <p>
-          <Link href="/" className="text-[#2E7D32] font-semibold hover:underline">
+          <Link href="/" className="text-brand-green font-semibold hover:underline">
             ← Back to home
           </Link>
         </p>
