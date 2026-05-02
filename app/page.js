@@ -25,6 +25,49 @@ const HERO_SLIDES = [
   },
 ];
 
+const LIVE_PROJECTS = [
+  {
+    title: "SchoolLedger GH",
+    summary:
+      "Multi-tenant school operating system for Ghana's private schools — tuition and feeding fees, student records, parent messaging, and WhatsApp payment confirmations with row-level security.",
+    stack: ["Next.js", "Supabase", "WhatsApp"],
+    href: "https://schoolledgergh.vercel.app/",
+    status: "Live",
+  },
+  {
+    title: "Benizer Green Shop",
+    summary:
+      "Full e-commerce launch for sustainable retail — product storytelling, streamlined checkout, and a polished storefront aligned with the client's green brand.",
+    stack: ["Next.js", "Tailwind CSS", "Commerce"],
+    href: "https://benizergreenshop.com",
+    status: "Live",
+  },
+  {
+    title: "WhatsApp AI Assistant",
+    summary:
+      "Subscription-free AI assistant powered by Gemini — replaced Make.com and OpenAI glue code with a single codebase and sub-30-minute onboarding.",
+    stack: ["Next.js", "Gemini API", "WhatsApp"],
+    href: null,
+    status: "Production",
+  },
+  {
+    title: "My Central Bank",
+    summary:
+      "Personal finance tracker for income, expenses, and savings goals — real-time sync across devices on PostgreSQL via Supabase.",
+    stack: ["Next.js", "Supabase", "PostgreSQL"],
+    href: null,
+    status: "Live",
+  },
+  {
+    title: "FounderOS",
+    summary:
+      "Life-business operating system — habits, income pipeline, and weekly reviews — shipped with GitHub Actions CI/CD on Vercel.",
+    stack: ["Next.js", "Supabase", "Vercel"],
+    href: null,
+    status: "Live",
+  },
+];
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [formStatus, setFormStatus] = useState({ submitting: false, message: "" });
@@ -271,7 +314,7 @@ export default function Home() {
               <span className="text-[#2E7D32]" aria-hidden="true">
                 ✓
               </span>
-              4 live products in 6 months
+              5 shipped platforms and tools
             </p>
           </div>
           <div className="mt-8 max-w-md mx-auto rounded-2xl bg-slate-950/55 backdrop-blur-md px-5 py-4 ring-1 ring-white/15 shadow-lg">
@@ -344,49 +387,69 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="py-16 px-4">
-        <h2 className="text-3xl font-bold text-center text-[#1E3A5F]">Live Projects</h2>
-        <p className="text-center text-gray-600 mt-2 mb-10">Real products I have built and shipped</p>
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">SchoolLedger GH</h3>
-            <p className="text-gray-600 mt-2">
-              Multi-tenant SaaS for Ghanaian schools. Live pilot school. WhatsApp payment
-              confirmations. Supabase RLS across 5 tables.
-            </p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">
-              Stack: Next.js, Supabase, WhatsApp API
-            </p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">WhatsApp AI Assistant</h3>
-            <p className="text-gray-600 mt-2">
-              Zero-subscription AI assistant using Google Gemini API. Replaced Make.com + OpenAI with
-              pure code. Client onboarding in under 30 minutes.
-            </p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">
-              Stack: Next.js, Gemini API, WhatsApp API
-            </p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">My Central Bank</h3>
-            <p className="text-gray-600 mt-2">
-              Personal finance tracker with income, expense, and savings tracking. Real-time Supabase
-              sync across devices.
-            </p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">
-              Stack: Next.js, Supabase, PostgreSQL
-            </p>
-          </div>
-          <div className="border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-bold text-[#1E3A5F]">FounderOS</h3>
-            <p className="text-gray-600 mt-2">
-              Life-business operating system with habit tracking, income pipeline, and weekly reviews.
-              Deployed via GitHub CI/CD.
-            </p>
-            <p className="text-sm text-[#2E7D32] mt-3 font-semibold">
-              Stack: Next.js, Supabase, Vercel
-            </p>
+      <section id="work" className="py-20 md:py-24 px-4 bg-slate-50 border-t border-slate-200/80">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#2E7D32] mb-3">
+            Portfolio
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1E3A5F] tracking-tight">
+            Live platforms &amp; products
+          </h2>
+          <p className="text-center text-slate-600 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+            Production-grade builds you can open in the browser — schools, commerce, and automation,
+            shipped for ownership and long-term operation.
+          </p>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {LIVE_PROJECTS.map((project) => (
+              <article
+                key={project.title}
+                className="group flex flex-col rounded-xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.06)] hover:shadow-lg hover:border-slate-300 transition-all duration-300"
+              >
+                <div className="flex flex-col flex-1 p-7 md:p-8">
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <h3 className="text-[1.05rem] md:text-lg font-semibold text-[#1E3A5F] leading-snug pr-2">
+                      {project.title}
+                    </h3>
+                    <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wider text-[#2E7D32] bg-emerald-50 border border-emerald-100/90 px-2.5 py-1 rounded-md">
+                      {project.status}
+                    </span>
+                  </div>
+                  <p className="text-slate-600 text-sm leading-relaxed flex-1">{project.summary}</p>
+                  <ul className="flex flex-wrap gap-2 mt-6 list-none p-0">
+                    {project.stack.map((tag) => (
+                      <li key={tag}>
+                        <span className="inline-block text-[11px] font-medium text-slate-600 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
+                          {tag}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6 pt-5 border-t border-slate-100">
+                    {project.href ? (
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E3A5F] hover:text-[#2E7D32] transition-colors"
+                      >
+                        Visit live site
+                        <span
+                          aria-hidden="true"
+                          className="transition-transform group-hover/link:translate-x-0.5"
+                        >
+                          →
+                        </span>
+                      </a>
+                    ) : (
+                      <p className="text-xs text-slate-400 leading-snug">
+                        Private / invite-only — request a walkthrough when we speak.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -424,7 +487,7 @@ export default function Home() {
               </p>
               <p className="mt-2 italic text-[#1E3A5F]">&ldquo;Will systems actually work?&rdquo;</p>
               <p className="mt-2">
-                The results shocked me. Within weeks, I had clarity. Within months, I had 4 live products.{" "}
+                The results shocked me. Within weeks, I had clarity. Within months, I had multiple live products.{" "}
                 <strong className="text-[#2E7D32]">
                   The system worked better than I ever imagined.
                 </strong>
@@ -714,10 +777,35 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4 text-[#2E7D32]">Live Projects</h4>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>SchoolLedger GH</li>
-                <li>WhatsApp AI Assistant</li>
-                <li>My Central Bank</li>
-                <li>FounderOS</li>
+                <li>
+                  <a
+                    href="https://schoolledgergh.vercel.app/"
+                    className="hover:text-white transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    SchoolLedger GH
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://benizergreenshop.com"
+                    className="hover:text-white transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Benizer Green Shop
+                  </a>
+                </li>
+                <li>
+                  <span className="text-gray-400">WhatsApp AI Assistant</span>
+                </li>
+                <li>
+                  <span className="text-gray-400">My Central Bank</span>
+                </li>
+                <li>
+                  <span className="text-gray-400">FounderOS</span>
+                </li>
               </ul>
             </div>
 
