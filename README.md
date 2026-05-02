@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Build With Innocent — Marketing Site
 
-## Getting Started
+Next.js (App Router) landing page for [buildwithinnocent.com](https://buildwithinnocent.com) with a lead form backed by Supabase and optional Resend email notifications.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Copy environment variables:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. Fill in Supabase URL and anon key. Add `RESEND_API_KEY` if you want notification and acknowledgment emails.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Install and run locally:
 
-## Learn More
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command        | Description              |
+| -------------- | ------------------------ |
+| `npm run dev`  | Development server       |
+| `npm run build`| Production build         |
+| `npm run start`| Production server        |
+| `npm run lint` | ESLint                   |
+| `npm run test` | Vitest unit tests        |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Lead API (`POST /api/leads`)
 
-## Deploy on Vercel
+- Persists to Supabase table `leads` (same shape as before).
+- **Rate limiting:** in-process sliding window per IP (see `lib/rate-limit.js`). On multi-instance hosts, add a shared limiter or edge firewall for strict guarantees.
+- **Honeypot:** hidden `website` field; submissions with it filled return success without storing (bot trap).
+- **Turnstile:** if `TURNSTILE_SECRET_KEY` is set, set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and complete verification server-side.
+- **Email HTML:** user-supplied fields are escaped before interpolation (`lib/escape-html.js`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Generated metadata
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open Graph image, favicon, Apple touch icon, and web app manifest are generated from `app/opengraph-image.js`, `app/icon.js`, `app/apple-icon.js`, and `app/manifest.js` (no manual `og-image.jpg` in `public/` required).
+
+## Deployment
+
+Configured for Vercel; set the same env vars in the project dashboard. Ensure Resend sender domains (`notifications@…`, `hello@…`) are verified in Resend.

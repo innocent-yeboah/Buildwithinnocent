@@ -1,12 +1,39 @@
-﻿import { supabase } from '@/lib/supabase';
-import { NextResponse } from 'next/server';
+﻿import { getSupabase } from "@/lib/supabase";
+import { escapeHtml } from "@/lib/escape-html";
+import { rateLimit } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/leads-ip";
+import { NextResponse } from "next/server";
 
-// ============================================
-// 1. EMAIL TO YOU (Admin Notification)
-// ============================================
+async function verifyTurnstile(token, remoteip) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+  if (!token || typeof token !== "string") return false;
+
+  const body = new URLSearchParams();
+  body.append("secret", secret);
+  body.append("response", token);
+  if (remoteip && remoteip !== "unknown") body.append("remoteip", remoteip);
+
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+
+  const data = await res.json();
+  return data.success === true;
+}
+
 async function sendEmailNotification(leadData) {
-  const { name, email, phone, service_interest, message } = leadData;
-  
+  const namePlain = leadData.name;
+  const servicePlain = leadData.service_interest || "";
+  const name = escapeHtml(leadData.name);
+  const email = escapeHtml(leadData.email);
+  const phone = escapeHtml(leadData.phone);
+  const serviceInterest = escapeHtml(leadData.service_interest || "");
+  const message = escapeHtml(leadData.message || "");
+  const waDigits = String(leadData.phone || "").replace(/\D/g, "");
+
   const emailHtml = `
     <!DOCTYPE html>
     <html>
@@ -22,59 +49,64 @@ async function sendEmailNotification(leadData) {
     </head>
     <body>
       <div class="container">
-        <h2>🔔 NEW LEAD!</h2>
+        <h2>New lead</h2>
         <div class="label">Name:</div>
         <div class="value">${name}</div>
         <div class="label">Email:</div>
         <div class="value">${email}</div>
         <div class="label">Phone:</div>
         <div class="value">${phone}</div>
-        <div class="label">Service Interest:</div>
-        <div class="value">${service_interest || 'Not specified'}</div>
+        <div class="label">Service interest:</div>
+        <div class="value">${serviceInterest || "Not specified"}</div>
         <div class="label">Message:</div>
-        <div class="value">${message || 'No message provided'}</div>
+        <div class="value">${message || "No message provided"}</div>
         <div class="label">Submitted:</div>
-        <div class="value">${new Date().toLocaleString('en-GH')}</div>
+        <div class="value">${escapeHtml(new Date().toLocaleString("en-GH"))}</div>
         <div class="footer">
-          Reply to this lead: <a href="https://wa.me/${phone.replace(/[^0-9]/g, '')}">WhatsApp ${phone}</a>
+          Reply via WhatsApp: <a href="https://wa.me/${escapeHtml(waDigits)}">WhatsApp ${phone}</a>
         </div>
       </div>
     </body>
     </html>
   `;
-  
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("RESEND_API_KEY is not set; skipping admin notification email.");
+    return false;
+  }
+
   try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: 'Build With Innocent <notifications@buildwithinnocent.com>',
-        to: ['igtechgh@gmail.com'],
-        subject: `🔔 New Lead: ${name} is interested in ${service_interest || 'software'}`,
-        html: emailHtml
-      })
+        from: "Build With Innocent <notifications@buildwithinnocent.com>",
+        to: ["igtechgh@gmail.com"],
+        subject: `New lead: ${namePlain} — ${servicePlain || "software"}`,
+        html: emailHtml,
+      }),
     });
-    
+
     if (!res.ok) {
-      const error = await res.text();
-      console.error('Resend error:', error);
+      console.error("Resend error:", await res.text());
     }
     return res.ok;
   } catch (error) {
-    console.error('Email notification error:', error);
+    console.error("Email notification error:", error);
     return false;
   }
 }
 
-// ============================================
-// 2. EMAIL TO CUSTOMER (Acknowledgment)
-// ============================================
 async function sendCustomerEmail(leadData) {
-  const { name, email, phone, service_interest } = leadData;
-  
+  const namePlain = leadData.name;
+  const name = escapeHtml(leadData.name);
+  const phone = escapeHtml(leadData.phone);
+  const serviceInterest = escapeHtml(leadData.service_interest || "");
+
   const emailHtml = `
     <!DOCTYPE html>
     <html>
@@ -97,20 +129,20 @@ async function sendCustomerEmail(leadData) {
       <div class="container">
         <div class="header"><h1>Build With Innocent</h1></div>
         <div class="content">
-          <div class="greeting">Hello ${name}! 👋</div>
+          <div class="greeting">Hello ${name}!</div>
           <div class="message">Thank you for reaching out to <strong>Build With Innocent</strong>. I have received your request and am excited to help you grow your business.</div>
           <div class="details">
-            <p><strong>📋 Your request summary:</strong></p>
-            <p>• Service requested: <strong>${service_interest || 'Consultation'}</strong></p>
+            <p><strong>Your request summary:</strong></p>
+            <p>• Service requested: <strong>${serviceInterest || "Consultation"}</strong></p>
             <p>• Contact number: <strong>${phone}</strong></p>
-            <p>• Submitted on: <strong>${new Date().toLocaleString('en-GH')}</strong></p>
+            <p>• Submitted on: <strong>${escapeHtml(new Date().toLocaleString("en-GH"))}</strong></p>
           </div>
           <div class="message"><strong>What happens next?</strong></div>
-          <div class="message">📞 I will contact you via WhatsApp within <strong>24 hours</strong> to discuss your needs in detail.<br><br>⚡ If you need immediate assistance, feel free to reach me directly:</div>
+          <div class="message">I will contact you via WhatsApp within <strong>24 hours</strong> to discuss your needs in detail.<br><br>If you need immediate assistance, you can reach me directly:</div>
           <div style="text-align: center;">
-            <a href="https://wa.me/233530710628" class="whatsapp-button">💬 Chat with me on WhatsApp</a>
+            <a href="https://wa.me/233530710628" class="whatsapp-button">Chat with me on WhatsApp</a>
           </div>
-          <div class="message">While you wait, you can explore my completed projects at:<br>🌐 <a href="https://buildwithinnocent.com" style="color: #1E3A5F;">buildwithinnocent.com</a></div>
+          <div class="message">While you wait, explore completed projects at:<br><a href="https://buildwithinnocent.com" style="color: #1E3A5F;">buildwithinnocent.com</a></div>
           <div class="signature">
             Best regards,<br>
             <strong style="color: #2E7D32;">Innocent Golden</strong><br>
@@ -125,47 +157,84 @@ async function sendCustomerEmail(leadData) {
     </body>
     </html>
   `;
-  
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("RESEND_API_KEY is not set; skipping customer acknowledgment email.");
+    return false;
+  }
+
   try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: 'Build With Innocent <hello@buildwithinnocent.com>',
-        to: [email],
-        subject: `Thank you, ${name}! I've received your request`,
-        html: emailHtml
-      })
+        from: "Build With Innocent <hello@buildwithinnocent.com>",
+        to: [leadData.email],
+        subject: `Thank you, ${namePlain}! I've received your request`,
+        html: emailHtml,
+      }),
     });
-    
+
     if (!res.ok) {
-      const error = await res.text();
-      console.error('Customer email error:', error);
+      console.error("Customer email error:", await res.text());
     }
     return res.ok;
   } catch (error) {
-    console.error('Customer email error:', error);
+    console.error("Customer email error:", error);
     return false;
   }
 }
 
-// ============================================
-// 3. MAIN POST HANDLER (ONLY ONE!)
-// ============================================
 export async function POST(request) {
   try {
-    const { name, email, phone, service, message } = await request.json();
-    
-    if (!name || !email || !phone) {
+    const ip = getClientIp(request);
+    const limited = rateLimit(`leads:${ip}`, { limit: 8, windowMs: 60_000 });
+    if (!limited.success) {
       return NextResponse.json(
-        { error: 'Name, email, and phone are required' },
+        { error: "Too many submissions. Please wait a minute and try again." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(limited.retryAfterMs / 1000)),
+          },
+        }
+      );
+    }
+
+    const body = await request.json();
+    const {
+      name,
+      email,
+      phone,
+      service,
+      message,
+      website: honeypot,
+      turnstileToken,
+    } = body;
+
+    if (honeypot != null && String(honeypot).trim() !== "") {
+      return NextResponse.json({ success: true });
+    }
+
+    const turnstileOk = await verifyTurnstile(turnstileToken, ip);
+    if (!turnstileOk) {
+      return NextResponse.json(
+        { error: "Security check failed. Please refresh and try again." },
         { status: 400 }
       );
     }
-    
+
+    if (!name || !email || !phone) {
+      return NextResponse.json(
+        { error: "Name, email, and phone are required" },
+        { status: 400 }
+      );
+    }
+
     const leadData = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
@@ -173,35 +242,27 @@ export async function POST(request) {
       service_interest: service || null,
       message: message || null,
     };
-    
-    // Insert into Supabase
-    const { error } = await supabase
-      .from('leads')
+
+    const { error } = await getSupabase()
+      .from("leads")
       .insert({
         ...leadData,
-        source: 'website',
+        source: "website",
         contacted: false,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
       });
-    
+
     if (error) {
-      console.error('Supabase insert error:', error);
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      console.error("Supabase insert error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    
-    // Send both emails (don't await — let them run in background)
-    sendEmailNotification(leadData).catch(err => console.error('Admin email failed:', err));
-    sendCustomerEmail(leadData).catch(err => console.error('Customer email failed:', err));
-    
+
+    sendEmailNotification(leadData).catch((err) => console.error("Admin email failed:", err));
+    sendCustomerEmail(leadData).catch((err) => console.error("Customer email failed:", err));
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error saving lead:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error("Error saving lead:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
