@@ -207,7 +207,11 @@ export default function Home() {
         </div>
 
         <div
-          className="absolute inset-0 z-[2] bg-gradient-to-b from-slate-950/85 via-slate-900/78 to-slate-950/88 pointer-events-none"
+          className="absolute inset-0 z-[2] bg-gradient-to-b from-black/90 via-black/[0.84] to-black/92 pointer-events-none"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_120%_90%_at_50%_36%,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.68)_52%,rgba(0,0,0,0.88)_100%)] pointer-events-none"
           aria-hidden
         />
 
@@ -216,21 +220,23 @@ export default function Home() {
             Slide {heroIndex + 1} of {HERO_SLIDES.length}
           </p>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight drop-shadow-md">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,0.92),0_1px_3px_rgba(0,0,0,0.85)]">
             Stop Fighting Your Business.
             <br />
-            <span className="text-[#86efac] drop-shadow-md">
+            <span className="text-[#6EE7B7] [text-shadow:0_2px_20px_rgba(0,0,0,0.92),0_0_28px_rgba(0,0,0,0.65)]">
               Start Running a System.
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto drop-shadow-sm">
+          <p className="text-xl md:text-2xl text-gray-100 mt-6 max-w-3xl mx-auto [text-shadow:0_2px_14px_rgba(0,0,0,0.88)]">
             Most Ghanaian businesses are losing money, time, and customers — not because their
             products are bad, but because their{" "}
-            <span className="font-semibold text-white">systems are broken</span>.
+            <span className="font-semibold text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.95)]">
+              systems are broken.
+            </span>
           </p>
-          <p className="text-lg md:text-xl text-gray-200 mt-4 max-w-2xl mx-auto drop-shadow-sm">
+          <p className="text-lg md:text-xl text-gray-100 mt-4 max-w-2xl mx-auto [text-shadow:0_2px_14px_rgba(0,0,0,0.88)]">
             I build custom software that turns chaos into clarity.
-            <span className="font-bold text-[#86efac]">
+            <span className="font-bold text-[#6EE7B7] [text-shadow:0_2px_16px_rgba(0,0,0,0.9)]">
               {" "}
               Free prototype. No monthly USD fees. You own everything.
             </span>
@@ -250,8 +256,8 @@ export default function Home() {
               See My Work
             </a>
           </div>
-          <div className="mt-12 inline-block bg-white/95 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-white/30">
-            <p className="text-gray-600 text-sm flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-12 inline-block bg-white/[0.96] backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/40 ring-1 ring-black/10">
+            <p className="text-gray-700 text-sm flex flex-wrap items-center justify-center gap-2">
               <span className="text-[#2E7D32]" aria-hidden="true">
                 ✓
               </span>
@@ -266,11 +272,11 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 max-w-md mx-auto">
-            <figure className="text-gray-300 text-sm italic">
+            <figure className="text-gray-200 text-sm italic [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
               <blockquote>
                 &ldquo;Inspiring story. Let&apos;s celebrate how far you&apos;ve come.&rdquo;
               </blockquote>
-              <figcaption className="block font-semibold text-gray-200 not-italic mt-1">
+              <figcaption className="block font-semibold text-gray-100 not-italic mt-1 [text-shadow:0_2px_12px_rgba(0,0,0,0.85)]">
                 — Clementina Aina, Founder of 6Cs (Top 0.01% EdTech)
               </figcaption>
             </figure>
@@ -288,8 +294,8 @@ export default function Home() {
                 role="tab"
                 aria-selected={i === heroIndex}
                 aria-label={`Workspace photo ${i + 1} of ${HERO_SLIDES.length}`}
-                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E3A5F]/50 ${
-                  i === heroIndex ? "w-9 bg-[#2E7D32]" : "w-2.5 bg-white/45 hover:bg-white/80"
+                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black/60 ${
+                  i === heroIndex ? "w-9 bg-[#2E7D32] ring-2 ring-white/50" : "w-2.5 bg-white/55 hover:bg-white/85"
                 }`}
                 onClick={() => setHeroIndex(i)}
               />
