@@ -102,23 +102,23 @@ const AUDIENCE = [
 
 export default function BootcampPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-800">
-      <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+    <main id="main-content" className="min-h-screen bg-white text-slate-800">
+      <div className="border-b border-slate-200/90 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-sm">
           <Link
             href="/"
-            className="text-sm font-semibold text-brand-navy hover:text-brand-green transition"
+            className="font-semibold text-brand-navy hover:text-brand-green transition"
           >
             ← Home
           </Link>
           <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-green">
             Bootcamp
           </span>
-          <BootcampWhatsAppLink className="text-sm font-semibold text-brand-green hover:underline">
+          <BootcampWhatsAppLink className="font-semibold text-brand-green hover:underline">
             WhatsApp: BOOTCAMP →
           </BootcampWhatsAppLink>
         </div>
-      </header>
+      </div>
 
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#e8f5e9]/40 via-white to-white">
         <div className="max-w-6xl mx-auto px-4 py-14 md:py-20 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
@@ -356,6 +356,6 @@ export default function BootcampPage() {
           </p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

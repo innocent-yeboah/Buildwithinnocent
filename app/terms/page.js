@@ -9,21 +9,21 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-800">
-      <header className="border-b border-slate-200 bg-brand-navy text-white">
-        <div className="max-w-3xl mx-auto px-4 py-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86efac] mb-2">
+    <main id="main-content" className="min-h-screen bg-white text-slate-800">
+      <div className="border-b border-slate-200 bg-gradient-to-br from-brand-tint/70 via-white to-white pt-[4.75rem] sm:pt-20">
+        <div className="max-w-3xl mx-auto px-4 pb-10 pt-10 md:pb-14 md:pt-12">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-green mb-2">
             Legal
           </p>
-          <h1 className="text-3xl font-bold tracking-tight">Terms of Service</h1>
-          <p className="text-gray-300 text-sm mt-2">
+          <h1 className="text-3xl font-bold tracking-tight text-brand-navy">Terms of Service</h1>
+          <p className="text-slate-600 text-sm mt-2">
             Last updated:{" "}
             <time dateTime="2026-05-02">2 May 2026</time>
           </p>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-3xl mx-auto px-4 py-10 md:py-14 space-y-8 text-sm md:text-base leading-relaxed">
+      <div className="max-w-3xl mx-auto px-4 py-10 md:py-14 space-y-8 text-sm md:text-base leading-relaxed">
         <p className="text-slate-600">
           These terms (“Terms”) govern your access to{" "}
           <strong className="text-brand-navy">buildwithinnocent.com</strong> (the “Site”) operated by
@@ -114,12 +114,15 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <p>
+        <p className="flex flex-wrap gap-x-4 gap-y-1">
           <Link href="/" className="text-brand-green font-semibold hover:underline">
             ← Back to home
           </Link>
+          <Link href="/cookies" className="text-brand-green font-semibold hover:underline">
+            Cookie Policy
+          </Link>
         </p>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

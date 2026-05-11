@@ -55,8 +55,20 @@ async function sendEmailNotification(leadData) {
       }),
     });
 
+    const raw = await res.text();
     if (!res.ok) {
-      console.error("Resend error:", await res.text());
+      try {
+        console.error("Resend admin email error:", res.status, JSON.stringify(JSON.parse(raw)));
+      } catch {
+        console.error("Resend admin email error:", res.status, raw);
+      }
+    } else {
+      try {
+        const data = JSON.parse(raw || "{}");
+        if (data.id) console.info("Resend admin email queued:", data.id);
+      } catch {
+        /* empty body */
+      }
     }
     return res.ok;
   } catch (error) {
@@ -95,14 +107,39 @@ async function sendCustomerEmail(leadData) {
       }),
     });
 
+    const raw = await res.text();
     if (!res.ok) {
-      console.error("Customer email error:", await res.text());
+      try {
+        console.error("Resend customer email error:", res.status, JSON.stringify(JSON.parse(raw)));
+      } catch {
+        console.error("Resend customer email error:", res.status, raw);
+      }
+    } else {
+      try {
+        const data = JSON.parse(raw || "{}");
+        if (data.id) console.info("Resend customer email queued:", data.id);
+      } catch {
+        /* empty body */
+      }
     }
     return res.ok;
   } catch (error) {
     console.error("Customer email error:", error);
     return false;
   }
+}
+
+/** Bots often probe `/api/leads`; avoid 405 (treated as 4xx in Search Console). */
+export function GET() {
+  return NextResponse.json(
+    { error: "Method not supported" },
+    {
+      status: 404,
+      headers: {
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    }
+  );
 }
 
 export async function POST(request) {
@@ -228,8 +265,14 @@ export async function POST(request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    sendEmailNotification(leadData).catch((err) => console.error("Admin email failed:", err));
-    sendCustomerEmail(leadData).catch((err) => console.error("Customer email failed:", err));
+    // Must await Resend sends: serverless freezes after response; fire-and-forget often never completes.
+    const [adminOk, customerOk] = await Promise.all([
+      sendEmailNotification(leadData),
+      sendCustomerEmail(leadData),
+    ]);
+    if (!adminOk || !customerOk) {
+      console.error("Lead saved but email issue:", { adminOk, customerOk, email: leadData.email });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

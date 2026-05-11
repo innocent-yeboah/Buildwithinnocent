@@ -351,7 +351,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <main id="main-content" className="min-h-screen bg-white pb-[env(safe-area-inset-bottom,0)]">
       {TURNSTILE_SITE_KEY ? (
         <Script
           src="https://challenges.cloudflare.com/turnstile/v0/api.js"
@@ -361,7 +361,7 @@ export default function Home() {
 
       <section
         id="top"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20"
+        className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-20 pt-[5.75rem] sm:pt-24 lg:pt-28 md:pb-28"
         aria-roledescription="carousel"
         aria-label="Introduction"
         onMouseEnter={() => setPauseHero(true)}
@@ -825,7 +825,7 @@ export default function Home() {
       <a
         href={WA_CHAT_URL}
         onClick={() => track("whatsapp_fab_click")}
-        className="fixed bottom-6 right-6 bg-brand-maroon text-white p-4 rounded-full shadow-xl shadow-brand-maroon/35 ring-2 ring-white/35 hover:bg-brand-maroon-muted transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
+        className="fixed bottom-6 right-6 bg-brand-maroon text-white p-4 rounded-full shadow-xl shadow-brand-maroon/35 ring-2 ring-white/35 hover:bg-brand-maroon-muted transition-all duration-300 z-[160] flex items-center justify-center hover:scale-110"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
@@ -837,7 +837,7 @@ export default function Home() {
 
       {modalMode ? (
         <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 z-[200] flex items-center justify-center p-4"
           role="presentation"
           onClick={(ev) => {
             if (ev.target === ev.currentTarget) setModalMode(null);
@@ -1232,6 +1232,11 @@ export default function Home() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/cookies" className="hover:text-white transition">
+                    Cookie Policy
+                  </Link>
+                </li>
+                <li>
                   <Link href="/terms" className="hover:text-white transition">
                     Terms of Service
                   </Link>
@@ -1319,10 +1324,16 @@ export default function Home() {
               <Link href="/terms" className="hover:text-white underline underline-offset-2">
                 Terms
               </Link>
+              <span className="text-gray-600" aria-hidden="true">
+                ·
+              </span>
+              <Link href="/cookies" className="hover:text-white underline underline-offset-2">
+                Cookies
+              </Link>
             </p>
           </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }
