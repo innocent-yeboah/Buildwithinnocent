@@ -62,7 +62,7 @@ export function SiteHeader() {
       </a>
 
       <header
-        className={`fixed inset-x-0 top-0 z-50 bg-white/90 backdrop-blur-md transition-shadow duration-200 ${
+        className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-200 ${
           showBorder ? "shadow-sm shadow-slate-900/06 ring-1 ring-slate-200/80" : "ring-1 ring-transparent"
         }`}
         role="banner"

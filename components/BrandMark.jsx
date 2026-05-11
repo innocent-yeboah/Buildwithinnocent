@@ -12,7 +12,7 @@ export function BrandMark({ className = "", title, priority = true }) {
 
   return (
     <span
-      className={`relative inline-flex shrink-0 overflow-hidden rounded-md bg-white ring-1 ring-slate-200/90 ${className}`}
+      className={`relative inline-flex shrink-0 overflow-hidden rounded-md bg-transparent ${className}`}
       role={decorative ? "presentation" : undefined}
       aria-hidden={decorative ? true : undefined}
     >
