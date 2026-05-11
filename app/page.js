@@ -362,7 +362,6 @@ export default function Home() {
       <section
         id="top"
         className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-20 pt-[5.75rem] sm:pt-24 lg:pt-28 md:pb-28"
-        aria-roledescription="carousel"
         aria-label="Introduction"
         onMouseEnter={() => setPauseHero(true)}
         onMouseLeave={() => setPauseHero(false)}
@@ -480,28 +479,6 @@ export default function Home() {
                 — Clementina Aina, Founder of 6Cs (Top 0.01% EdTech)
               </figcaption>
             </figure>
-          </div>
-
-          <div
-            className="flex justify-center gap-2.5 mt-14 flex-wrap"
-            role="tablist"
-            aria-label="Hero workspace photos"
-          >
-            {HERO_SLIDES.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                role="tab"
-                aria-selected={i === heroIndex}
-                aria-label={`Workspace photo ${i + 1} of ${HERO_SLIDES.length}`}
-                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2 focus-visible:ring-offset-white/90 shadow-sm ${
-                  i === heroIndex
-                    ? "w-9 bg-brand-green ring-2 ring-white/70 shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
-                    : "w-2.5 bg-white/90 hover:bg-white shadow-[0_1px_6px_rgba(0,0,0,0.25)]"
-                }`}
-                onClick={() => setHeroIndex(i)}
-              />
-            ))}
           </div>
         </div>
       </section>
