@@ -3,26 +3,26 @@ export default function manifest() {
     name: "Build With Innocent",
     short_name: "BWI",
     description:
-      "Websites, WhatsApp automation, and custom software for Ghanaian businesses.",
+      "Digital Business Systems for African Enterprises — custom software, websites, and operating systems.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#11274c",
     icons: [
       {
-        src: "/brand/logo.png",
-        sizes: "693x744",
+        src: "/images/logo-icon.png",
+        sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
         src: "/icon.png",
-        sizes: "693x744",
+        sizes: "512x512",
         type: "image/png",
       },
       {
         src: "/apple-icon.png",
-        sizes: "693x744",
+        sizes: "512x512",
         type: "image/png",
       },
     ],

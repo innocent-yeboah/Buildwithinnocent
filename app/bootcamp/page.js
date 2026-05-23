@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BootcampWhatsAppLink } from "./BootcampCtas";
 
 export const metadata = {
-  title: "Coding Bootcamp | Build With Innocent — Zero to Production in 8 Weeks",
+  title: "Coding Bootcamp | Build With Innocent — Digital Business Systems for African Enterprises",
   description:
     "Live cohort bootcamp: 8 weeks of classes, real shipped projects, WhatsApp support, CV & LinkedIn review. Reply BOOTCAMP on WhatsApp for curriculum and payment options.",
   keywords: [

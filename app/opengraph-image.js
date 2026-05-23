@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og";
 
+import { SITE_DESCRIPTION, SITE_TITLE, TAGLINE } from "@/lib/brand";
+
 export const runtime = "edge";
 
-export const alt = "Build With Innocent — Custom software for Ghanaian businesses";
+export const alt = SITE_TITLE;
 
 export const size = {
   width: 1200,
@@ -23,7 +25,7 @@ export default function Image() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#ffffff",
-          backgroundImage: "linear-gradient(135deg, #ffffff 0%, #eef2f7 100%)",
+          backgroundImage: "linear-gradient(135deg, #ffffff 0%, #e8f5e9 100%)",
         }}
       >
         <div
@@ -32,13 +34,14 @@ export default function Image() {
             flexDirection: "column",
             alignItems: "center",
             padding: 48,
+            maxWidth: 1000,
           }}
         >
           <div
             style={{
-              fontSize: 56,
+              fontSize: 52,
               fontWeight: 700,
-              color: "#11274c",
+              color: "#1E3A5F",
               textAlign: "center",
               lineHeight: 1.15,
             }}
@@ -47,25 +50,26 @@ export default function Image() {
           </div>
           <div
             style={{
-              fontSize: 34,
+              fontSize: 30,
               fontWeight: 600,
-              color: "#166534",
-              marginTop: 24,
+              color: "#2E7D32",
+              marginTop: 20,
               textAlign: "center",
+              lineHeight: 1.3,
             }}
           >
-            Custom software for Ghanaian businesses
+            {TAGLINE}
           </div>
           <div
             style={{
               fontSize: 22,
-              color: "#4b5563",
-              marginTop: 22,
+              color: "#475569",
+              marginTop: 24,
               textAlign: "center",
-              maxWidth: 920,
+              maxWidth: 880,
             }}
           >
-            Websites, WhatsApp automation, dashboards — free prototype first.
+            {SITE_DESCRIPTION}
           </div>
         </div>
       </div>

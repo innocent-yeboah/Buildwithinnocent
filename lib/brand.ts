@@ -1,0 +1,35 @@
+/** Build With Innocent — brand tokens (site, OG, email). */
+
+export const COMPANY_NAME = "Build With Innocent";
+
+export const TAGLINE = "Digital Business Systems for African Enterprises";
+
+export const SITE_TITLE = `${COMPANY_NAME} — ${TAGLINE}`;
+
+export const SITE_DESCRIPTION =
+  "Custom software, websites, and business operating systems for African enterprises. Free prototype. Based in Accra, Ghana.";
+
+export const BRAND = {
+  primary: "#1E3A5F",
+  primaryMuted: "#172E4C",
+  secondary: "#2E7D32",
+  secondaryMuted: "#256628",
+  accent: "#FFC107",
+  surface: "#f9fafb",
+  body: "#475569",
+  bodyDark: "#334155",
+  border: "#e2e8f0",
+  tint: "#e8f5e9",
+  white: "#ffffff",
+  maroon: "#710628",
+  maroonMuted: "#5c0520",
+} as const;
+
+export const WA_PRIMARY = "https://wa.me/233530710628";
+
+export const LOGO = {
+  full: "/images/logo-full.png",
+  icon: "/images/logo-icon.png",
+  fullPublic: "/logo.png",
+  iconPublic: "/logo-icon.png",
+} as const;

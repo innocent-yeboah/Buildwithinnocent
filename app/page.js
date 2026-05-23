@@ -4,7 +4,11 @@ import { track } from "@vercel/analytics/react";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { CTA } from "@/components/CTA";
+import { Footer } from "@/components/Footer";
+import { OPEN_CONSULT_EVENT } from "@/lib/consultation";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
@@ -72,6 +76,34 @@ const LIVE_PROJECTS = [
   },
 ];
 
+const SERVICES = [
+  {
+    emoji: "🖥️",
+    title: "Modern Websites",
+    bullets: [
+      "Professional websites that work on all devices",
+      "Online booking and payment",
+      "WhatsApp integration",
+    ],
+  },
+  {
+    emoji: "📊",
+    title: "Business Systems",
+    bullets: [
+      "Custom dashboards for managing customers, orders, inventory",
+      "Admin controls you understand",
+    ],
+  },
+  {
+    emoji: "⚡",
+    title: "Digital Transformation",
+    bullets: [
+      "Turn your manual processes into automated systems",
+      "Scale without hiring more people",
+    ],
+  },
+];
+
 const FAQ_ITEMS = [
   {
     q: 'What does "free prototype" actually mean?',
@@ -129,10 +161,16 @@ export default function Home() {
   const turnstileContainerRef = useRef(null);
   const turnstileWidgetId = useRef(null);
 
-  const openConsultModal = () => {
+  const openConsultModal = useCallback(() => {
     track("consultation_cta_click");
     setModalMode("consult");
-  };
+  }, []);
+
+  useEffect(() => {
+    const onOpenConsult = () => openConsultModal();
+    window.addEventListener(OPEN_CONSULT_EVENT, onOpenConsult);
+    return () => window.removeEventListener(OPEN_CONSULT_EVENT, onOpenConsult);
+  }, [openConsultModal]);
 
   const openRegisterModal = () => {
     track("registration_modal_open");
@@ -407,25 +445,14 @@ export default function Home() {
           </p>
 
           <div className="rounded-3xl bg-slate-950/58 backdrop-blur-md px-6 py-10 md:px-12 md:py-11 shadow-2xl ring-1 ring-white/20 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight [text-shadow:0_2px_16px_rgba(0,0,0,0.65)]">
-              Stop Fighting Your Business.
-              <br />
-              <span className="text-[#6EE7B7] [text-shadow:0_2px_14px_rgba(0,0,0,0.7)]">
-                Start Running a System.
-              </span>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight [text-shadow:0_2px_16px_rgba(0,0,0,0.65)]">
+              Digital Business Systems for African Enterprises
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100 mt-6 max-w-3xl mx-auto [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]">
-              Most Ghanaian businesses are losing money, time, and customers — not because their
-              products are bad, but because their{" "}
-              <span className="font-semibold text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
-                systems are broken.
-              </span>
-            </p>
-            <p className="text-lg md:text-xl text-gray-100 mt-4 max-w-2xl mx-auto [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]">
-              I build custom software that turns chaos into clarity.
-              <span className="font-bold text-[#6EE7B7] [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
-                {" "}
-                Free prototype. No monthly USD fees. You own everything.
+            <p className="text-lg md:text-xl text-gray-100 mt-6 max-w-3xl mx-auto leading-relaxed [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]">
+              I build custom software, websites, and business operating systems that help African
+              businesses grow —{" "}
+              <span className="font-semibold text-emerald-300 [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
+                24/7, even while you sleep.
               </span>
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
@@ -456,18 +483,11 @@ export default function Home() {
           </div>
 
           <div className="mt-12 inline-block bg-white/[0.96] backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/40 ring-1 ring-black/10">
-            <p className="text-gray-700 text-sm flex flex-wrap items-center justify-center gap-2">
+            <p className="text-gray-700 text-sm font-medium flex flex-wrap items-center justify-center gap-2">
               <span className="text-brand-green" aria-hidden="true">
                 ✓
               </span>
-              Built on The Four Laws of Atomic Habits
-              <span className="text-gray-300 mx-1" aria-hidden="true">
-                |
-              </span>
-              <span className="text-brand-green" aria-hidden="true">
-                ✓
-              </span>
-              5 shipped platforms and tools
+              Trusted by businesses across Ghana
             </p>
           </div>
           <div className="mt-8 max-w-md mx-auto rounded-2xl bg-slate-950/55 backdrop-blur-md px-5 py-4 ring-1 ring-white/15 shadow-lg">
@@ -483,65 +503,48 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-brand-surface">
+      <section id="services" className="py-16 px-4 bg-brand-surface scroll-mt-24">
         <h2 className="text-3xl font-bold text-center text-brand-navy">What I Build</h2>
-        <p className="text-center text-gray-600 mt-2 mb-10">Services I offer to help businesses grow</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <div className="text-4xl mb-3" aria-hidden="true">
-              🖥️
+        <p className="text-center text-gray-600 mt-2 mb-10 max-w-2xl mx-auto">
+          Digital business systems tailored for African enterprises — from your first website to
+          full operating software.
+        </p>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          {SERVICES.map((service) => (
+            <div
+              key={service.title}
+              className="bg-white p-6 rounded-xl shadow-md ring-1 ring-slate-200/80 hover:shadow-lg hover:ring-brand-green/30 transition"
+            >
+              <div className="text-4xl mb-3" aria-hidden="true">
+                {service.emoji}
+              </div>
+              <h3 className="text-xl font-bold text-brand-navy">{service.title}</h3>
+              <ul className="mt-4 space-y-2 text-gray-600 text-sm leading-relaxed">
+                {service.bullets.map((bullet) => (
+                  <li key={bullet} className="flex gap-2">
+                    <span className="text-brand-green shrink-0" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h3 className="text-xl font-bold text-brand-navy">Modern Websites</h3>
-            <p className="text-gray-600 mt-2">
-              Professional modern websites that serve as an engine for business growth — they attract
-              customers and build trust. Mobile-friendly and fast.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <div className="text-4xl mb-3" aria-hidden="true">
-              💬
-            </div>
-            <h3 className="text-xl font-bold text-brand-navy">WhatsApp AI Automation</h3>
-            <p className="text-gray-600 mt-2">
-              Automated replies to customer messages. Save hours every week. Instant responses.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <div className="text-4xl mb-3" aria-hidden="true">
-              📊
-            </div>
-            <h3 className="text-xl font-bold text-brand-navy">Business Dashboards</h3>
-            <p className="text-gray-600 mt-2">
-              Track inventory, sales, and payments in one place. Know your business in real-time.
-            </p>
-          </div>
+          ))}
+        </div>
+        <p className="text-center mt-10">
           <Link
             href="/bootcamp"
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition border-2 border-transparent hover:border-brand-green/45 ring-1 ring-brand-navy/08 flex flex-col group"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-brand-green hover:underline"
           >
-            <div className="text-4xl mb-3" aria-hidden="true">
-              🎓
-            </div>
-            <h3 className="text-xl font-bold text-brand-navy group-hover:text-brand-green transition-colors">
-              Coding Bootcamp
-            </h3>
-            <p className="text-gray-600 mt-2 flex-1">
-              8-week cohort: live classes, shipped projects, WhatsApp support — from zero to a
-              production-ready portfolio.
-            </p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-green">
-              View program
-              <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-            </span>
+            Also offering an 8-week Coding Bootcamp →
           </Link>
-        </div>
+        </p>
       </section>
 
       <section
         id="work"
-        className="relative py-20 md:py-24 px-4 border-t-4 border-brand-green bg-gradient-to-b from-brand-tint/90 via-white to-brand-surface"
+        className="relative scroll-mt-24 py-20 md:py-24 px-4 border-t-4 border-brand-green bg-gradient-to-b from-brand-tint/90 via-white to-brand-surface"
       >
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-green/40 to-transparent pointer-events-none" aria-hidden />
         <div className="max-w-6xl mx-auto relative">
@@ -627,7 +630,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-white">
+      <section id="story" className="py-20 px-4 bg-white scroll-mt-24">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-brand-navy mb-12">
             From Uber Seat to Desk
@@ -1152,165 +1155,9 @@ export default function Home() {
         </div>
       ) : null}
 
-      <footer className="bg-brand-navy text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Build With Innocent</h3>
-              <p className="text-gray-300 text-sm">
-                Custom software for Ghanaian businesses. Free prototype. No monthly USD fees.
-              </p>
-            </div>
+      <CTA onBookConsult={openConsultModal} />
 
-            <div>
-              <h4 className="font-semibold mb-4 text-brand-green">Quick Links</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li>
-                  <a href="#top" className="hover:text-white transition">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#work" className="hover:text-white transition">
-                    My Work
-                  </a>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={openConsultModal}
-                    className="hover:text-white transition text-left text-gray-300 text-sm"
-                  >
-                    Book Consultation
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={openRegisterModal}
-                    className="hover:text-white transition text-left text-gray-300 text-sm"
-                  >
-                    Bootcamp sign-up
-                  </button>
-                </li>
-                <li>
-                  <a href="#faq" className="hover:text-white transition">
-                    FAQ
-                  </a>
-                </li>
-                <li>
-                  <Link href="/bootcamp" className="hover:text-white transition">
-                    Coding Bootcamp
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="hover:text-white transition">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/cookies" className="hover:text-white transition">
-                    Cookie Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="hover:text-white transition">
-                    Terms of Service
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4 text-brand-green">Live Projects</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li>
-                  <a
-                    href="https://schoolledgergh.vercel.app/"
-                    className="hover:text-white transition"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    SchoolLedger GH
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://benizergreenshop.com"
-                    className="hover:text-white transition"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Benizer Green Shop
-                  </a>
-                </li>
-                <li>
-                  <span className="text-gray-400">WhatsApp AI Assistant</span>
-                </li>
-                <li>
-                  <span className="text-gray-400">My Central Bank</span>
-                </li>
-                <li>
-                  <span className="text-gray-400">FounderOS</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4 text-brand-green">Contact</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li>
-                  <a href="tel:+233530710628" className="hover:text-white transition">
-                    +233 530 710 628
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={WA_CHAT_URL}
-                    className="hover:text-white transition"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    +233 530 710 628 (WhatsApp)
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:igtechgh@gmail.com" className="hover:text-white transition">
-                    igtechgh@gmail.com
-                  </a>
-                </li>
-                <li>
-                  <a href="https://buildwithinnocent.com" className="hover:text-white transition">
-                    buildwithinnocent.com
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm space-y-2">
-            <p>&copy; 2026 Build With Innocent. All rights reserved.</p>
-            <p>Built with Next.js &amp; Tailwind CSS. Deployed on Vercel.</p>
-            <p className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-1">
-              <Link href="/privacy" className="hover:text-white underline underline-offset-2">
-                Privacy
-              </Link>
-              <span className="text-gray-600" aria-hidden="true">
-                ·
-              </span>
-              <Link href="/terms" className="hover:text-white underline underline-offset-2">
-                Terms
-              </Link>
-              <span className="text-gray-600" aria-hidden="true">
-                ·
-              </span>
-              <Link href="/cookies" className="hover:text-white underline underline-offset-2">
-                Cookies
-              </Link>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer onBookConsult={openConsultModal} />
     </main>
   );
 }

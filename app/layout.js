@@ -2,31 +2,30 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 
 import { CookieConsentLoader } from "@/components/CookieConsentLoader.jsx";
-import { SiteHeader } from "@/components/SiteHeader.jsx";
-
+import { Navbar } from "@/components/Navbar";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   metadataBase: new URL("https://buildwithinnocent.com"),
-  title: "Build With Innocent | Custom Software for Ghanaian Businesses",
-  description:
-    "Websites, WhatsApp automation, and custom software for Ghanaian businesses. Free prototype. No monthly USD fees. Based in Accra.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   keywords: [
-    "web developer Ghana",
-    "Accra web design",
-    "WhatsApp automation",
+    "digital business systems Africa",
     "custom software Ghana",
-    "business website",
+    "web developer Ghana",
+    "Accra software development",
+    "WhatsApp automation",
+    "business operating systems",
   ],
   authors: [{ name: "Innocent Golden" }],
   creator: "Innocent Golden",
   publisher: "Build With Innocent",
   robots: "index, follow",
   openGraph: {
-    title: "Build With Innocent | Custom Software for Ghanaian Businesses",
-    description:
-      "I build websites, WhatsApp automation, and custom software for Ghanaian businesses. Free prototype first. Based in Accra.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "https://buildwithinnocent.com",
     siteName: "Build With Innocent",
     locale: "en_GH",
@@ -34,16 +33,16 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Build With Innocent | Custom Software for Ghanaian Businesses",
-    description:
-      "I build websites, WhatsApp automation, and custom software for Ghanaian businesses. Free prototype first.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png", sizes: "693x744" },
-      { url: "/brand/logo.png", type: "image/png", sizes: "693x744" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/logo-icon.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "693x744" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
 
@@ -51,7 +50,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={`${inter.className} antialiased`}>
-        <SiteHeader />
+        <Navbar />
         {children}
         <CookieConsentLoader />
       </body>
