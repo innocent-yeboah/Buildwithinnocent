@@ -1,6 +1,11 @@
 import { addDays, format, startOfWeek, subDays } from "date-fns";
 
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import {
+  getAdminNotificationEmail,
+  getResendFromAddresses,
+  sendResendEmail,
+} from "@/lib/resend";
 
 export interface CronResult {
   overdueProposals: { id: string; proposal_number: string | null; business_name: string }[];
@@ -14,28 +19,14 @@ export interface CronResult {
 }
 
 async function sendCronEmail(subject: string, html: string): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.INTERNAL_ADMIN_EMAIL ?? "igtechgh@gmail.com";
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY not set; skipping cron email.");
-    return false;
-  }
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "Build With Innocent OS <notifications@buildwithinnocent.com>",
-      to: [to],
-      subject,
-      html,
-    }),
+  const { admin: from } = getResendFromAddresses();
+  const result = await sendResendEmail({
+    from,
+    to: getAdminNotificationEmail(),
+    subject,
+    html,
   });
-
-  return res.ok;
+  return result.ok;
 }
 
 export async function runDailyChecks(): Promise<CronResult> {

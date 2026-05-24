@@ -1,9 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { cache } from "react";
 
 import type { Database } from "@/lib/internal/types";
 
-export async function createClient() {
+export const createClient = cache(async function createClient() {
   const cookieStore = await cookies();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -25,9 +26,9 @@ export async function createClient() {
             cookieStore.set(name, value, options);
           });
         } catch {
-          /* set from Server Component — middleware refreshes session */
+          /* Server Component — session refresh handled in middleware */
         }
       },
     },
   });
-}
+});

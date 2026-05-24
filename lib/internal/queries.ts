@@ -6,7 +6,7 @@ import {
   subDays,
 } from "date-fns";
 
-import { createClient } from "@/lib/supabase/server";
+import { getInternalDb } from "@/lib/supabase/internal-db";
 import type {
   DashboardData,
   Lead,
@@ -22,7 +22,7 @@ function activeLeadStatuses() {
 }
 
 export async function getDashboardData(): Promise<DashboardData> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const today = format(new Date(), "yyyy-MM-dd");
   const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
   const monthStart = format(startOfMonth(new Date()), "yyyy-MM-dd");
@@ -143,7 +143,7 @@ export async function getLeads(filters?: {
   from?: string;
   to?: string;
 }): Promise<Lead[]> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   let query = supabase.from("leads").select("*").order("created_at", { ascending: false });
 
   if (filters?.status) query = query.eq("status", filters.status);
@@ -157,7 +157,7 @@ export async function getLeads(filters?: {
 }
 
 export async function getLeadById(id: string): Promise<Lead | null> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const { data, error } = await supabase.from("leads").select("*").eq("id", id).single();
   if (error) return null;
   return data as Lead;
@@ -168,7 +168,7 @@ export async function getProposals(filters?: {
   from?: string;
   to?: string;
 }): Promise<Proposal[]> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   let query = supabase
     .from("proposals")
     .select("*, leads(business_name, contact_name, email)")
@@ -184,7 +184,7 @@ export async function getProposals(filters?: {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const { data, error } = await supabase
     .from("projects")
     .select("*")
@@ -194,7 +194,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getRevenueSummary() {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const monthStart = format(startOfMonth(new Date()), "yyyy-MM-dd");
   const yearStart = format(new Date(new Date().getFullYear(), 0, 1), "yyyy-MM-dd");
 
@@ -249,7 +249,7 @@ export async function getRevenueSummary() {
 }
 
 export async function getMaintenancePlans(): Promise<MaintenancePlan[]> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const { data, error } = await supabase
     .from("maintenance_plans")
     .select("*")
@@ -259,7 +259,7 @@ export async function getMaintenancePlans(): Promise<MaintenancePlan[]> {
 }
 
 export async function getReferrals(): Promise<Referral[]> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const { data, error } = await supabase
     .from("referrals")
     .select("*, leads(business_name, status)")
@@ -269,7 +269,7 @@ export async function getReferrals(): Promise<Referral[]> {
 }
 
 export async function recordProposalView(proposalId: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const today = format(new Date(), "yyyy-MM-dd");
   const { data: existing } = await supabase
     .from("proposals")
@@ -288,7 +288,7 @@ export async function recordProposalView(proposalId: string): Promise<void> {
 }
 
 export async function getProposalPublic(id: string): Promise<Proposal | null> {
-  const supabase = await createClient();
+  const supabase = getInternalDb();
   const { data, error } = await supabase
     .from("proposals")
     .select("*, leads(business_name, contact_name, email)")

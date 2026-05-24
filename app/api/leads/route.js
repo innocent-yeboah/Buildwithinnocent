@@ -3,6 +3,11 @@ import { rateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/leads-ip";
 import { NextResponse } from "next/server";
 import { buildAdminLeadEmailHtml, buildCustomerLeadEmailHtml } from "@/lib/lead-emails";
+import {
+  getAdminNotificationEmail,
+  getResendFromAddresses,
+  sendResendEmail,
+} from "@/lib/resend";
 import { syncWebsiteLeadToCrm } from "@/lib/sync-website-lead";
 
 async function verifyTurnstile(token, remoteip) {
@@ -26,108 +31,42 @@ async function verifyTurnstile(token, remoteip) {
 }
 
 async function sendEmailNotification(leadData) {
-  const emailHtml = buildAdminLeadEmailHtml(leadData);
-
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY is not set; skipping admin notification email.");
-    return false;
-  }
-
   const isRegistration =
     leadData.source === "bootcamp_registration" || leadData.form_type === "registration";
   const namePlain = leadData.name;
   const servicePlain = leadData.service_interest || "";
+  const { admin: from } = getResendFromAddresses();
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Build With Innocent <notifications@buildwithinnocent.com>",
-        to: ["igtechgh@gmail.com"],
-        subject: isRegistration
-          ? `Bootcamp registration · ${namePlain}`
-          : `New lead · ${namePlain} — ${servicePlain || "software"}`,
-        html: emailHtml,
-      }),
-    });
+  const result = await sendResendEmail({
+    from,
+    to: getAdminNotificationEmail(),
+    subject: isRegistration
+      ? `Bootcamp registration · ${namePlain}`
+      : `New lead · ${namePlain} — ${servicePlain || "software"}`,
+    html: buildAdminLeadEmailHtml(leadData),
+    replyTo: leadData.email,
+  });
 
-    const raw = await res.text();
-    if (!res.ok) {
-      try {
-        console.error("Resend admin email error:", res.status, JSON.stringify(JSON.parse(raw)));
-      } catch {
-        console.error("Resend admin email error:", res.status, raw);
-      }
-    } else {
-      try {
-        const data = JSON.parse(raw || "{}");
-        if (data.id) console.info("Resend admin email queued:", data.id);
-      } catch {
-        /* empty body */
-      }
-    }
-    return res.ok;
-  } catch (error) {
-    console.error("Email notification error:", error);
-    return false;
-  }
+  return result.ok;
 }
 
 async function sendCustomerEmail(leadData) {
-  const emailHtml = buildCustomerLeadEmailHtml(leadData);
-
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY is not set; skipping customer acknowledgment email.");
-    return false;
-  }
-
   const namePlain = leadData.name;
   const isRegistration =
     leadData.source === "bootcamp_registration" || leadData.form_type === "registration";
+  const { customer: from } = getResendFromAddresses();
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Build With Innocent <hello@buildwithinnocent.com>",
-        to: [leadData.email],
-        subject: isRegistration
-          ? `${namePlain}, you're on the bootcamp list (confirmed)`
-          : `${namePlain}, thanks — I've got your note`,
-        html: emailHtml,
-      }),
-    });
+  const result = await sendResendEmail({
+    from,
+    to: leadData.email,
+    subject: isRegistration
+      ? `${namePlain}, you're on the bootcamp list (confirmed)`
+      : `${namePlain}, thanks — I've got your note`,
+    html: buildCustomerLeadEmailHtml(leadData),
+    replyTo: getAdminNotificationEmail(),
+  });
 
-    const raw = await res.text();
-    if (!res.ok) {
-      try {
-        console.error("Resend customer email error:", res.status, JSON.stringify(JSON.parse(raw)));
-      } catch {
-        console.error("Resend customer email error:", res.status, raw);
-      }
-    } else {
-      try {
-        const data = JSON.parse(raw || "{}");
-        if (data.id) console.info("Resend customer email queued:", data.id);
-      } catch {
-        /* empty body */
-      }
-    }
-    return res.ok;
-  } catch (error) {
-    console.error("Customer email error:", error);
-    return false;
-  }
+  return result.ok;
 }
 
 /** Bots often probe `/api/leads`; avoid 405 (treated as 4xx in Search Console). */

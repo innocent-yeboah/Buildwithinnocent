@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -59,25 +59,27 @@ type AsyncState<T> = {
 };
 
 function useSupabaseQuery<T>(
-  fetcher: () => Promise<T>,
-  deps: unknown[] = []
+  depKey: string,
+  fetcher: () => Promise<T>
 ): AsyncState<T | null> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const fetcherRef = useRef(fetcher);
+  fetcherRef.current = fetcher;
 
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const result = await fetcher();
+      const result = await fetcherRef.current();
       setData(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
-  }, deps);
+  }, [depKey]);
 
   useEffect(() => {
     refetch();
@@ -95,7 +97,7 @@ export function useLeads(filters?: {
   const supabase = getSupabase();
   const filterKey = JSON.stringify(filters ?? {});
 
-  const state = useSupabaseQuery<Lead[]>(async () => {
+  const state = useSupabaseQuery<Lead[]>(filterKey, async () => {
     let query = supabase.from("leads").select("*").order("created_at", { ascending: false });
     if (filters?.status) query = query.eq("status", filters.status);
     if (filters?.source) query = query.eq("source", filters.source);
@@ -104,7 +106,7 @@ export function useLeads(filters?: {
     const { data, error } = await query;
     if (error) throw new Error(error.message);
     return (data ?? []) as Lead[];
-  }, [filterKey]);
+  });
 
   const createLead = async (payload: LeadInsert) => {
     await dbInsert("leads", payload);
@@ -141,7 +143,7 @@ export function useProposals(filters?: { status?: string; from?: string; to?: st
   const supabase = getSupabase();
   const filterKey = JSON.stringify(filters ?? {});
 
-  const state = useSupabaseQuery<Proposal[]>(async () => {
+  const state = useSupabaseQuery<Proposal[]>(filterKey, async () => {
     let query = supabase
       .from("proposals")
       .select("*, leads(business_name, contact_name, email)")
@@ -152,7 +154,7 @@ export function useProposals(filters?: { status?: string; from?: string; to?: st
     const { data, error } = await query;
     if (error) throw new Error(error.message);
     return (data ?? []) as Proposal[];
-  }, [filterKey]);
+  });
 
   const createProposal = async (payload: ProposalInsert) => {
     await dbInsert("proposals", payload);
@@ -182,14 +184,14 @@ export function useProposals(filters?: { status?: string; from?: string; to?: st
 export function useProjects() {
   const supabase = getSupabase();
 
-  const state = useSupabaseQuery<Project[]>(async () => {
+  const state = useSupabaseQuery<Project[]>("projects", async () => {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
     return (data ?? []) as Project[];
-  }, []);
+  });
 
   const createProject = async (payload: ProjectInsert) => {
     await dbInsert("projects", payload);
@@ -223,14 +225,14 @@ export function useProjects() {
 export function useRevenue() {
   const supabase = getSupabase();
 
-  const state = useSupabaseQuery<RevenueEntry[]>(async () => {
+  const state = useSupabaseQuery<RevenueEntry[]>("revenue", async () => {
     const { data, error } = await supabase
       .from("revenue")
       .select("*")
       .order("date", { ascending: false });
     if (error) throw new Error(error.message);
     return (data ?? []) as RevenueEntry[];
-  }, []);
+  });
 
   const createEntry = async (payload: RevenueInsert) => {
     await dbInsert("revenue", payload);
@@ -248,14 +250,14 @@ export function useRevenue() {
 export function useMaintenancePlans() {
   const supabase = getSupabase();
 
-  const state = useSupabaseQuery<MaintenancePlan[]>(async () => {
+  const state = useSupabaseQuery<MaintenancePlan[]>("maintenance", async () => {
     const { data, error } = await supabase
       .from("maintenance_plans")
       .select("*")
       .order("next_invoice_date", { ascending: true });
     if (error) throw new Error(error.message);
     return (data ?? []) as MaintenancePlan[];
-  }, []);
+  });
 
   const createPlan = async (payload: MaintenancePlanInsert) => {
     await dbInsert("maintenance_plans", payload);
@@ -281,14 +283,14 @@ export function useMaintenancePlans() {
 export function useReferrals() {
   const supabase = getSupabase();
 
-  const state = useSupabaseQuery<Referral[]>(async () => {
+  const state = useSupabaseQuery<Referral[]>("referrals", async () => {
     const { data, error } = await supabase
       .from("referrals")
       .select("*, leads(business_name, status)")
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
     return (data ?? []) as Referral[];
-  }, []);
+  });
 
   const createReferral = async (payload: ReferralInsert) => {
     await dbInsert("referrals", payload);
@@ -309,17 +311,27 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setEmail(data.user?.email ?? null);
-      setLoading(false);
+    let cancelled = false;
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (!cancelled) {
+        setEmail(data.session?.user?.email ?? null);
+        setLoading(false);
+      }
     });
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setEmail(session?.user?.email ?? null);
+      setLoading(false);
     });
-    return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   const signOut = async () => {
     await supabase.auth.signOut();

@@ -28,6 +28,7 @@ export async function middleware(request: NextRequest) {
     },
   });
 
+  // Single auth refresh per request — do not call getUser() again in Server Components.
   const {
     data: { user },
   } = await supabase.auth.getUser();

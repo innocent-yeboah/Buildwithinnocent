@@ -23,6 +23,12 @@ export const BRAND = {
   white: "#ffffff",
   maroon: "#710628",
   maroonMuted: "#5c0520",
+  /** Email templates (lib/lead-emails.js) */
+  navy: "#1E3A5F",
+  navyMuted: "#172E4C",
+  green: "#2E7D32",
+  greenMuted: "#256628",
+  greenTint: "#e8f5e9",
 } as const;
 
 export const WA_PRIMARY = "https://wa.me/233530710628";
