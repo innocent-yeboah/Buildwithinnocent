@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/internal/cron?job=daily",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/internal/cron?job=weekly",
+      "schedule": "0 8 * * 1"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/leads-ip";
 import { NextResponse } from "next/server";
 import { buildAdminLeadEmailHtml, buildCustomerLeadEmailHtml } from "@/lib/lead-emails";
+import { syncWebsiteLeadToCrm } from "@/lib/sync-website-lead";
 
 async function verifyTurnstile(token, remoteip) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -172,6 +173,7 @@ export async function POST(request) {
       form,
       experienceLevel,
       agreeTerms,
+      attribution,
     } = body;
 
     const isRegistration = form === "registration";
@@ -258,11 +260,22 @@ export async function POST(request) {
       created_at: new Date().toISOString(),
     };
 
-    const { error } = await getSupabase().from("leads").insert(row);
+    const { data: inserted, error } = await getSupabase()
+      .from("website_leads")
+      .insert(row)
+      .select(
+        "id, name, email, phone, service_interest, message, goals, experience_level, form_type, source"
+      )
+      .single();
 
     if (error) {
       console.error("Supabase insert error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    const syncResult = await syncWebsiteLeadToCrm(inserted, attribution);
+    if (!syncResult.ok && !syncResult.skipped) {
+      console.error("Website lead saved but CRM sync failed:", syncResult.error);
     }
 
     // Must await Resend sends: serverless freezes after response; fire-and-forget often never completes.

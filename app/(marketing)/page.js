@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 import { OPEN_CONSULT_EVENT } from "@/lib/consultation";
+import { captureLeadAttribution } from "@/lib/lead-attribution";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
@@ -281,6 +282,7 @@ export default function Home() {
           website,
           form: "consultation",
           turnstileToken: TURNSTILE_SITE_KEY ? turnstileToken : undefined,
+          attribution: captureLeadAttribution(),
         }),
       });
 
@@ -356,6 +358,7 @@ export default function Home() {
           company,
           agreeTerms: agree,
           turnstileToken: TURNSTILE_SITE_KEY ? turnstileToken : undefined,
+          attribution: captureLeadAttribution(),
         }),
       });
 
