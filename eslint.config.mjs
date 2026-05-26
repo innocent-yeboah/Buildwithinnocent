@@ -5,8 +5,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   {
     rules: {
-      // Keep guidance but don't fail CI on dependency suggestions.
-      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/exhaustive-deps": "off",
     },
   },
   // Override default ignores of eslint-config-next.

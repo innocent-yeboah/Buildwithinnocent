@@ -79,11 +79,11 @@ function useSupabaseQuery<T>(
     } finally {
       setLoading(false);
     }
-  }, [depKey]);
+  }, []);
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [depKey, refetch]);
 
   return { data, loading, error, refetch };
 }
@@ -306,11 +306,11 @@ export function useReferrals() {
 }
 
 export function useAuth() {
-  const supabase = getSupabase();
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const supabase = getSupabase();
     let cancelled = false;
 
     supabase.auth.getSession().then(({ data }) => {
@@ -331,10 +331,10 @@ export function useAuth() {
       cancelled = true;
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await getSupabase().auth.signOut();
     window.location.href = "/login";
   };
 
