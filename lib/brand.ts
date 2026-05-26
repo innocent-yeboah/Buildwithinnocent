@@ -31,7 +31,15 @@ export const BRAND = {
   greenTint: "#e8f5e9",
 } as const;
 
-export const WA_PRIMARY = "https://wa.me/233530710628";
+export const WA_HUMAN_E164 = "233530710628";
+export const WA_HUMAN_DISPLAY = "+233 530 710 628";
+export const WA_PRIMARY = `https://wa.me/${WA_HUMAN_E164}`;
+
+export const WA_AI_E164 = "233530453400";
+export const WA_AI_DISPLAY = "+233 530 453 400";
+export const WA_AI_PREFILL_MESSAGE =
+  "Hello! I'm interested in building a digital business system for my business.";
+export const WA_AI_CHAT_URL = `https://wa.me/${WA_AI_E164}?text=${encodeURIComponent(WA_AI_PREFILL_MESSAGE)}`;
 
 export const LOGO = {
   full: "/images/logo-full.png",

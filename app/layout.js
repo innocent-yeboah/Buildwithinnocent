@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -47,7 +48,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }
