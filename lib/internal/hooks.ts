@@ -65,25 +65,48 @@ function useSupabaseQuery<T>(
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [trackedKey, setTrackedKey] = useState(depKey);
   const fetcherRef = useRef(fetcher);
-  fetcherRef.current = fetcher;
+
+  if (trackedKey !== depKey) {
+    setTrackedKey(depKey);
+    setLoading(true);
+    setError(null);
+  }
+
+  useEffect(() => {
+    fetcherRef.current = fetcher;
+  });
+
+  const runFetch = useCallback(async (signal?: { cancelled: boolean }) => {
+    try {
+      const result = await fetcherRef.current();
+      if (signal?.cancelled) return;
+      setData(result);
+      setError(null);
+    } catch (err) {
+      if (signal?.cancelled) return;
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      if (!signal?.cancelled) {
+        setLoading(false);
+      }
+    }
+  }, []);
 
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
-    try {
-      const result = await fetcherRef.current();
-      setData(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    await runFetch();
+  }, [runFetch]);
 
   useEffect(() => {
-    refetch();
-  }, [depKey, refetch]);
+    const signal = { cancelled: false };
+    void runFetch(signal);
+    return () => {
+      signal.cancelled = true;
+    };
+  }, [depKey, runFetch]);
 
   return { data, loading, error, refetch };
 }
