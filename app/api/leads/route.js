@@ -2,9 +2,15 @@
 import { rateLimit } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/leads-ip";
 import { NextResponse } from "next/server";
-import { buildAdminLeadEmailHtml, buildCustomerLeadEmailHtml } from "@/lib/lead-emails";
+import {
+  buildAdminLeadEmailHtml,
+  buildAdminLeadEmailText,
+  buildCustomerLeadEmailHtml,
+  buildCustomerLeadEmailText,
+} from "@/lib/lead-emails";
 import {
   getAdminNotificationEmail,
+  getDefaultReplyTo,
   getResendFromAddresses,
   sendResendEmail,
 } from "@/lib/resend";
@@ -36,15 +42,24 @@ async function sendEmailNotification(leadData) {
   const namePlain = leadData.name;
   const servicePlain = leadData.service_interest || "";
   const { admin: from } = getResendFromAddresses();
+  const payload = { ...leadData, submitted_at: new Date().toISOString() };
 
   const result = await sendResendEmail({
     from,
     to: getAdminNotificationEmail(),
     subject: isRegistration
-      ? `Bootcamp registration · ${namePlain}`
-      : `New lead · ${namePlain} — ${servicePlain || "software"}`,
-    html: buildAdminLeadEmailHtml(leadData),
+      ? `[Bootcamp] New registration — ${namePlain}`
+      : `[Lead] ${namePlain} — ${servicePlain || "consultation"}`,
+    html: buildAdminLeadEmailHtml(payload),
+    text: buildAdminLeadEmailText(payload),
     replyTo: leadData.email,
+    headers: {
+      "X-Entity-Ref-ID": `lead-admin-${Date.now()}`,
+    },
+    tags: [
+      { name: "category", value: "lead-admin" },
+      { name: "form_type", value: leadData.form_type || "consultation" },
+    ],
   });
 
   return result.ok;
@@ -55,15 +70,25 @@ async function sendCustomerEmail(leadData) {
   const isRegistration =
     leadData.source === "bootcamp_registration" || leadData.form_type === "registration";
   const { customer: from } = getResendFromAddresses();
+  const payload = { ...leadData, submitted_at: new Date().toISOString() };
 
   const result = await sendResendEmail({
     from,
     to: leadData.email,
     subject: isRegistration
-      ? `${namePlain}, you're on the bootcamp list (confirmed)`
-      : `${namePlain}, thanks — I've got your note`,
-    html: buildCustomerLeadEmailHtml(leadData),
-    replyTo: getAdminNotificationEmail(),
+      ? `${namePlain}, your bootcamp registration is confirmed`
+      : `${namePlain}, thank you for contacting Build With Innocent`,
+    html: buildCustomerLeadEmailHtml(payload),
+    text: buildCustomerLeadEmailText(payload),
+    replyTo: getDefaultReplyTo(),
+    headers: {
+      "X-Entity-Ref-ID": `lead-customer-${Date.now()}`,
+    },
+    listUnsubscribe: "<mailto:hello@buildwithinnocent.com?subject=Unsubscribe>",
+    tags: [
+      { name: "category", value: "lead-customer" },
+      { name: "form_type", value: leadData.form_type || "consultation" },
+    ],
   });
 
   return result.ok;
