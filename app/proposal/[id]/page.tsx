@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 
 import { StatusBadge } from "@/components/internal/StatusBadge";
+
+/** Loads proposal via service role at request time. */
+export const dynamic = "force-dynamic";
 import { formatCurrency, formatDate } from "@/lib/internal/format";
 import { getProposalPublic, recordProposalView } from "@/lib/internal/queries";
 
