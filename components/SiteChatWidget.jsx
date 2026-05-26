@@ -96,6 +96,11 @@ export function SiteChatWidget() {
           message: text,
           sessionId: getSessionId(),
           history: messages.filter((m) => m.role === "user" || m.role === "assistant"),
+          metadata: {
+            pageUrl: typeof window !== "undefined" ? window.location.href : "",
+            referrer: typeof document !== "undefined" ? document.referrer || "" : "",
+            channel: "website_chat",
+          },
         }),
       });
 

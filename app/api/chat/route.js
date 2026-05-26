@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 
 import { getChatReply, isChatConfigured } from "@/lib/chat-assistant";
+import { WEBHOOK_FORMATS } from "@/lib/chat-webhook";
 import { getClientIp } from "@/lib/leads-ip";
 import { rateLimit } from "@/lib/rate-limit";
 
 export async function GET() {
   return NextResponse.json({
     configured: isChatConfigured(),
+    webhookFormat: process.env.CHAT_WEBHOOK_FORMAT?.trim() || "meta",
+    supportedFormats: [...WEBHOOK_FORMATS, "meta", "whatsapp", "simple"],
   });
 }
 
@@ -41,6 +44,10 @@ export async function POST(request) {
         ? body.sessionId
         : `anon-${ip}`;
     const history = Array.isArray(body.history) ? body.history : [];
+    const metadata =
+      body.metadata && typeof body.metadata === "object" && !Array.isArray(body.metadata)
+        ? body.metadata
+        : {};
 
     if (!message) {
       return NextResponse.json({ error: "Message is required." }, { status: 400 });
@@ -50,7 +57,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "Message is too long." }, { status: 400 });
     }
 
-    const reply = await getChatReply({ message, sessionId, history });
+    const reply = await getChatReply({ message, sessionId, history, metadata });
 
     if (!reply) {
       return NextResponse.json(
