@@ -189,6 +189,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("book") !== "consult") return;
+    track("consultation_deep_link_open");
+    window.history.replaceState({}, "", "/");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot sync from ?book=consult
+    setModalMode("consult");
+  }, []);
+
+  useEffect(() => {
     if (!modalMode) return undefined;
     const onKey = (ev) => {
       if (ev.key === "Escape") setModalMode(null);
