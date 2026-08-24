@@ -1,6 +1,6 @@
 # Rebuild Plan — Build With Innocent
 
-**Status:** Accepted by Innocent (2026-08-24), with known weak spots below.  
+**Build-from prompt (source of truth for the first ship):** [`docs/BUILD-PROMPT.md`](./BUILD-PROMPT.md) — one public page. The four-page IA in this file is a later pass only.  
 **Source:** Interview with Innocent Golden (2026-08-24), folded from the original “simple yet expensive developer portfolio” brief.  
 **Live site:** [buildwithinnocent.com](https://buildwithinnocent.com)
 
