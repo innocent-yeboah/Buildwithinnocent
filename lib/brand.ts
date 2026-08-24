@@ -2,12 +2,14 @@
 
 export const COMPANY_NAME = "Build With Innocent";
 
-export const TAGLINE = "Digital Business Systems for African Enterprises";
+export const HERO_SENTENCE =
+  "I build the website and the system behind it so a business with no online presence can take orders.";
 
-export const SITE_TITLE = `${COMPANY_NAME} — ${TAGLINE}`;
+export const TAGLINE = HERO_SENTENCE;
 
-export const SITE_DESCRIPTION =
-  "Custom software, websites, and business operating systems for African enterprises. Free prototype. Based in Accra, Ghana.";
+export const SITE_TITLE = `${COMPANY_NAME} — Innocent Golden`;
+
+export const SITE_DESCRIPTION = HERO_SENTENCE;
 
 export const BRAND = {
   primary: "#1E3A5F",

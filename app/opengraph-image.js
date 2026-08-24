@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-import { SITE_DESCRIPTION, SITE_TITLE, TAGLINE } from "@/lib/brand";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
 
 export const runtime = "edge";
 
@@ -50,15 +50,14 @@ export default function Image() {
           </div>
           <div
             style={{
-              fontSize: 30,
+              fontSize: 24,
               fontWeight: 600,
-              color: "#2E7D32",
-              marginTop: 20,
+              color: "#1E3A5F",
+              marginTop: 12,
               textAlign: "center",
-              lineHeight: 1.3,
             }}
           >
-            {TAGLINE}
+            Innocent Golden
           </div>
           <div
             style={{
@@ -67,6 +66,7 @@ export default function Image() {
               marginTop: 24,
               textAlign: "center",
               maxWidth: 880,
+              lineHeight: 1.4,
             }}
           >
             {SITE_DESCRIPTION}

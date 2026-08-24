@@ -40,7 +40,6 @@ async function sendEmailNotification(leadData) {
   const isRegistration =
     leadData.source === "bootcamp_registration" || leadData.form_type === "registration";
   const namePlain = leadData.name;
-  const servicePlain = leadData.service_interest || "";
   const { admin: from } = getResendFromAddresses();
   const payload = { ...leadData, submitted_at: new Date().toISOString() };
 
@@ -49,7 +48,7 @@ async function sendEmailNotification(leadData) {
     to: getAdminNotificationEmail(),
     subject: isRegistration
       ? `[Bootcamp] New registration — ${namePlain}`
-      : `[Lead] ${namePlain} — ${servicePlain || "consultation"}`,
+      : `[Inquiry] ${namePlain}`,
     html: buildAdminLeadEmailHtml(payload),
     text: buildAdminLeadEmailText(payload),
     replyTo: leadData.email,
@@ -77,7 +76,7 @@ async function sendCustomerEmail(leadData) {
     to: leadData.email,
     subject: isRegistration
       ? `${namePlain}, your bootcamp registration is confirmed`
-      : `${namePlain}, thank you for contacting Build With Innocent`,
+      : "I have this.",
     html: buildCustomerLeadEmailHtml(payload),
     text: buildCustomerLeadEmailText(payload),
     replyTo: getDefaultReplyTo(),

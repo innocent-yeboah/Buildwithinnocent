@@ -1,22 +1,25 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
 
-import { SiteChatWidget } from "@/components/SiteChatWidget";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/brand";
 
 const inter = Inter({ subsets: ["latin"] });
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
+});
 
 export const metadata = {
   metadataBase: new URL("https://buildwithinnocent.com"),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   keywords: [
-    "digital business systems Africa",
+    "developer Accra",
     "custom software Ghana",
-    "web developer Ghana",
-    "Accra software development",
-    "WhatsApp automation",
-    "business operating systems",
+    "website for business Ghana",
+    "Innocent Golden",
+    "Build With Innocent",
   ],
   authors: [{ name: "Innocent Golden" }],
   creator: "Innocent Golden",
@@ -48,10 +51,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className={`${inter.className} antialiased`}>
-        {children}
-        <SiteChatWidget />
-      </body>
+      <body className={`${inter.className} ${instrument.variable} antialiased`}>{children}</body>
     </html>
   );
 }

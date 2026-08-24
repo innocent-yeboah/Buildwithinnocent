@@ -3,7 +3,7 @@ export default function manifest() {
     name: "Build With Innocent",
     short_name: "BWI",
     description:
-      "Digital Business Systems for African Enterprises — custom software, websites, and operating systems.",
+      "I build the website and the system behind it so a business with no online presence can take orders.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

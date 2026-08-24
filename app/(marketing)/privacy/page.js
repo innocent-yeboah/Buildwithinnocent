@@ -10,7 +10,7 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <main id="main-content" className="min-h-screen bg-white text-slate-800">
-      <div className="border-b border-slate-200 bg-gradient-to-br from-brand-tint/70 via-white to-white pt-[4.75rem] sm:pt-20">
+      <div className="border-b border-slate-200 bg-gradient-to-br from-brand-tint/70 via-white to-white">
         <div className="max-w-3xl mx-auto px-4 pb-10 pt-10 md:pb-14 md:pt-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-green mb-2">
             Legal
