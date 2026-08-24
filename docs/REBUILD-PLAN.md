@@ -197,6 +197,61 @@ Do not put **free prototype**, **meet in Accra**, **24/7 even while you sleep**,
 
 ---
 
+## How the website works (step by step)
+
+This is the **portfolio**, not the shop system you later build for a client. Goal: a business owner trusts you and starts a conversation they can pay for.
+
+### A. A stranger on the phone
+
+1. They open `/`. One still, your name, one sentence: you build the website and the system behind it so a business with no online presence can take orders.
+2. They see two pieces of work. Benizer is “this is the starting kind.” SchoolLedger is “larger school system — not the GHS 3,500 build; no new school projects.”
+3. They see how it works: agree scope → 50% → private link → 50% → live. **Ghana, from GHS 3,500.** **Outside Ghana, I send a price after we talk.** Typical **2–4 weeks**.
+4. They tap **Start a conversation**, fill four fields (name, email, phone, what they want built), submit.
+5. The page says thank you. They get a short email. You get an alert. Optional: they use the quiet WhatsApp link instead of the form.
+6. Within one business day you reply, confirm Ghana vs not, and name what is in the base vs extra (including how they collect money).
+
+### B. After they want to hire you (off the website)
+
+7. You agree scope in writing. They pay **50%** (MoMo / bank / Wise / card — not on this website).
+8. You build on a private link. They click through with you.
+9. They pay the **remaining 50%**. You put it on their domain. They own it. You stop unless they agree support.
+
+The website’s job ended at step 6. Steps 7–9 are you, WhatsApp/email, and your bank. The site does not take the deposit, does not host the private link as a product, and does not run their shop.
+
+### C. What is not strictly needed for that goal
+
+| Extra in the current plan | Why it is extra |
+|---|---|
+| Separate `/work`, `/about`, `/contact` | Taste of a studio. Trust + convert can happen on **one page**. |
+| Long case-study pages | A still, a short story, live link, Rule 3 caption is enough. |
+| Display serif / extra type | Helps “expensive.” Inter + space + editing still works. |
+| Bootcamp footer link | Different customer. Does not help a shop owner hire you. |
+| WhatsApp in the footer | Useful backup. Form + email already converts. |
+| Auto-email to the visitor | Polite. The on-page thank-you + your reply in one day can stand alone. |
+| Cookie banner / Turnstile / attribution | Legal or spam tools. Not the conversion story. |
+| Internal OS, chat, AI WhatsApp, CRM dual-sync | Your back office. Not the portfolio. |
+| Phase 1 types cleanup as its own ship | Invisible. Can happen while building the page. |
+
+### D. Simplest version that still works (ship this first)
+
+**One public page** (`/`) plus the existing legal URLs in a tiny footer.
+
+On that page, in order:
+
+1. Hero (still + sentence + one button: Start a conversation)
+2. Two work blocks (Benizer + SchoolLedger, Rule 3 captions, live links)
+3. How we work + Rule 1 money block (Ghana 3,500, 50/50, outside Ghana, 2–4 weeks)
+4. The four-field form
+5. Footer: WhatsApp text link optional, privacy/terms, no bootcamp until you miss it
+
+Behind the page: `POST /api/leads` (already exists) → save the row → email you → short email to them. Chat widget off. No new nav. `/bootcamp` and `/internal` keep working if someone has the URL; they are not linked.
+
+**Done when:** a Ghanaian shop owner can understand the offer, see two proofs, see Ghana-labeled money, and you receive a complete four-field inquiry.
+
+Four routes (Home / Work / About / Contact) are a **second pass** if the one page feels cramped. They are not required to reach the goal.
+
+---
+
 # Part 2 — Implementation
 
 ## 2.1 Approach
@@ -219,11 +274,11 @@ You read this document and say it is right, or mark what to change. Still no mar
 
 One brand module, one Supabase factory, env validation. Chat widget off root layout.
 
-### Phase 2 — The public portfolio (the work that matters)
+### Phase 2 — Simplest public page (the work that matters)
 
-New Home, Work (two case studies), About, Contact. New header. Hero still. Price, 50/50, 2–4 weeks, three steps on the site. Form + emails as specified. Bootcamp footer only. Chat and extra WhatsApp FABs gone from public layouts.
+Replace the current marketing homepage with the **one-page** version in section D. Chat off. Form + emails. Rules 1–3 on that page. Do not build `/work`, `/about`, or `/contact` until the one page is live and you want the extra air.
 
-**Exit:** a shop owner in Accra can see what you do, two pieces of work, Ghana-labeled GHS 3,500, 50/50, and send a four-field form. Rules 1–3 are visible on Home, Work, and About. The page does not look like a template and does not look like an Awwwards demo.
+**Exit:** a shop owner in Accra can see the offer, two proofs, Ghana-labeled GHS 3,500, 50/50, and send a four-field form. The page does not look like a template and does not look like an Awwwards demo.
 
 ### Phase 3 — Inquiry backend (after Phase 2 is live)
 
@@ -251,7 +306,7 @@ Only if you later have a clinic case study or choose to promote bootcamp again.
 
 ## 2.5 First code after you accept
 
-**Phase 2** — the four public pages, designed to this document. Not a months-long types-only cleanup that leaves the current homepage up.
+**Phase 2** — the **one public page** in section D. Extra routes only after that is live.
 
 ---
 
