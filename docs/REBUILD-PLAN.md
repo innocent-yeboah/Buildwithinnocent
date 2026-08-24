@@ -49,11 +49,31 @@ These are not reasons to throw the plan away. They are situations the **public s
 
 **Wrong result:** A school deposit for a product you put on hold — or a shop owner who feels the portfolio is advertising something they will not get at the base price.
 
-**How we will treat these in Phase 2 (unless you override):**
+### Standing rules (the app must never break these)
 
-1. Label the number **Ghana, from GHS 3,500**. International line in the same block, same honesty: **Outside Ghana, I send a price after we talk.** Do not hide the Ghana number; do not let it look global.
-2. On Home / About, say **order and collect payment the way you already work** — cash, MoMo, or checkout if you use one. Do not imply a card gateway in the base. Scope in step 1 names the rail.
-3. On each Work piece, one line of context: **what it is**, and for SchoolLedger **not the GHS 3,500 starting system**.
+Copy, layout, and case-study pages are wrong if they violate a line below. Phase 2 is not done until these can be checked on the live pages.
+
+**Rule 1 — Price is never global**
+
+- Never print **GHS 3,500** (or 1,750, or 50%) without the word **Ghana** in that same block.
+- Never show the Ghana number alone. The same block must always contain, at equal weight: **Ghana, from GHS 3,500** · **50% after we agree scope, 50% after you approve a private link** · **Outside Ghana, I send a price after we talk.**
+- Never use “starting at,” “from,” or “plans from” next to 3,500 unless **Ghana** is the subject of that sentence.
+- The contact form still does not ask country. The page, not the visitor’s IP, must make the two markets obvious.
+
+**Rule 2 — The base system takes orders; it does not sell a payment gateway**
+
+- Never describe the GHS 3,500 build as checkout, card payments, Paystack, or “customers pay on the site.”
+- Always describe the base as: **customers place orders on the site; you collect money the way you already do** (cash, personal MoMo, or a checkout you already have).
+- Online checkout, delivery zones, or a new payment API are **out of the base** until step 1 writes them down as extra.
+- Step 1 (scope) must name the money rail in writing before the 50% deposit. If it is not named, do not take the deposit.
+
+**Rule 3 — Work is proof, not the price**
+
+- Never place SchoolLedger (or any case study) beside the price without a caption.
+- Every Work piece must have one line: what it is, and whether it **is** or **is not** the GHS 3,500 starting system.
+- SchoolLedger’s line is fixed: **A larger school system — not the Ghana GHS 3,500 starting build. I am not taking new school projects on this site.**
+- Benizer’s line is fixed: **A shop on the web — this is the kind of system the starting build is for.**
+- On Home, the price block may sit next to Benizer, never as if SchoolLedger is the thing you get for 3,500.
 
 ---
 
@@ -78,7 +98,7 @@ Voice: **I**, not we. Public name: **Innocent Golden**. Home: **Accra**. No prom
 The system (smallest full build):
 
 1. A public website
-2. A way customers order or pay (whatever rail that business already uses — do not name Paystack or MoMo on the homepage)
+2. Customers **place orders** on the site. You **collect money the way you already do** unless checkout is scoped as extra (Rule 2)
 3. A simple admin to see orders
 4. WhatsApp alerts
 5. Staff login
@@ -126,8 +146,8 @@ Primary nav: **Home · Work · About · Contact**
 **Home (short):**
 
 1. Hero — one calm workspace still (placeholder until you send a better photo). Headline = the sentence in 1.2. Two actions: See the work · Start a conversation.
-2. Selected work — SchoolLedger GH and Benizer Green Shop only.
-3. How we work — the three paid steps + Ghana price, 50/50, 2–4 weeks.
+2. Selected work — SchoolLedger GH and Benizer Green Shop only, each with Rule 3 captions.
+3. How we work — the three paid steps + **Rule 1 money block** (Ghana price, 50/50, outside Ghana, 2–4 weeks). Never a lone “from GHS 3,500.”
 4. Close — same conversation button.
 
 No testimonials until a client talks about **hired work**.  
@@ -203,7 +223,7 @@ One brand module, one Supabase factory, env validation. Chat widget off root lay
 
 New Home, Work (two case studies), About, Contact. New header. Hero still. Price, 50/50, 2–4 weeks, three steps on the site. Form + emails as specified. Bootcamp footer only. Chat and extra WhatsApp FABs gone from public layouts.
 
-**Exit:** a shop owner in Accra can see what you do, two pieces of work, from GHS 3,500, 50/50, and send a four-field form. The page does not look like a template and does not look like an Awwwards demo.
+**Exit:** a shop owner in Accra can see what you do, two pieces of work, Ghana-labeled GHS 3,500, 50/50, and send a four-field form. Rules 1–3 are visible on Home, Work, and About. The page does not look like a template and does not look like an Awwwards demo.
 
 ### Phase 3 — Inquiry backend (after Phase 2 is live)
 
@@ -271,4 +291,4 @@ Only if you later have a clinic case study or choose to promote bootcamp again.
 
 ---
 
-Until you accept this plan, **no rebuild code will be written.**
+Until Phase 2 starts, Rules 1–3 in this document are standing product rules, not optional copy.
