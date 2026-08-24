@@ -1,6 +1,6 @@
 # Rebuild Plan — Build With Innocent
 
-**Status:** Ready for acceptance. No rebuild code until Innocent accepts this document.  
+**Status:** Accepted by Innocent (2026-08-24), with known weak spots below.  
 **Source:** Interview with Innocent Golden (2026-08-24), folded from the original “simple yet expensive developer portfolio” brief.  
 **Live site:** [buildwithinnocent.com](https://buildwithinnocent.com)
 
@@ -18,6 +18,42 @@ The site must **not look cheap** and must **not look too fancy** in a way that a
 Wrong people: **anyone who will not pay GHS 3,500** (Ghana base).
 
 Taste references are [Brikken+Co](https://brikken.co/) and [Viskhan Khasiyev](https://khasiyev.com/) — we borrow **space, type, and editing**, plus **one restrained motion** (fade or hover). We do **not** copy Awwwards circus (reactive heroes, cursor-preview grids, looping video). A shop owner with no website must understand the page in seconds.
+
+---
+
+## Three weak spots (where this logic fails)
+
+These are not reasons to throw the plan away. They are situations the **public site + the offer it sells** will get wrong, confusing, or incomplete unless we design around them.
+
+### 1. A visitor outside Ghana still sees GHS 3,500
+
+**Situation:** A shop owner in London (or a Ghanaian helping a cousin abroad) opens the same homepage. The page says **from GHS 3,500**, **50% / 50%**, and somewhere **I’ll send a price after we talk**.
+
+**What goes wrong:** They treat 3,500 as *their* price and feel baited when the first reply is higher. Or a Ghanaian reads “I’ll send a price after we talk” and thinks 3,500 is not real. One URL cannot tell who is in Ghana. The form does not ask country. Your first email has to fix a number the site already printed.
+
+**Incomplete result:** The site promised a clear Ghana price and a quiet international quote. The visitor got both messages at once.
+
+### 2. “Pay however they already pay” when they have no rail
+
+**Situation:** The ideal client has **no online presence**. They take cash and a personal MoMo number. The homepage promises a **way customers order or pay** and an **admin to see orders**. You “wire whatever that business already uses.”
+
+**What goes wrong:** After the deposit they get a catalogue and “send MoMo to 024….” They thought customers would pay on the phone (card / checkout). You thought the smallest system is menu + order note + WhatsApp. The word **pay** did the damage. There is no existing Paystack/MoMo API to wire.
+
+**Incomplete result:** They approved a private link that is a website, not the “full system” they heard. The remaining 50% fight starts here.
+
+### 3. SchoolLedger next to “from GHS 3,500”
+
+**Situation:** A private-school owner (or a shop owner comparing height) opens Work, sees **SchoolLedger GH**, then sees **from GHS 3,500** and 50/50.
+
+**What goes wrong:** They believe 3,500 buys *that* kind of system, or they think the price is fake (too low → cheap). We kept SchoolLedger as proof while **not selling to schools**. The site does not say “this is a larger, different project.” Proof and offer disagree.
+
+**Wrong result:** A school deposit for a product you put on hold — or a shop owner who feels the portfolio is advertising something they will not get at the base price.
+
+**How we will treat these in Phase 2 (unless you override):**
+
+1. Label the number **Ghana, from GHS 3,500**. International line in the same block, same honesty: **Outside Ghana, I send a price after we talk.** Do not hide the Ghana number; do not let it look global.
+2. On Home / About, say **order and collect payment the way you already work** — cash, MoMo, or checkout if you use one. Do not imply a card gateway in the base. Scope in step 1 names the rail.
+3. On each Work piece, one line of context: **what it is**, and for SchoolLedger **not the GHS 3,500 starting system**.
 
 ---
 
