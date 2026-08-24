@@ -329,7 +329,7 @@ Only if you later have a clinic case study or choose to promote bootcamp again.
 | Payment on site | 50% after scope, 50% after private-link approval, then go live |
 | Prototype | None; scope from 3,500 |
 | Time on site | 2–4 weeks typical |
-| Nav | Home, Work, About, Contact |
+| Nav | One page first. Home / Work / About / Contact is a later pass |
 | CTA | Form first; WhatsApp +233 530 710 628 quiet |
 | Chat widget | Off public pages |
 | Bootcamp | `/bootcamp`, footer only |
